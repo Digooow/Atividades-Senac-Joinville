@@ -1,0 +1,15 @@
+algoritmo "Leia a nota de um aluno e diga se ele passou de ano"
+
+var
+  nota: real
+
+inicio
+
+  escreval("Digite a nota: ")
+  leia(nota)
+
+    se nota >= 7 entao escreva("Passou de ano!")
+      senao escreva("Não passou!")
+        fimse
+
+fimalgoritmo

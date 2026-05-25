@@ -1,0 +1,40 @@
+algoritmo "Calculadora"
+
+var
+  num1, num2: real
+  sinal, continuar: caractere
+inicio
+
+  escreval("Escolha um número para fazermos a conta: ")
+  leia(num1)
+
+repita
+
+
+  escreval("Escolha o sinal da operação: + para adição, - para subtração, / para divisão, * para multiplicação.")
+  leia(sinal)
+  escreval("Escolha o próximo número para continuarmos a conta:")
+  leia(num2)
+
+escolha sinal
+
+  caso "+" num1 <- num1+num2 escreva("O resultado da soma é: ", num1,".")
+  caso "-" num1 <- num1-num2 escreva("O resultado da subtração é: ", num1".")
+  caso "*" num1 <- num1*num2 escreva("O resultado da multiplicação é: ", num1".")
+  caso "/"  
+    se num2 = 0 entao escreva("Impossível dividir por 0.")
+      senao num1 <- num1/num2 escreva("O resultado da divisão é: ", num1".")
+        fimse
+  outrocaso escreval("Valor inválido")
+
+
+fimescolha
+
+  escreval(" Deseja adicionar outro valor? Aperte S para sim e N para não.")
+  leia(continuar)
+
+  ate continuar = "n"
+
+  escreval("O resultado é: "num1)
+
+fimalgoritmo

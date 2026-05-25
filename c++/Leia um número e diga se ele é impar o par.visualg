@@ -1,0 +1,17 @@
+algoritmo "Par ou impar"
+
+var
+  num, sobra: inteiro
+
+inicio
+
+  escreval("Escolha um número e te direi se ele é par ou impar. ")
+  leia(num)
+
+      sobra <- num mod 2
+
+        se sobra = 0 entao escreva("O número é par.")
+            senao escreva("O número é impar.")
+
+        fimse
+fimalgoritmo
