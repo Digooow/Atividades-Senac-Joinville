@@ -1,0 +1,25 @@
+algoritmo "Leia um número inteiro e mostre a tabuada dele do 1 até o 10."
+
+var
+  num, num2: inteiro
+
+inicio
+
+  escreval("Escolha um número que te mostrarei a tabuada dele XD: ")
+  leia(num)
+  escreva("Você escolheu o número ", num, ", e a sua tabuada é:")
+
+  enquanto num2 <= 10 faca 
+  escreval(num2*num)
+  num2 <- num2 + 1
+
+
+  fimenquanto
+
+
+
+
+
+
+
+fimalgoritmo

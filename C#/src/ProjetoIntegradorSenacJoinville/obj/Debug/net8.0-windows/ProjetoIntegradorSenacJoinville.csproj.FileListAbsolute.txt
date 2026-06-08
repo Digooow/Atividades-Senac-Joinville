@@ -1,0 +1,14 @@
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\bin\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.exe
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\bin\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.deps.json
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\bin\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.runtimeconfig.json
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\bin\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.dll
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\bin\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.pdb
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\obj\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\obj\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.AssemblyInfoInputs.cache
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\obj\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.AssemblyInfo.cs
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\obj\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.csproj.CoreCompileInputs.cache
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\obj\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.dll
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\obj\Debug\net8.0-windows\refint\ProjetoIntegradorSenacJoinville.dll
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\obj\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.pdb
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\obj\Debug\net8.0-windows\ProjetoIntegradorSenacJoinville.genruntimeconfig.cache
+C:\Users\Rodrigo\source\repos\src\ProjetoIntegradorSenacJoinville\obj\Debug\net8.0-windows\ref\ProjetoIntegradorSenacJoinville.dll

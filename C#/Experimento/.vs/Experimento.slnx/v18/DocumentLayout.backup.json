@@ -1,0 +1,69 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Rodrigo\\source\\repos\\Experimento\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{60E37372-CDF3-4044-9FA8-4A61E2654A29}|Experimento\\Experimento.csproj|c:\\users\\rodrigo\\source\\repos\\experimento\\experimento\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{60E37372-CDF3-4044-9FA8-4A61E2654A29}|Experimento\\Experimento.csproj|solutionrelative:experimento\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60E37372-CDF3-4044-9FA8-4A61E2654A29}|Experimento\\Experimento.csproj|c:\\users\\rodrigo\\source\\repos\\experimento\\experimento\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60E37372-CDF3-4044-9FA8-4A61E2654A29}|Experimento\\Experimento.csproj|solutionrelative:experimento\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Rodrigo\\source\\repos\\Experimento\\Experimento\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "Experimento\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\Rodrigo\\source\\repos\\Experimento\\Experimento\\MainWindow.xaml",
+              "RelativeToolTip": "Experimento\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-25T00:06:49.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Rodrigo\\source\\repos\\Experimento\\Experimento\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "Experimento\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\Rodrigo\\source\\repos\\Experimento\\Experimento\\MainWindow.xaml.cs",
+              "RelativeToolTip": "Experimento\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-25T00:06:48.577Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
