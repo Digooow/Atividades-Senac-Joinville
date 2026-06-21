@@ -53,7 +53,7 @@ Atividades-Senac-Joinville/
 
 ## 🔹 Pastas do Repositório
 
-|### 📁 C#:|
+### 📁 C#:
 - **.NET & Windows Forms**  
   Contém os projetos desenvolvidos com o ecossistema **.NET** e **Windows Forms**.
 
