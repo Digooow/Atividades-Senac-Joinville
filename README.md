@@ -18,6 +18,8 @@
   <img src="https://img.shields.io/github/languages/top/Digooow/Atividades-Senac-Joinville" />
 </p>
 
+---
+
 Repositório criado para armazenar e versionar todos os códigos, exercícios e projetos desenvolvidos durante o curso **Jovem Programador** no [SENAC Joinville](https://www.sc.senac.br/). 
 
 Aqui você vai encontrar desde atividades avaliativas de lógica até um projeto integrador completo com interface gráfica e testes automatizados.
@@ -74,9 +76,14 @@ Atividades-Senac-Joinville/
 - **🎯 Objetivo pedagógico:**  
   Construir uma base sólida em algoritmos e estruturas de dados, que serve como alicerce para todas as outras linguagens e tecnologias estudadas posteriormente no curso.
 
-- **📂 Arquivos principal:**  
-  `c++/Atividade Avaliativa C++ Prof Claudia/Atividade avaliativa c++ senac dev c++PRONTA.cpp` – Um dos exercícios finais que reúne múltiplos conceitos em um único programa.
-  `c++/Atividade Avaliativa Teste de Qualidade/Atividade 1/Atividade Cpp prof Claudia Refatorada SOLID.cpp` - Versão refatorada da Atividade avaliativa C++ Usando os principios SOLID.
+- **📂 Arquivos principal:**
+ 
+  -  `c++/Atividade Avaliativa C++ Prof Claudia/Atividade avaliativa c++ senac dev c++PRONTA.cpp`: 
+  -   Um dos exercícios finais que reúne múltiplos conceitos em um único programa.
+ 
+  -  `c++/Atividade Avaliativa Teste de Qualidade/Atividade 1/Atividade Cpp prof Claudia Refatorada SOLID.cpp`:
+  -   Versão refatorada da Atividade avaliativa C++ Usando os principios SOLID.
+    
 ---
 > 💡 *Esses códigos representam minha evolução inicial como programador – do "hello world" até soluções mais elaboradas. Eles são a prova de que a lógica se aprende praticando.*
 >
