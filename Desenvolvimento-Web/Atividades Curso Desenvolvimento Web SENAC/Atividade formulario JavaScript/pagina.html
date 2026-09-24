@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <title>Exemplos de Eventos JavaScript</title>
+    </head>
+    <body>
+        <h1>Eventos JavaScript</h1>
+
+        <h2>1. onClick()</h2>
+        <button onclick="clicou()">Clique aqui</button>
+        <p id="resultadoClick"></p>
+
+        <h2>2. onChange()</h2>
+        <select onchange="mudouOpcao(this)">
+            <option value="">Escolha uma opção</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="HTML">HTML</option>
+            <option value="CSS">CSS</option>
+        </select>
+        <p id="resultadoChange"></p>
+
+        <h2>3. onSubmit()</h2>
+        <form onsubmit="enviouFormulario(event)">
+            <input type="text" placeholder="Digite seu nome">
+            <button type="submit">Enviar</button>
+        </form>
+        <p id="resultadoSubmit"></p>
+
+
+        <h2>4. onFocus()</h2>
+        <input type="text" placeholder="Clique neste campo" onfocus="entrouNoCampo()">
+        <p id="resultadoFocus"></p>
+
+
+        <h2>5. onBlur()</h2>
+        <input type="text" placeholder="Clique e depois saia do campo" onblur="saiuDoCampo()">
+        <p id="resultadoBlur"></p>
+
+
+        <h2>6. onKeyDown()</h2>
+        <input type="text" placeholder="Pressione uma tecla" onkeydown="pressionouTecla(event)">
+        <p id="resultadoKeyDown"></p>
+
+
+        <script>
+            function clicou() {
+                document.getElementById("resultadoClick").textContent =
+                    "Você clicou no botão!";
+            }
+
+            function mudouOpcao(elemento) {
+                document.getElementById("resultadoChange").textContent =
+                    "Você escolheu: " + elemento.value;
+            }
+
+            function enviouFormulario(event) {
+                event.preventDefault();
+
+                document.getElementById("resultadoSubmit").textContent =
+                    "Formulário enviado!";
+            }
+
+            function entrouNoCampo() {
+                document.getElementById("resultadoFocus").textContent =
+                    "O campo recebeu foco!";
+            }
+
+            function saiuDoCampo() {
+                document.getElementById("resultadoBlur").textContent =
+                    "Você saiu do campo!";
+            }
+
+            function pressionouTecla(event) {
+                document.getElementById("resultadoKeyDown").textContent =
+                    "Você pressionou: " + event.key;
+            }
+        </script>
+    </body>
+</html>

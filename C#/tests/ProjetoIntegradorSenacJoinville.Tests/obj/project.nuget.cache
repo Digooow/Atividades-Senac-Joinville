@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vNtsh1VBLGk=",
+  "dgSpecHash": "7HlWz3lE1Ic=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Rodrigo\\source\\repos\\tests\\ProjetoIntegradorSenacJoinville.Tests\\ProjetoIntegradorSenacJoinville.Tests.csproj",
+  "projectFilePath": "C:\\Users\\Rodrigo\\Desktop\\Projetos\\Atividades-Senac-Joinville\\C#\\tests\\ProjetoIntegradorSenacJoinville.Tests\\ProjetoIntegradorSenacJoinville.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rodrigo\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\Rodrigo\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",

@@ -5533,11 +5533,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rodrigo\\source\\repos\\tests\\ProjetoIntegradorSenacJoinville.Tests\\ProjetoIntegradorSenacJoinville.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\Rodrigo\\Desktop\\Projetos\\Atividades-Senac-Joinville\\C#\\tests\\ProjetoIntegradorSenacJoinville.Tests\\ProjetoIntegradorSenacJoinville.Tests.csproj",
       "projectName": "ProjetoIntegradorSenacJoinville.Tests",
-      "projectPath": "C:\\Users\\Rodrigo\\source\\repos\\tests\\ProjetoIntegradorSenacJoinville.Tests\\ProjetoIntegradorSenacJoinville.Tests.csproj",
+      "projectPath": "C:\\Users\\Rodrigo\\Desktop\\Projetos\\Atividades-Senac-Joinville\\C#\\tests\\ProjetoIntegradorSenacJoinville.Tests\\ProjetoIntegradorSenacJoinville.Tests.csproj",
       "packagesPath": "C:\\Users\\Rodrigo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Rodrigo\\source\\repos\\tests\\ProjetoIntegradorSenacJoinville.Tests\\obj\\",
+      "outputPath": "C:\\Users\\Rodrigo\\Desktop\\Projetos\\Atividades-Senac-Joinville\\C#\\tests\\ProjetoIntegradorSenacJoinville.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -5560,8 +5560,8 @@
           "framework": "net8.0-windows7.0",
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\Users\\Rodrigo\\source\\repos\\src\\ProjetoIntegradorSenacJoinville\\ProjetoIntegradorSenacJoinville.csproj": {
-              "projectPath": "C:\\Users\\Rodrigo\\source\\repos\\src\\ProjetoIntegradorSenacJoinville\\ProjetoIntegradorSenacJoinville.csproj"
+            "C:\\Users\\Rodrigo\\Desktop\\Projetos\\Atividades-Senac-Joinville\\C#\\src\\ProjetoIntegradorSenacJoinville\\ProjetoIntegradorSenacJoinville.csproj": {
+              "projectPath": "C:\\Users\\Rodrigo\\Desktop\\Projetos\\Atividades-Senac-Joinville\\C#\\src\\ProjetoIntegradorSenacJoinville\\ProjetoIntegradorSenacJoinville.csproj"
             }
           }
         }
@@ -5616,7 +5616,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

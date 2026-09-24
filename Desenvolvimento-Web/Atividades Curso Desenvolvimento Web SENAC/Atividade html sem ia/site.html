@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha página pessoal</title>
+    <link rel="stylesheet" href="site.css">
+</head>
+<body>
+    <header>
+        <h1>Digooow's Portfólio</h1>
+        <nav>
+            <ul>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="sobre">
+    <h2>Sobre mim</h2>
+    
+    <div class="intro">
+        <p>
+            Sou um desenvolvedor <strong>Full Stack</strong> com paixão por construir soluções escaláveis e bem estruturadas. 
+            Minha stack principal combina <strong>.NET</strong> no backend com <strong>React</strong> no frontend.
+        </p>
+        <p>
+            Acredito que um bom desenvolvedor não se limita a dominar linguagens e ferramentas – 
+            também aplica <span class="destaque">princípios sólidos de engenharia de software</span> 
+            para construir sistemas manuteníveis, testáveis e escaláveis.
+        </p>
+    </div>
+
+    <div class="cards-grid">
+    
+        <div class="card">
+            <h3>🏛️ Arquitetura</h3>
+            <ul>
+                <li><strong>MVC</strong> – Separação em Model, View e Controller</li>
+                <li><strong>MVVM</strong> – Model-View-ViewModel para WPF/XAML</li>
+                <li><strong>Clean Architecture</strong> – Camadas isolando regras de negócio</li>
+                <li><strong>Microsserviços</strong> – Arquitetura distribuída e escalável</li>
+            </ul>
+        </div>
+
+    
+        <div class="card">
+            <h3>📐 Princípios</h3>
+            <ul>
+                <li><strong>SOLID</strong> – Código orientado a objetos coeso e flexível</li>
+                <li><strong>Design Patterns</strong> – Soluções reutilizáveis (Factory, Repository)</li>
+                <li><strong>DDD</strong> – Modelagem focada no domínio</li>
+                <li><strong>Clean Code</strong> – Código legível e expressivo</li>
+            </ul>
+        </div>
+
+    
+        <div class="card">
+            <h3>🧪 Testes</h3>
+            <ul>
+                <li><strong>TDD</strong> – Testes antes do código</li>
+                <li><strong>Testes Unitários</strong> – Comportamento isolado</li>
+                <li><strong>Testes de Integração</strong> – Interação entre componentes</li>
+            </ul>
+        </div>
+
+      
+        <div class="card">
+            <h3>🚀 Metodologias &amp; DevOps</h3>
+            <ul>
+                <li><strong>Scrum</strong> – Entregas incrementais</li>
+                <li><strong>Kanban</strong> – Fluxo contínuo com WIP</li>
+                <li><strong>DevOps</strong> – Integração desenvolvimento e operações</li>
+                <li><strong>CI/CD</strong> – Automação com GitHub Actions, Azure Pipelines</li>
+            </ul>
+        </div>
+
+       
+        <div class="card">
+            <h3>🌐 APIs &amp; Integração</h3>
+            <ul>
+                <li><strong>RESTful</strong> – Recursos e verbos HTTP</li>
+                <li><strong>Swagger (OpenAPI)</strong> – Documentação interativa</li>
+                <li><strong>Postman</strong> – Teste e monitoramento de APIs</li>
+            </ul>
+        </div>
+    </div>
+
+    
+</section>
+
+
+
+        <section id="contato">
+    <h2>Fale comigo</h2>
+    <form action="#" method="post">
+       
+        <label for="nome">Nome completo:</label>
+        <input type="text" id="nome" name="nome" 
+               placeholder="Digite seu nome" 
+               required>
+
+        
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" 
+               placeholder="seu@email.com" 
+               required>
+
+        
+        <label for="assunto">Assunto:</label>
+        <select id="assunto" name="assunto">
+            <option value="duvida">Dúvida</option>
+            <option value="sugestao">Sugestão</option>
+            <option value="orcamento">Orçamento</option>
+        </select>
+
+        
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" name="mensagem" 
+                  placeholder="Escreva sua mensagem aqui..." 
+                  maxlength="500" 
+                  required></textarea>
+
+        
+        <button type="submit">Enviar mensagem</button>
+    </form>
+</section>
+
+        <aside>
+            <h3>Redes Sociais</h3>
+            <ul>
+                <li><a href="https://www.linkedin.com/in/Digooow/" target="_blank">LinkedIn</a></li>
+                <li><a href="https://github.com/Digooow" target="_blank">GitHub</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer>
+        <p>"Projeto desenvolvido como atividade avaliativa de Desenvolvimento Web com IA."</p>
+    </footer>
+</body>
+</html>

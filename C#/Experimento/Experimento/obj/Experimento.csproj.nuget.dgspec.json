@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rodrigo\\source\\repos\\Experimento\\Experimento\\Experimento.csproj": {}
+    "C:\\Users\\Rodrigo\\Desktop\\Projetos\\Atividades-Senac-Joinville\\C#\\Experimento\\Experimento\\Experimento.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rodrigo\\source\\repos\\Experimento\\Experimento\\Experimento.csproj": {
+    "C:\\Users\\Rodrigo\\Desktop\\Projetos\\Atividades-Senac-Joinville\\C#\\Experimento\\Experimento\\Experimento.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rodrigo\\source\\repos\\Experimento\\Experimento\\Experimento.csproj",
+        "projectUniqueName": "C:\\Users\\Rodrigo\\Desktop\\Projetos\\Atividades-Senac-Joinville\\C#\\Experimento\\Experimento\\Experimento.csproj",
         "projectName": "Experimento",
-        "projectPath": "C:\\Users\\Rodrigo\\source\\repos\\Experimento\\Experimento\\Experimento.csproj",
+        "projectPath": "C:\\Users\\Rodrigo\\Desktop\\Projetos\\Atividades-Senac-Joinville\\C#\\Experimento\\Experimento\\Experimento.csproj",
         "packagesPath": "C:\\Users\\Rodrigo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rodrigo\\source\\repos\\Experimento\\Experimento\\obj\\",
+        "outputPath": "C:\\Users\\Rodrigo\\Desktop\\Projetos\\Atividades-Senac-Joinville\\C#\\Experimento\\Experimento\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -71,7 +71,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

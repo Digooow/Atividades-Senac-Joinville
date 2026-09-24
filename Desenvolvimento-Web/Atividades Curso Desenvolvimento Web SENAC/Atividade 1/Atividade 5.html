@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Anime Style</title>
+    <style>
+        /* Reset básico e fonte */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Yu Gothic', 'Noto Sans JP', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0b0e2a 0%, #1b1f4a 40%, #2a1f4a 70%, #0f0c2a 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* Fundo com estrelas e partículas animadas (estilo anime) */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20% 30%, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40% 70%, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 60% 20%, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 80% 80%, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 10% 90%, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 90% 10%, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 50% 50%, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 30% 60%, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 70% 40%, #fff, rgba(0,0,0,0));
+            background-size: 200px 200px;
+            background-repeat: repeat;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 0;
+            animation: twinkle 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.4; transform: scale(1); }
+            100% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        /* Efeito de névoa/aurora (cores de anime) */
+        body::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 40%, rgba(255, 100, 200, 0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 60%, rgba(100, 200, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 80%, rgba(200, 100, 255, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+            animation: aurora 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes aurora {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(5%, 5%) rotate(5deg); }
+        }
+
+        /* Container do formulário (estilo card anime) */
+        .login-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            background: rgba(18, 22, 50, 0.75);
+            backdrop-filter: blur(16px);
+            border-radius: 32px;
+            padding: 40px 35px 45px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.6),
+                0 0 40px rgba(180, 100, 255, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 28px 70px rgba(0, 0, 0, 0.7),
+                0 0 60px rgba(180, 100, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Elementos decorativos "anime" (estrelas, corações) */
+        .login-container::before {
+            content: '✦ ✧ ★ ✧ ✦';
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+            letter-spacing: 8px;
+            color: rgba(255, 215, 100, 0.6);
+            text-shadow: 0 0 20px rgba(255, 215, 100, 0.2);
+            white-space: nowrap;
+            background: rgba(18, 22, 50, 0.6);
+            padding: 0 16px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .login-container::after {
+            content: '🌸';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            font-size: 2.5rem;
+            opacity: 0.2;
+            transform: rotate(15deg);
+            filter: blur(1px);
+        }
+
+        /* Título */
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #f8b4d9, #a78bfa, #6ee7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-shadow: 0 0 40px rgba(167, 139, 250, 0.2);
+            position: relative;
+        }
+
+        h1::after {
+            content: '☆';
+            position: absolute;
+            right: -30px;
+            top: -10px;
+            font-size: 1.8rem;
+            -webkit-text-fill-color: initial;
+            color: #fbbf24;
+            opacity: 0.6;
+            animation: spin 8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Subtítulo */
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+            padding-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .subtitle span {
+            color: #fbbf24;
+            font-weight: 400;
+        }
+
+        /* Grupos de campos */
+        .form-group {
+            margin-bottom: 22px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        /* Ícones nos labels (estilo anime) */
+        label[for="username"]::before {
+            content: '👤 ';
+            font-size: 1rem;
+        }
+
+        label[for="password"]::before {
+            content: '🔑 ';
+            font-size: 1rem;
+        }
+
+        /* Inputs com estilo "anime cyber" */
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+            outline: none;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #a78bfa;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 
+                0 0 20px rgba(167, 139, 250, 0.15),
+                inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="text"]:focus + label,
+        input[type="password"]:focus + label {
+            color: #a78bfa;
+        }
+
+        /* Efeito de placeholder estilizado */
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+            font-style: italic;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Botão de submit (estilo anime) */
+        input[type="submit"] {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #a78bfa, #6ee7ff);
+            border: none;
+            border-radius: 30px;
+            color: #0b0e2a;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s, filter 0.3s;
+            box-shadow: 0 8px 25px rgba(167, 139, 250, 0.3);
+            text-transform: uppercase;
+            font-family: inherit;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        input[type="submit"]::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+            animation: shine 5s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        input[type="submit"]:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 35px rgba(167, 139, 250, 0.4);
+            filter: brightness(1.05);
+        }
+
+        input[type="submit"]:active {
+            transform: scale(0.97);
+        }
+
+        /* Checkbox "Lembrar-me" estilizado */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 18px;
+            padding: 10px 0 5px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        input[type="checkbox"]:checked {
+            background: linear-gradient(135deg, #a78bfa, #6ee7ff);
+            border-color: #a78bfa;
+            box-shadow: 0 0 20px rgba(167, 139, 250, 0.3);
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0b0e2a;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            text-transform: none;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .checkbox-group label:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Link "Esqueceu a senha?" (estilo anime) */
+        .forgot-link {
+            display: block;
+            text-align: right;
+            margin-top: 14px;
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .forgot-link:hover {
+            color: #fbbf24;
+            text-decoration: underline;
+        }
+
+        /* Rodapé com "anime" */
+        .anime-footer {
+            text-align: center;
+            margin-top: 25px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-top: 18px;
+        }
+
+        .anime-footer span {
+            color: #fbbf24;
+        }
+
+        /* Responsividade */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 22px 35px;
+                border-radius: 24px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h1::after {
+                right: -20px;
+                font-size: 1.4rem;
+            }
+
+            .login-container::before {
+                font-size: 0.9rem;
+                letter-spacing: 4px;
+                top: -14px;
+                padding: 0 12px;
+            }
+
+            input[type="text"],
+            input[type="password"] {
+                padding: 12px 16px;
+                font-size: 0.95rem;
+            }
+
+            input[type="submit"] {
+                padding: 14px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <div class="subtitle">✦ <span>anime</span> style ✦</div>
+
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="username">Nome de Usuário</label>
+                <input type="text" id="username" name="username" placeholder="seu @ ou e-mail" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </div>
+
+            <input type="submit" value="Entrar ✦">
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember">Lembrar-me</label>
+            </div>
+
+            <a href="#" class="forgot-link">Esqueceu a senha?</a>
+        </form>
+
+        <div class="anime-footer">
+            ✧ <span>✦</span> アニメ ✧ <span>✦</span>  ✧
+        </div>
+    </div>
+</body>
+</html>

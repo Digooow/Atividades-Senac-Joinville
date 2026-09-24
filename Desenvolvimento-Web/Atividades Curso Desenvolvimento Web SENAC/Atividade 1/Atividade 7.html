@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jovem Programador 2026 — Frostpunk</title>
+    <!-- Fonte com estilo steampunk/gótico -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=MedievalSharp&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET E ESTRUTURA ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+            font-family: 'Cinzel', 'Georgia', serif;
+            background: #0a0d0f;
+            background-image:
+                radial-gradient(ellipse at 20% 30%, rgba(20, 60, 80, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(10, 40, 60, 0.2) 0%, transparent 50%),
+                repeating-linear-gradient(45deg,
+                    transparent 0px,
+                    transparent 60px,
+                    rgba(255, 255, 255, 0.008) 60px,
+                    rgba(255, 255, 255, 0.008) 61px);
+            color: #c8d8e0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ===== FLOCOS DE NEVE (CSS PURO) ===== */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: rgba(200, 220, 240, 0.15);
+            font-size: 1.2rem;
+            animation: fall linear infinite;
+        }
+
+        .snowflake:nth-child(1) { left: 5%; animation-duration: 18s; animation-delay: 0s; font-size: 1rem; }
+        .snowflake:nth-child(2) { left: 15%; animation-duration: 22s; animation-delay: 2s; font-size: 1.6rem; }
+        .snowflake:nth-child(3) { left: 25%; animation-duration: 14s; animation-delay: 4s; font-size: 0.8rem; }
+        .snowflake:nth-child(4) { left: 35%; animation-duration: 20s; animation-delay: 1s; font-size: 1.4rem; }
+        .snowflake:nth-child(5) { left: 45%; animation-duration: 16s; animation-delay: 3s; font-size: 1rem; }
+        .snowflake:nth-child(6) { left: 55%; animation-duration: 24s; animation-delay: 5s; font-size: 1.8rem; }
+        .snowflake:nth-child(7) { left: 65%; animation-duration: 19s; animation-delay: 2s; font-size: 0.9rem; }
+        .snowflake:nth-child(8) { left: 75%; animation-duration: 21s; animation-delay: 4s; font-size: 1.3rem; }
+        .snowflake:nth-child(9) { left: 85%; animation-duration: 17s; animation-delay: 1s; font-size: 1.1rem; }
+        .snowflake:nth-child(10) { left: 95%; animation-duration: 23s; animation-delay: 3s; font-size: 1.5rem; }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0.2; }
+        }
+
+        /* ===== CONTAINER PRINCIPAL (A "FORNALHA") ===== */
+        .container {
+            max-width: 880px;
+            width: 100%;
+            background: rgba(10, 15, 18, 0.92);
+            padding: 35px 40px 45px;
+            border: 2px solid #4a6a7a;
+            border-radius: 16px;
+            position: relative;
+            z-index: 1;
+            box-shadow:
+                0 0 40px rgba(0, 80, 120, 0.15),
+                inset 0 0 60px rgba(0, 40, 60, 0.3),
+                0 10px 30px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(2px);
+            transition: box-shadow 0.4s ease;
+        }
+
+        .container:hover {
+            box-shadow:
+                0 0 60px rgba(0, 100, 150, 0.25),
+                inset 0 0 80px rgba(0, 50, 80, 0.4),
+                0 10px 40px rgba(0, 0, 0, 0.9);
+        }
+
+        /* ===== BORDAS DECORATIVAS COM ENGRENAGENS ===== */
+        .container::before {
+            content: '⚙ ⚙ ⚙ ⚙ ⚙';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #4a6a7a;
+            font-size: 1rem;
+            letter-spacing: 6px;
+            background: #0a0d0f;
+            padding: 0 15px;
+            white-space: nowrap;
+        }
+
+        .container::after {
+            content: '⚙ ⚙ ⚙ ⚙ ⚙';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #4a6a7a;
+            font-size: 1rem;
+            letter-spacing: 6px;
+            background: #0a0d0f;
+            padding: 0 15px;
+            white-space: nowrap;
+        }
+
+        /* ===== TERMÔMETRO/STATUS ===== */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: rgba(0, 30, 50, 0.3);
+            border: 1px solid #2a4a5a;
+            border-radius: 8px;
+            padding: 10px 18px;
+            margin-bottom: 25px;
+            font-size: 0.75rem;
+            color: #8aacba;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .status-bar .temp {
+            color: #ff8c42;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .status-bar .temp span {
+            font-size: 1.2rem;
+        }
+
+        .status-bar .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #ff8c42;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+            box-shadow: 0 0 12px #ff8c42;
+            margin-right: 6px;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        .status-bar .coal {
+            color: #b8a88a;
+        }
+
+        /* ===== CABEÇALHO ===== */
+        header {
+            text-align: center;
+            border-bottom: 2px solid #2a4a5a;
+            padding-bottom: 18px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        header .logo-icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 4px;
+            opacity: 0.6;
+            letter-spacing: 10px;
+        }
+
+        h1 {
+            font-family: 'MedievalSharp', 'Cinzel', cursive;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #d4e8f0;
+            text-shadow: 0 0 30px rgba(100, 180, 220, 0.15);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        h1 .highlight {
+            color: #ff8c42;
+            text-shadow: 0 0 20px rgba(255, 140, 66, 0.2);
+        }
+
+        h1::after {
+            content: '❄';
+            position: absolute;
+            right: -20px;
+            top: -10px;
+            font-size: 1.8rem;
+            opacity: 0.15;
+        }
+
+        h1::before {
+            content: '❄';
+            position: absolute;
+            left: -20px;
+            top: -10px;
+            font-size: 1.8rem;
+            opacity: 0.15;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #8aacba;
+            letter-spacing: 4px;
+            font-weight: 400;
+            margin-top: 4px;
+            opacity: 0.8;
+        }
+
+        .subtitle span {
+            color: #ff8c42;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: #6a8a9a;
+            margin-top: 10px;
+            font-style: italic;
+            letter-spacing: 2px;
+            border-top: 1px solid #1a3a4a;
+            padding-top: 12px;
+            opacity: 0.7;
+        }
+
+        /* ===== SEÇÕES ===== */
+        .section {
+            margin-top: 28px;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-family: 'MedievalSharp', 'Cinzel', cursive;
+            font-size: 1.6rem;
+            color: #d4e8f0;
+            letter-spacing: 3px;
+            border-bottom: 1px dashed #2a5a6a;
+            padding-bottom: 6px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+        }
+
+        .section-title .bracket {
+            color: #ff8c42;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        .section-title .icon {
+            font-size: 1.4rem;
+            opacity: 0.5;
+        }
+
+        /* ===== TEXTOS ===== */
+        .section p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #b8ccd4;
+            margin-bottom: 12px;
+            padding-left: 6px;
+            border-left: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .section p:hover {
+            border-left-color: #ff8c42;
+        }
+
+        .section p strong {
+            color: #ff8c42;
+            font-weight: 700;
+        }
+
+        .section p .highlight-blue {
+            color: #6ab8d4;
+            font-weight: 700;
+        }
+
+        /* ===== LISTA DE CIDADES ===== */
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 6px 12px;
+            background: rgba(0, 30, 50, 0.15);
+            border: 1px solid #1a3a4a;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-top: 8px;
+        }
+
+        .city-grid .city {
+            font-size: 0.85rem;
+            color: #8aacba;
+            padding: 3px 0;
+            border-bottom: 1px solid #1a2a3a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .city-grid .city::before {
+            content: '❄';
+            font-size: 0.7rem;
+            opacity: 0.3;
+        }
+
+        .city-grid .city:hover {
+            color: #d4e8f0;
+        }
+
+        /* ===== ESTATÍSTICAS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 12px 0 8px;
+        }
+
+        .stat-card {
+            background: rgba(0, 30, 50, 0.2);
+            border: 1px solid #1a3a4a;
+            border-radius: 8px;
+            padding: 14px 12px;
+            text-align: center;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: #ff8c42;
+            background: rgba(0, 30, 50, 0.35);
+        }
+
+        .stat-card .number {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ff8c42;
+            text-shadow: 0 0 20px rgba(255, 140, 66, 0.15);
+            display: block;
+            font-family: 'Cinzel', serif;
+        }
+
+        .stat-card .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #6a8a9a;
+            letter-spacing: 1px;
+            margin-top: 2px;
+            display: block;
+        }
+
+        /* ===== FORMULÁRIO ===== */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+            background: rgba(0, 20, 30, 0.2);
+            border: 1px solid #1a3a4a;
+            border-radius: 10px;
+            padding: 22px 24px 26px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .form-row label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #8aacba;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-row label::before {
+            content: '▶';
+            color: #ff8c42;
+            font-size: 0.7rem;
+            opacity: 0.6;
+        }
+
+        .form-row input[type="text"] {
+            background: rgba(10, 20, 25, 0.8);
+            border: 1px solid #2a4a5a;
+            border-radius: 6px;
+            padding: 10px 14px;
+            color: #d4e8f0;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+
+        .form-row input[type="text"]:focus {
+            border-color: #ff8c42;
+            box-shadow: 0 0 20px rgba(255, 140, 66, 0.1), inset 0 0 20px rgba(255, 140, 66, 0.05);
+        }
+
+        .form-row input[type="text"]::placeholder {
+            color: #4a6a7a;
+            font-style: italic;
+            opacity: 0.5;
+        }
+
+        /* ===== RADIO BUTTONS (TURNO) ===== */
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+            padding-top: 4px;
+        }
+
+        .radio-group label {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #b8ccd4;
+            text-transform: none;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .radio-group label:hover {
+            color: #d4e8f0;
+        }
+
+        .radio-group label::before {
+            content: '';
+            display: none;
+        }
+
+        .radio-group input[type="radio"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #4a6a7a;
+            border-radius: 50%;
+            background: transparent;
+            transition: border-color 0.3s, background 0.3s;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .radio-group input[type="radio"]:checked {
+            border-color: #ff8c42;
+            background: #ff8c42;
+            box-shadow: 0 0 15px rgba(255, 140, 66, 0.25);
+        }
+
+        .radio-group input[type="radio"]:focus {
+            outline: none;
+        }
+
+        /* ===== BOTÃO ===== */
+        .btn-submit {
+            background: transparent;
+            border: 2px solid #ff8c42;
+            color: #ff8c42;
+            padding: 14px 30px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 4px;
+            background: rgba(255, 140, 66, 0.05);
+            box-shadow: 0 0 20px rgba(255, 140, 66, 0.05);
+        }
+
+        .btn-submit:hover {
+            background: rgba(255, 140, 66, 0.15);
+            border-color: #ffaa66;
+            color: #ffaa66;
+            box-shadow: 0 0 40px rgba(255, 140, 66, 0.15);
+            transform: scale(1.02);
+            letter-spacing: 6px;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* ===== RODAPÉ ===== */
+        .footer {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 1px solid #1a3a4a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.7rem;
+            color: #4a6a7a;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .footer .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer .left .gear {
+            color: #4a6a7a;
+            font-size: 1.2rem;
+            animation: spin 20s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer .right {
+            text-align: right;
+            opacity: 0.6;
+        }
+
+        .footer .right .highlight {
+            color: #ff8c42;
+            font-weight: 700;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px 16px 28px;
+            }
+
+            .container::before,
+            .container::after {
+                font-size: 0.7rem;
+                letter-spacing: 4px;
+                padding: 0 10px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+                letter-spacing: 3px;
+            }
+
+            h1::before,
+            h1::after {
+                display: none;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .section p {
+                font-size: 0.95rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .city-grid {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+                padding: 10px 12px;
+            }
+
+            form {
+                padding: 16px 14px 20px;
+            }
+
+            .radio-group {
+                gap: 10px 16px;
+            }
+
+            .btn-submit {
+                font-size: 1rem;
+                padding: 12px 20px;
+                letter-spacing: 3px;
+            }
+
+            .footer {
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+            }
+
+            .footer .right {
+                text-align: center;
+            }
+
+            .status-bar {
+                font-size: 0.65rem;
+                padding: 8px 12px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .container {
+                padding: 16px 10px 20px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+                letter-spacing: 2px;
+            }
+
+            .subtitle {
+                font-size: 0.8rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .stat-card .number {
+                font-size: 1.6rem;
+            }
+
+            .city-grid {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+                gap: 4px 8px;
+                padding: 8px 10px;
+            }
+
+            .city-grid .city {
+                font-size: 0.7rem;
+            }
+
+            form {
+                padding: 12px 10px 16px;
+                gap: 12px;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== FLOCOS DE NEVE ===== -->
+    <div class="snowflakes">
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❄</div>
+    </div>
+
+    <!-- ===== CONTAINER PRINCIPAL ===== -->
+    <div class="container">
+
+        <!-- ===== STATUS BAR ===== -->
+        <div class="status-bar">
+            <span>
+                <span class="status-dot"></span>
+                SISTEMA OPERACIONAL <span style="color:#d4e8f0;">ATIVO</span>
+            </span>
+            <span class="temp">
+                <span>🔥</span> FORNALHA :: <span>+2°C</span>
+            </span>
+            <span class="coal">
+                ⚙ CARVÃO :: <span style="color:#d4e8f0;">100%</span>
+            </span>
+            <span>
+                ❄ TEMPERATURA EXTERNA :: <span style="color:#6ab8d4;">-42°C</span>
+            </span>
+        </div>
+
+        <!-- ===== CABEÇALHO ===== -->
+        <header>
+            <span class="logo-icon">⚙ ❄ ⚙</span>
+            <h1>
+                Jovem <span class="highlight">Programador</span> 2026
+            </h1>
+            <div class="subtitle">
+                <span>◆</span> SEXTA EDIÇÃO <span>◆</span> 23 CIDADES <span>◆</span> 1.260 VAGAS
+            </div>
+            <div class="tagline">
+                "Forjando programadores no coração do inverno digital"
+            </div>
+        </header>
+
+        <!-- ===== SOBRE O PROGRAMA ===== -->
+        <div class="section">
+            <div class="section-title">
+                <span class="bracket">[</span> SOBRE <span class="bracket">]</span>
+                <span class="icon">❄</span>
+            </div>
+            <p>
+                O <strong>Jovem Programador</strong> é o maior programa de formação gratuita em tecnologia de Santa Catarina[reference:0][reference:1]. Promovido pelo <strong>SEPROSC</strong> em parceria com o <strong>Senac SC</strong>, o programa já alcançou <strong>19,3 mil inscritos</strong>, com <strong>126 turmas</strong> e <strong>4,1 mil vagas</strong> disponibilizadas desde sua criação em 2021[reference:2].
+            </p>
+            <p>
+                Em 2026, o programa chega à sua <strong>sexta edição</strong> com a maior oferta de vagas da história: <strong>1.260 vagas gratuitas</strong> distribuídas por <strong>23 municípios</strong> catarinenses[reference:3][reference:4]. As aulas são na modalidade <strong>híbrida</strong> (online e presenciais), ministradas por profissionais experientes e com forte conexão com o mercado[reference:5][reference:6].
+            </p>
+            <p>
+                O curso é <strong>100% gratuito</strong> para pessoas com renda familiar per capita de até <strong>2 salários mínimos</strong>, por meio do <strong>Programa Senac de Gratuidade (PSG)</strong>[reference:7][reference:8]. Podem participar pessoas a partir de <strong>16 anos</strong> que estejam cursando ou já tenham concluído o ensino médio[reference:9][reference:10].
+            </p>
+        </div>
+
+        <!-- ===== ESTATÍSTICAS ===== -->
+        <div class="section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="number">1.260</span>
+                    <span class="label">Vagas gratuitas</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number">23</span>
+                    <span class="label">Cidades participantes</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number">16+</span>
+                    <span class="label">Idade mínima</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number">6ª</span>
+                    <span class="label">Edição</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== CONTEÚDO DO CURSO ===== -->
+        <div class="section">
+            <div class="section-title">
+                <span class="bracket">[</span> CONTEÚDO <span class="bracket">]</span>
+                <span class="icon">⚙</span>
+            </div>
+            <p>
+                Os participantes aprendem desde os <strong>conceitos básicos de lógica e programação</strong> até o desenvolvimento de projetos e desafios práticos, como o <strong>Hackathon</strong>[reference:11][reference:12]. Ao final do curso, recebem <strong>certificação reconhecida</strong> e têm acesso a uma rede de empresas parceiras interessadas em contratar novos talentos[reference:13][reference:14].
+            </p>
+            <p>
+                O programa conecta conteúdo técnico e atividades aplicadas, aproximando alunos de empresas e possibilitando que demandas reais orientem o aprendizado[reference:15]. Entre as competências desenvolvidas estão: lógica de programação, algoritmos, estruturas de dados, desenvolvimento web (HTML, CSS, JavaScript), bancos de dados, Git, metodologias ágeis e soft skills[reference:16].
+            </p>
+        </div>
+
+        <!-- ===== INCLUSÃO E DIVERSIDADE ===== -->
+        <div class="section">
+            <div class="section-title">
+                <span class="bracket">[</span> INCLUSÃO <span class="bracket">]</span>
+                <span class="icon">❄</span>
+            </div>
+            <p>
+                Reforçando seu compromisso com a <strong>inclusão</strong>, o programa 2026 contará com <strong>cotas para pessoas com deficiência (PCDs)</strong> e, pela primeira vez, uma <strong>turma exclusiva para mulheres</strong> na cidade de <strong>Palhoça</strong>, promovendo um ambiente seguro e acolhedor para o desenvolvimento de talentos femininos na área de TI[reference:17][reference:18].
+            </p>
+            <p>
+                O programa também conta com <strong>6% das vagas</strong> por unidade destinadas às <strong>Vagas Inclusivas – Talentos Plurais</strong>[reference:19].
+            </p>
+        </div>
+
+        <!-- ===== CIDADES PARTICIPANTES ===== -->
+        <div class="section">
+            <div class="section-title">
+                <span class="bracket">[</span> CIDADES <span class="bracket">]</span>
+                <span class="icon">❄</span>
+            </div>
+            <p>
+                Com o objetivo de descentralizar o acesso à formação em tecnologia, o Jovem Programador estará presente em <strong>23 cidades</strong> de Santa Catarina[reference:20][reference:21]:
+            </p>
+            <div class="city-grid">
+                <span class="city">Araranguá</span>
+                <span class="city">Biguaçu</span>
+                <span class="city">Blumenau</span>
+                <span class="city">Brusque</span>
+                <span class="city">Caçador</span>
+                <span class="city">Canoinhas</span>
+                <span class="city">Chapecó</span>
+                <span class="city">Concórdia</span>
+                <span class="city">Criciúma</span>
+                <span class="city">Curitibanos</span>
+                <span class="city">Florianópolis</span>
+                <span class="city">Fraiburgo</span>
+                <span class="city">Jaraguá do Sul</span>
+                <span class="city">Joaçaba</span>
+                <span class="city">Joinville</span>
+                <span class="city">Lages</span>
+                <span class="city">Palhoça</span>
+                <span class="city">Porto União</span>
+                <span class="city">Rio do Sul</span>
+                <span class="city">São Miguel do Oeste</span>
+                <span class="city">Tubarão</span>
+                <span class="city">Videira</span>
+                <span class="city">Xanxerê</span>
+            </div>
+            <p style="margin-top: 12px; font-size: 0.9rem; color: #6a8a9a;">
+                <strong>📅 Aula Magna:</strong> 24 de março de 2026, em Blumenau — com transmissão ao vivo para todas as turmas[reference:22].
+            </p>
+        </div>
+
+        <!-- ===== FORMULÁRIO DE INSCRIÇÃO ===== -->
+        <div class="section">
+            <div class="section-title">
+                <span class="bracket">[</span> INSCRIÇÃO <span class="bracket">]</span>
+                <span class="icon">⚙</span>
+            </div>
+            <p style="font-size: 0.95rem; color: #8aacba;">
+                ⚠️ As inscrições para o <strong>Jovem Programador 2026</strong> vão até <strong>18 de janeiro de 2026</strong>[reference:23][reference:24]. Inscreva-se no site oficial: <strong style="color: #ff8c42;">jovemprogramador.com.br</strong>
+            </p>
+
+            <form action="#" method="post">
+                <div class="form-row">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" id="cidade" name="cidade" placeholder="Sua cidade em SC" required>
+                </div>
+
+                <div class="form-row">
+                    <label>Turno</label>
+                    <div class="radio-group">
+                        <label for="manha">
+                            <input type="radio" id="manha" name="turno" value="manha">
+                            Manhã
+                        </label>
+                        <label for="tarde">
+                            <input type="radio" id="tarde" name="turno" value="tarde">
+                            Tarde
+                        </label>
+                        <label for="noite">
+                            <input type="radio" id="noite" name="turno" value="noite">
+                            Noite
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">🔥 Inscreva-se</button>
+            </form>
+        </div>
+
+        <!-- ===== RODAPÉ ===== -->
+        <div class="footer">
+            <div class="left">
+                <span class="gear">⚙</span>
+                <span>Jovem Programador 2026</span>
+                <span style="opacity:0.4;">|</span>
+                <span>SEPROSC + Senac SC</span>
+            </div>
+            <div class="right">
+                <span class="highlight">❄</span> Sobreviva. Aprenda. Programe. <span class="highlight">❄</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "exercicio-api-backend-senac",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Digooow/exercicio-api-backend-senac#readme",
+  "bugs": {
+    "url": "https://github.com/Digooow/exercicio-api-backend-senac/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Digooow/exercicio-api-backend-senac.git"
+  },
+  "license": "ISC",
+  "author": "Rodrigo",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

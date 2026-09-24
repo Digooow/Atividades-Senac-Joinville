@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Minhas Listas - Terror</title>
+        <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+        <style>
+            /* ===== RESET E FUNDO ===== */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 30px 20px 120px;
+                font-family: 'Creepster', 'Georgia', serif;
+                color: #e0e0e0;
+                background: radial-gradient(ellipse at 30% 20%, #1a0a0a, #0d0d0d 70%);
+                position: relative;
+                overflow-x: hidden;
+            }
+
+            /* ========================================
+                    RAIOS COM INTENSIDADE REDUZIDA E RARIDADE
+               ======================================== */
+            .lightning {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 10;
+                opacity: 0;
+            }
+
+            .lightning::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                width: 2px;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.08);
+                box-shadow: 0 0 12px rgba(200, 220, 255, 0.15);
+                transform: skewX(-20deg);
+            }
+
+            .lightning::after {
+                content: '';
+                position: absolute;
+                top: 20%;
+                width: 1px;
+                height: 60%;
+                background: rgba(255, 255, 255, 0.05);
+                box-shadow: 0 0 15px rgba(200, 220, 255, 0.08);
+                transform: skewX(15deg);
+            }
+
+            /* ===== RAIO 1: FORTE (opacidade 0.4, ciclo 9s, 2 flashes) ===== */
+            .lightning-1 {
+                background: rgba(200, 220, 255, 0.35);
+                animation: flashStrong 9s infinite;
+            }
+            .lightning-1::before {
+                left: 30%;
+                animation: raioMove1 9s infinite alternate;
+            }
+            .lightning-1::after {
+                left: 60%;
+                animation: raioMove2 11s infinite alternate-reverse;
+            }
+
+            @keyframes flashStrong {
+                0%, 88%, 90%, 93%, 100% { opacity: 0; }
+                89%, 92% { opacity: 0.4; }
+                91% { opacity: 0.15; }
+            }
+
+            /* ===== RAIO 2: MÉDIO (opacidade 0.25, ciclo 7s, 1 flash) ===== */
+            .lightning-2 {
+                background: rgba(200, 220, 255, 0.2);
+                animation: flashMedium 7s infinite;
+                animation-delay: 2s;
+            }
+            .lightning-2::before {
+                left: 50%;
+                animation: raioMove1 12s infinite alternate;
+            }
+            .lightning-2::after {
+                left: 20%;
+                animation: raioMove2 8s infinite alternate-reverse;
+            }
+
+            @keyframes flashMedium {
+                0%, 91%, 100% { opacity: 0; }
+                92%, 94% { opacity: 0.25; }
+                93% { opacity: 0.1; }
+            }
+
+            /* ===== RAIO 3: FRACO (opacidade 0.2, ciclo 3.5s, 1 flash rápido) ===== */
+            .lightning-3 {
+                background: rgba(200, 220, 255, 0.12);
+                animation: flashWeak 3.5s infinite;
+                animation-delay: 1s;
+            }
+            .lightning-3::before {
+                left: 70%;
+                animation: raioMove1 6s infinite alternate;
+            }
+            .lightning-3::after {
+                left: 40%;
+                animation: raioMove2 10s infinite alternate-reverse;
+            }
+
+            @keyframes flashWeak {
+                0%, 95%, 100% { opacity: 0; }
+                96%, 98% { opacity: 0.2; }
+                97% { opacity: 0.08; }
+            }
+
+            /* ===== RAIO 4: MUITO FORTE (RARO - opacidade 0.4, ciclo 18s, 2 flashes) ===== */
+            .lightning-4 {
+                background: rgba(200, 220, 255, 0.35);
+                animation: flashVeryStrong 18s infinite;
+                animation-delay: 5s; /* demora a começar */
+            }
+            .lightning-4::before {
+                left: 15%;
+                animation: raioMove1 14s infinite alternate;
+            }
+            .lightning-4::after {
+                left: 80%;
+                animation: raioMove2 7s infinite alternate-reverse;
+            }
+
+            @keyframes flashVeryStrong {
+                0%, 85%, 87%, 90%, 100% { opacity: 0; }
+                86%, 89% { opacity: 0.4; }
+                88% { opacity: 0.15; }
+            }
+
+            /* ===== RAIO 5: SURPRESA (RARO - opacidade 0.3, ciclo 16s, 2 flashes) ===== */
+            .lightning-5 {
+                background: rgba(200, 220, 255, 0.25);
+                animation: flashSurprise 16s infinite;
+                animation-delay: 8s; /* começa bem depois */
+            }
+            .lightning-5::before {
+                left: 45%;
+                animation: raioMove1 15s infinite alternate;
+            }
+            .lightning-5::after {
+                left: 55%;
+                animation: raioMove2 13s infinite alternate-reverse;
+            }
+
+            @keyframes flashSurprise {
+                0%, 80%, 82%, 85%, 100% { opacity: 0; }
+                81%, 84% { opacity: 0.3; }
+                83% { opacity: 0.12; }
+            }
+
+            /* Movimento dos traços */
+            @keyframes raioMove1 {
+                0% { transform: skewX(-20deg) translateX(0); }
+                100% { transform: skewX(20deg) translateX(60px); }
+            }
+            @keyframes raioMove2 {
+                0% { transform: skewX(15deg) translateX(0); }
+                100% { transform: skewX(-15deg) translateX(-40px); }
+            }
+
+            /* ========================================
+                    NÉVOA EXTERNA (30% DA TELA)
+               ======================================== */
+            .fog-bg {
+                position: fixed;
+                top: 0;
+                width: 30%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 2;
+                background: radial-gradient(ellipse at center, rgba(200,210,220,0.15), transparent 70%);
+                backdrop-filter: blur(4px);
+                opacity: 0.6;
+                animation: fogMove 15s infinite alternate ease-in-out;
+                border-radius: 50%;
+                filter: blur(10px);
+            }
+
+            .fog-bg::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: repeating-linear-gradient(45deg, 
+                    transparent 0px, 
+                    transparent 60px, 
+                    rgba(255,255,255,0.03) 60px, 
+                    rgba(255,255,255,0.03) 61px
+                );
+                animation: fogSlide 20s infinite linear;
+            }
+
+            @keyframes fogMove {
+                0% { left: 0; opacity: 0.4; transform: scale(1); }
+                50% { left: 20%; opacity: 0.8; transform: scale(1.2); }
+                100% { left: 70%; opacity: 0.4; transform: scale(0.9); }
+            }
+
+            @keyframes fogSlide {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(30%); }
+            }
+
+            /* ========================================
+                    NÉVOA INTERNA
+               ======================================== */
+            .fog-fg {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 4;
+                background: radial-gradient(ellipse at 60% 40%, rgba(255,255,255,0.04) 0%, transparent 50%);
+                backdrop-filter: blur(2px);
+                opacity: 0.3;
+                animation: fogMoveInterna 20s infinite alternate ease-in-out;
+            }
+
+            @keyframes fogMoveInterna {
+                0% { opacity: 0.2; transform: scale(1); }
+                50% { opacity: 0.5; transform: scale(1.05); }
+                100% { opacity: 0.2; transform: scale(1); }
+            }
+
+            /* ========================================
+                    ELEMENTOS DECORATIVOS
+               ======================================== */
+            .will-o-wisp, .bat, .ghost, .vampire {
+                z-index: 2;
+            }
+
+            /* ===== FOGOS-FÁTUOS ===== */
+            .will-o-wisp {
+                position: fixed;
+                pointer-events: none;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: radial-gradient(circle at 30% 30%, #88ddff, #2266aa);
+                box-shadow: 0 0 30px #88ddff, 0 0 60px #4488ff;
+                opacity: 0.6;
+                animation: floatWisp 10s infinite alternate ease-in-out;
+                filter: blur(1px);
+            }
+
+            .will-o-wisp::after {
+                content: '';
+                position: absolute;
+                top: -10px;
+                left: -10px;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: radial-gradient(circle at 30% 30%, rgba(136,221,255,0.3), transparent 70%);
+                animation: pulseWisp 3s infinite alternate;
+            }
+
+            @keyframes floatWisp {
+                0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+                33% { transform: translate(40px, -30px) scale(1.3); opacity: 0.8; }
+                66% { transform: translate(-20px, -60px) scale(0.8); opacity: 0.6; }
+                100% { transform: translate(30px, -20px) scale(1.1); opacity: 0.4; }
+            }
+
+            @keyframes pulseWisp {
+                0% { transform: scale(1); opacity: 0.3; }
+                100% { transform: scale(1.5); opacity: 0.7; }
+            }
+
+            .wisp1 { top: 10%; left: 5%; animation-delay: 0s; }
+            .wisp2 { top: 25%; right: 8%; animation-delay: 3s; }
+            .wisp3 { top: 55%; left: 3%; animation-delay: 6s; }
+            .wisp4 { bottom: 25%; right: 5%; animation-delay: 1.5s; }
+            .wisp5 { top: 40%; left: 15%; animation-delay: 4.5s; }
+
+            /* ===== MORCEGOS ===== */
+            .bat {
+                position: fixed;
+                pointer-events: none;
+                animation: flyBat 12s infinite alternate ease-in-out;
+            }
+
+            .bat-body {
+                position: relative;
+                width: 30px;
+                height: 20px;
+                background: #111;
+                border-radius: 50% 50% 40% 40%;
+                box-shadow: 0 -5px 0 #222;
+            }
+            .bat-body::before,
+            .bat-body::after {
+                content: '';
+                position: absolute;
+                top: -2px;
+                width: 35px;
+                height: 15px;
+                background: #111;
+                border-radius: 50% 50% 0 0 / 80% 80% 0 0;
+                transform: rotate(-10deg);
+                box-shadow: inset 0 -3px 0 #222;
+            }
+            .bat-body::before {
+                left: -30px;
+                transform: rotate(-15deg);
+                border-radius: 80% 20% 0 0 / 100% 50% 0 0;
+            }
+            .bat-body::after {
+                right: -30px;
+                transform: rotate(15deg);
+                border-radius: 20% 80% 0 0 / 50% 100% 0 0;
+            }
+            .bat-body .head {
+                position: absolute;
+                top: -6px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 10px;
+                height: 8px;
+                background: #111;
+                border-radius: 50% 50% 0 0;
+                box-shadow: -4px -4px 0 #111, 4px -4px 0 #111;
+            }
+            .bat-body .head::after {
+                content: '';
+                position: absolute;
+                top: -2px;
+                left: 2px;
+                width: 3px;
+                height: 3px;
+                background: #ff4444;
+                border-radius: 50%;
+                box-shadow: 4px 0 0 #ff4444;
+                animation: olhosVermelhos 2s infinite alternate;
+            }
+            @keyframes olhosVermelhos {
+                0% { opacity: 0.5; }
+                100% { opacity: 1; }
+            }
+
+            .bat.b1 { top: 12%; left: 8%; animation-delay: 0s; transform: scale(1.2); }
+            .bat.b2 { top: 35%; right: 5%; animation-delay: 3s; transform: scale(0.9); }
+            .bat.b3 { bottom: 22%; left: 15%; animation-delay: 6s; transform: scale(1.5); }
+            .bat.b4 { top: 65%; right: 10%; animation-delay: 1.5s; transform: scale(0.8); }
+            .bat.b5 { top: 45%; left: 25%; animation-delay: 4s; transform: scale(1.1); }
+
+            @keyframes flyBat {
+                0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+                25% { transform: translate(30px, -20px) rotate(5deg); opacity: 0.6; }
+                50% { transform: translate(-20px, -40px) rotate(-5deg); opacity: 0.9; }
+                75% { transform: translate(40px, -10px) rotate(3deg); opacity: 0.6; }
+                100% { transform: translate(-10px, -50px) rotate(-2deg); opacity: 0.3; }
+            }
+
+            /* ===== FANTASMAS ===== */
+            .ghost {
+                position: fixed;
+                pointer-events: none;
+                animation: floatGhost 8s infinite alternate ease-in-out;
+            }
+            .ghost-body {
+                position: relative;
+                width: 50px;
+                height: 70px;
+                background: rgba(220,220,240,0.15);
+                border-radius: 50% 50% 20% 20% / 60% 60% 20% 20%;
+                box-shadow: inset 0 -10px 20px rgba(255,255,255,0.1), 0 0 30px rgba(200,200,255,0.2);
+                backdrop-filter: blur(2px);
+                border: 1px solid rgba(255,255,255,0.1);
+            }
+            .ghost-body::before {
+                content: '';
+                position: absolute;
+                top: 20px;
+                left: 12px;
+                width: 10px;
+                height: 14px;
+                background: #0d0d0d;
+                border-radius: 50% 50% 30% 30%;
+                box-shadow: 16px 0 0 #0d0d0d;
+            }
+            .ghost-body::after {
+                content: '';
+                position: absolute;
+                top: 38px;
+                left: 15px;
+                width: 20px;
+                height: 8px;
+                border-bottom: 3px solid #0d0d0d;
+                border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            }
+            .ghost-tail {
+                position: absolute;
+                bottom: -15px;
+                left: 5px;
+                width: 40px;
+                height: 20px;
+                background: inherit;
+                border-radius: 0 0 50% 50%;
+                filter: blur(1px);
+                opacity: 0.5;
+            }
+            .ghost-tail::before {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: -5px;
+                width: 30px;
+                height: 15px;
+                background: inherit;
+                border-radius: 0 0 50% 50%;
+                filter: blur(2px);
+                opacity: 0.3;
+            }
+
+            .ghost.g1 { top: 5%; left: 20%; animation-delay: 0s; transform: scale(1); }
+            .ghost.g2 { top: 30%; right: 15%; animation-delay: 2.5s; transform: scale(0.8); }
+            .ghost.g3 { bottom: 18%; left: 30%; animation-delay: 5s; transform: scale(1.2); }
+            .ghost.g4 { top: 60%; left: 10%; animation-delay: 1.2s; transform: scale(0.9); }
+            .ghost.g5 { bottom: 38%; right: 5%; animation-delay: 3.8s; transform: scale(1.1); }
+            .ghost.g6 { top: 20%; left: 50%; animation-delay: 6s; transform: scale(0.7); }
+
+            @keyframes floatGhost {
+                0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.2; }
+                50% { transform: translateY(-30px) rotate(3deg) scale(1.05); opacity: 0.6; }
+                100% { transform: translateY(-10px) rotate(-2deg) scale(0.95); opacity: 0.2; }
+            }
+
+            /* ===== VAMPIROS ===== */
+            .vampire {
+                position: fixed;
+                pointer-events: none;
+                animation: teleportVampire 15s infinite alternate ease-in-out;
+            }
+            .vampire-body {
+                position: relative;
+                width: 40px;
+                height: 60px;
+                background: #2a1a1a;
+                border-radius: 20% 20% 10% 10%;
+                box-shadow: inset 0 -10px 20px rgba(0,0,0,0.5), 0 0 20px rgba(200,0,0,0.3);
+                border: 1px solid #440000;
+            }
+            .vampire-body::before {
+                content: '';
+                position: absolute;
+                top: -10px;
+                left: -15px;
+                width: 70px;
+                height: 50px;
+                background: #1a0a0a;
+                border-radius: 50% 50% 10% 10% / 80% 80% 10% 10%;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+                border-bottom: 2px solid #440000;
+                transform: rotate(-5deg);
+            }
+            .vampire-head {
+                position: absolute;
+                top: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 25px;
+                height: 25px;
+                background: #f0e0d0;
+                border-radius: 50% 50% 30% 30%;
+                box-shadow: inset 0 -5px 10px rgba(0,0,0,0.1), 0 0 10px rgba(255,200,200,0.2);
+            }
+            .vampire-head::before {
+                content: '';
+                position: absolute;
+                top: 6px;
+                left: 4px;
+                width: 6px;
+                height: 6px;
+                background: #ff0000;
+                border-radius: 50%;
+                box-shadow: 10px 0 0 #ff0000;
+                animation: olhosVermelhos 1s infinite alternate;
+            }
+            .vampire-head::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 6px;
+                width: 4px;
+                height: 6px;
+                background: #fff;
+                border-radius: 0 0 50% 50%;
+                box-shadow: 8px 0 0 #fff;
+            }
+
+            .vampire.v1 { top: 15%; left: 45%; animation-delay: 0s; transform: scale(1.1); }
+            .vampire.v2 { top: 55%; right: 20%; animation-delay: 4s; transform: scale(0.9); }
+            .vampire.v3 { bottom: 30%; left: 55%; animation-delay: 8s; transform: scale(1.3); }
+
+            @keyframes teleportVampire {
+                0% { transform: translate(0, 0) scale(1); opacity: 0; }
+                10% { opacity: 0.8; }
+                40% { transform: translate(50px, -30px) scale(1.2) rotate(5deg); opacity: 0.9; }
+                70% { transform: translate(-30px, 20px) scale(0.9) rotate(-3deg); opacity: 0.8; }
+                90% { opacity: 0.5; }
+                100% { transform: translate(20px, -40px) scale(1); opacity: 0; }
+            }
+
+            /* ========================================
+                    CONTAINER PRINCIPAL
+               ======================================== */
+            .container {
+                max-width: 700px;
+                width: 100%;
+                background: rgba(10, 10, 18, 0.88);
+                padding: 40px 35px 30px;
+                border: 4px solid #880000;
+                position: relative;
+                z-index: 3;
+                box-shadow: 
+                    0 0 40px rgba(255,0,0,0.3),
+                    inset 0 0 40px rgba(0,0,0,0.9),
+                    10px 10px 0 rgba(0,0,0,0.6);
+                transform: skewX(-2deg) rotate(0.5deg);
+                transition: transform 0.3s ease;
+                clip-path: polygon(
+                    0% 0%, 95% 0%, 100% 5%, 100% 95%, 95% 100%, 
+                    5% 100%, 0% 95%, 0% 5%
+                );
+                margin-bottom: 40px;
+            }
+
+            .container:hover {
+                transform: skewX(-1deg) rotate(1deg) scale(1.01);
+            }
+
+            /* ===== TÍTULO ===== */
+            h1 {
+                font-family: 'Creepster', cursive;
+                font-size: 3.8rem;
+                text-align: center;
+                text-transform: uppercase;
+                color: #880000;
+                text-shadow: 4px 4px 0 #000, 8px 8px 0 #440000, 0 0 20px rgba(255,0,0,0.5);
+                letter-spacing: 6px;
+                margin-bottom: 20px;
+                transform: rotate(-2deg) scale(1.05);
+                animation: pulsar 3s infinite alternate;
+            }
+
+            @keyframes pulsar {
+                0% { text-shadow: 4px 4px 0 #000, 8px 8px 0 #440000, 0 0 20px rgba(255,0,0,0.3); }
+                100% { text-shadow: 6px 6px 0 #000, 12px 12px 0 #660000, 0 0 40px rgba(255,0,0,0.7); }
+            }
+
+            /* ===== SUBTÍTULOS ===== */
+            h2 {
+                font-family: 'Creepster', cursive;
+                font-size: 2.2rem;
+                color: #cccccc;
+                text-shadow: 3px 3px 0 #220000, 0 0 15px rgba(200,0,0,0.2);
+                border-bottom: 3px dashed #880000;
+                padding-bottom: 8px;
+                margin-top: 35px;
+                margin-bottom: 20px;
+                transform: skewX(-5deg);
+                letter-spacing: 3px;
+                position: relative;
+                display: inline-block;
+            }
+
+            h2::after {
+                content: '';
+                position: absolute;
+                bottom: -15px;
+                left: 10px;
+                width: 6px;
+                height: 20px;
+                background: #880000;
+                border-radius: 0 0 50% 50%;
+                box-shadow: 20px 0 0 #660000, 40px 0 0 #880000, 60px 0 0 #440000;
+                opacity: 0.5;
+                animation: escorrer 2s infinite;
+            }
+
+            @keyframes escorrer {
+                0% { height: 15px; opacity: 0.3; }
+                50% { height: 30px; opacity: 0.8; }
+                100% { height: 15px; opacity: 0.3; }
+            }
+
+            /* ===== LISTAS ===== */
+            ol, ul {
+                padding-left: 30px;
+                margin-bottom: 20px;
+                list-style: none;
+            }
+
+            ol li {
+                font-size: 1.4rem;
+                padding: 10px 15px 10px 45px;
+                margin-bottom: 8px;
+                background: rgba(255,255,255,0.03);
+                border-left: 5px solid #880000;
+                position: relative;
+                transition: all 0.3s ease;
+                transform: skewX(2deg);
+                font-family: 'Georgia', serif;
+                font-style: italic;
+                color: #d0d0d0;
+                text-shadow: 1px 1px 0 #000;
+            }
+
+            ol li::before {
+                content: "☠️";
+                position: absolute;
+                left: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 1.8rem;
+                filter: grayscale(0.5);
+                opacity: 0.6;
+            }
+
+            ol li:hover {
+                background: rgba(136,0,0,0.2);
+                border-left-width: 15px;
+                transform: skewX(0deg) scale(1.02);
+                color: #ffaaaa;
+                box-shadow: 0 0 20px rgba(255,0,0,0.2);
+            }
+
+            ol {
+                counter-reset: item;
+            }
+            ol li {
+                counter-increment: item;
+            }
+            ol li::after {
+                content: counter(item);
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-family: 'Creepster', cursive;
+                font-size: 1.8rem;
+                color: #660000;
+                text-shadow: 0 0 10px rgba(255,0,0,0.5);
+                opacity: 0.3;
+                font-style: normal;
+            }
+
+            ul li {
+                font-size: 1.4rem;
+                padding: 10px 15px 10px 50px;
+                margin-bottom: 8px;
+                background: rgba(255,255,255,0.02);
+                border-right: 5px solid #440044;
+                position: relative;
+                transition: all 0.3s ease;
+                transform: skewX(-2deg);
+                font-family: 'Georgia', serif;
+                font-style: italic;
+                color: #c0c0c0;
+                text-shadow: 1px 1px 0 #000;
+            }
+
+            ul li::before {
+                content: "👁️";
+                position: absolute;
+                left: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 1.8rem;
+                filter: grayscale(0.7) brightness(1.2);
+                opacity: 0.5;
+                animation: olhar 4s infinite alternate;
+            }
+
+            @keyframes olhar {
+                0% { transform: translateY(-50%) scale(1) rotate(0deg); }
+                100% { transform: translateY(-50%) scale(1.3) rotate(10deg); }
+            }
+
+            ul li:hover {
+                background: rgba(68,0,68,0.2);
+                border-right-width: 15px;
+                transform: skewX(0deg) scale(1.02);
+                color: #ddbbff;
+                box-shadow: 0 0 20px rgba(136,0,136,0.3);
+            }
+
+            /* ========================================
+                    TÚMULOS (ATRÁS, NA BASE)
+               ======================================== */
+            .graveyard {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding: 0 10px 20px;
+                z-index: 1;
+                pointer-events: none;
+                background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%);
+            }
+
+            .tombstone {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 60px;
+                opacity: 0.7;
+            }
+
+            .tombstone .stone {
+                width: 50px;
+                height: 70px;
+                background: #2a2a2a;
+                border-radius: 10% 10% 5% 5% / 20% 20% 5% 5%;
+                box-shadow: inset -5px -5px 10px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.8);
+                position: relative;
+                border: 1px solid #444;
+                transform: rotate(-1deg);
+            }
+
+            .tombstone .stone::before {
+                content: '';
+                position: absolute;
+                top: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 3px;
+                height: 20px;
+                background: #444;
+                border-radius: 2px;
+                box-shadow: 
+                    -6px 0 0 #444, 6px 0 0 #444,
+                    -6px -6px 0 #444, 6px -6px 0 #444;
+            }
+
+            .tombstone .stone::after {
+                content: 'RIP';
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                color: #555;
+                font-family: 'Georgia', serif;
+                font-size: 0.6rem;
+                letter-spacing: 2px;
+                text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            }
+
+            .tombstone .name {
+                position: absolute;
+                top: 22px;
+                left: 50%;
+                transform: translateX(-50%);
+                color: #4a4a4a;
+                font-family: 'Georgia', serif;
+                font-size: 0.45rem;
+                letter-spacing: 1px;
+                opacity: 0.5;
+                width: 80%;
+                text-align: center;
+            }
+
+            .tombstone:nth-child(2) .stone { transform: rotate(2deg); }
+            .tombstone:nth-child(3) .stone { transform: rotate(-3deg); }
+            .tombstone:nth-child(4) .stone { transform: rotate(1deg); }
+            .tombstone:nth-child(5) .stone { transform: rotate(-2deg); }
+            .tombstone:nth-child(6) .stone { transform: rotate(3deg); }
+            .tombstone:nth-child(7) .stone { transform: rotate(-1deg); }
+
+            /* ===== RODAPÉ TEXTUAL ===== */
+            .footer-note {
+                position: relative;
+                z-index: 5;
+                text-align: center;
+                font-size: 0.9rem;
+                color: #555;
+                font-family: 'Georgia', serif;
+                font-style: italic;
+                letter-spacing: 2px;
+                padding: 10px 0;
+                width: 100%;
+                background: rgba(0,0,0,0.3);
+                margin-top: 20px;
+            }
+
+            .footer-note span {
+                color: #660000;
+                font-weight: bold;
+                text-shadow: 0 0 8px rgba(255,0,0,0.3);
+            }
+
+            /* ========================================
+                    RESPONSIVIDADE
+               ======================================== */
+            @media (max-width: 700px) {
+                body {
+                    padding-bottom: 140px;
+                }
+                .tombstone {
+                    width: 40px;
+                }
+                .tombstone .stone {
+                    width: 35px;
+                    height: 50px;
+                }
+                .tombstone .stone::before {
+                    height: 14px;
+                    width: 2px;
+                    box-shadow: -4px 0 0 #444, 4px 0 0 #444, -4px -4px 0 #444, 4px -4px 0 #444;
+                }
+                .tombstone .stone::after {
+                    font-size: 0.4rem;
+                    bottom: 6px;
+                }
+                .tombstone .name {
+                    font-size: 0.35rem;
+                    top: 14px;
+                }
+                .container {
+                    padding: 25px 20px 20px;
+                    transform: skewX(0deg);
+                }
+                h1 {
+                    font-size: 2.6rem;
+                    letter-spacing: 3px;
+                }
+                h2 {
+                    font-size: 1.8rem;
+                }
+                ol li, ul li {
+                    font-size: 1.1rem;
+                    padding-left: 40px;
+                    transform: skewX(0deg);
+                }
+                ol li::before, ul li::before {
+                    font-size: 1.4rem;
+                }
+                ol li::after {
+                    font-size: 1.4rem;
+                }
+                .will-o-wisp, .bat, .ghost, .vampire {
+                    display: none;
+                }
+                .graveyard {
+                    padding: 0 5px 10px;
+                }
+                .fog-bg {
+                    width: 50%;
+                }
+                .lightning-4, .lightning-5 {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- ===== RAIOS ===== -->
+        <div class="lightning lightning-1"></div>
+        <div class="lightning lightning-2"></div>
+        <div class="lightning lightning-3"></div>
+        <div class="lightning lightning-4"></div>
+        <div class="lightning lightning-5"></div>
+
+        <!-- ===== NÉVOA EXTERNA ===== -->
+        <div class="fog-bg"></div>
+
+        <!-- ===== NÉVOA INTERNA ===== -->
+        <div class="fog-fg"></div>
+
+        <!-- ===== ELEMENTOS DECORATIVOS ===== -->
+        <div class="will-o-wisp wisp1"></div>
+        <div class="will-o-wisp wisp2"></div>
+        <div class="will-o-wisp wisp3"></div>
+        <div class="will-o-wisp wisp4"></div>
+        <div class="will-o-wisp wisp5"></div>
+
+        <div class="bat b1"><div class="bat-body"><div class="head"></div></div></div>
+        <div class="bat b2"><div class="bat-body"><div class="head"></div></div></div>
+        <div class="bat b3"><div class="bat-body"><div class="head"></div></div></div>
+        <div class="bat b4"><div class="bat-body"><div class="head"></div></div></div>
+        <div class="bat b5"><div class="bat-body"><div class="head"></div></div></div>
+
+        <div class="ghost g1"><div class="ghost-body"><div class="ghost-tail"></div></div></div>
+        <div class="ghost g2"><div class="ghost-body"><div class="ghost-tail"></div></div></div>
+        <div class="ghost g3"><div class="ghost-body"><div class="ghost-tail"></div></div></div>
+        <div class="ghost g4"><div class="ghost-body"><div class="ghost-tail"></div></div></div>
+        <div class="ghost g5"><div class="ghost-body"><div class="ghost-tail"></div></div></div>
+        <div class="ghost g6"><div class="ghost-body"><div class="ghost-tail"></div></div></div>
+
+        <div class="vampire v1"><div class="vampire-body"><div class="vampire-head"></div></div></div>
+        <div class="vampire v2"><div class="vampire-body"><div class="vampire-head"></div></div></div>
+        <div class="vampire v3"><div class="vampire-body"><div class="vampire-head"></div></div></div>
+
+        <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+        <div class="container">
+            <h1>Minhas Listas</h1>
+
+            <h2>Filmes Favoritos</h2>
+            <ol>
+                <li>O Senhor dos Anéis</li>
+                <li>Matrix</li>
+                <li>Inception</li>
+                <li>Star Wars</li>
+                <li>Jurassic Park</li>
+            </ol>
+
+            <h2>Materiais Escolares</h2>
+            <ul>
+                <li>Caderno</li>
+                <li>Lápis</li>
+                <li>Borracha</li>
+                <li>Canetas coloridas</li>
+                <li>Mochila</li>
+            </ul>
+        </div>
+
+        <!-- ===== TÚMULOS ===== -->
+        <div class="graveyard">
+            <div class="tombstone"><div class="stone"><span class="name">Alfredo</span></div></div>
+            <div class="tombstone"><div class="stone"><span class="name">Bárbara</span></div></div>
+            <div class="tombstone"><div class="stone"><span class="name">César</span></div></div>
+            <div class="tombstone"><div class="stone"><span class="name">Diana</span></div></div>
+            <div class="tombstone"><div class="stone"><span class="name">Eduardo</span></div></div>
+            <div class="tombstone"><div class="stone"><span class="name">Fernanda</span></div></div>
+            <div class="tombstone"><div class="stone"><span class="name">Gabriel</span></div></div>
+        </div>
+
+        <!-- ===== RODAPÉ TEXTUAL ===== -->
+        <div class="footer-note">
+            <span>☠️</span> — listas do além — <span>☠️</span>
+        </div>
+
+    </body>
+</html>
