@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjetoIntegradorSenacJoinville")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0c8ff5ff96927dd507ecb8e5b1c88a48650427cd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c59af17b17fccb8825cafe975ee2e0de7fd87d82")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjetoIntegradorSenacJoinville")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjetoIntegradorSenacJoinville")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
