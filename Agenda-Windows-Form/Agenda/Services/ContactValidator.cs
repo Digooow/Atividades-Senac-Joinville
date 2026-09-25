@@ -1,10 +1,12 @@
 using System.Linq;
 
-namespace Agenda
+using Agenda.Models;
+
+namespace Agenda.Services
 {
-    internal class ValidarContato
+    internal static class ContactValidator
     {
-        public static bool Validar(Contato contato, out string mensagemErro)
+        public static bool Validar(Contact contato, out string mensagemErro)
         {
             mensagemErro = string.Empty;
 

@@ -6,11 +6,11 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Agenda
+namespace Agenda.Forms
 {
-    public partial class Form2 : Form
+    public partial class AboutForm : Form
     {
-        public Form2()
+        public AboutForm()
         {
             InitializeComponent();
         }

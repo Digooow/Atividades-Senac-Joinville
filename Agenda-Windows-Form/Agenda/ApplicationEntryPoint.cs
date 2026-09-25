@@ -1,6 +1,8 @@
 namespace Agenda
 {
-    internal static class Program
+    using Agenda.Forms;
+
+    internal static class ApplicationEntryPoint
     {
         /// <summary>
         ///  The main entry point for the application.
@@ -11,7 +13,7 @@ namespace Agenda
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
     }
 }

@@ -1,34 +1,36 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Agenda.Models;
+using Agenda.Services;
 
-namespace Agenda.Tests;
+namespace Agenda.Tests.Services;
 
 [TestClass]
-public class ValidarContatoTests
+public class ContactValidatorTests
 {
     [TestMethod]
     public void DeveRejeitarNomeVazio()
     {
-        var contato = new Agenda.Contato { Telefone = "(47) 99999-9999" };
+        var contato = new Contact { Telefone = "(47) 99999-9999" };
 
-        Assert.IsFalse(Agenda.ValidarContato.Validar(contato, out var mensagem));
+        Assert.IsFalse(ContactValidator.Validar(contato, out var mensagem));
         StringAssert.Contains(mensagem, "Nome");
     }
 
     [TestMethod]
     public void DeveRejeitarTelefoneComPoucosDigitos()
     {
-        var contato = new Agenda.Contato { Nome = "Ana", Telefone = "123456789" };
+        var contato = new Contact { Nome = "Ana", Telefone = "123456789" };
 
-        Assert.IsFalse(Agenda.ValidarContato.Validar(contato, out var mensagem));
+        Assert.IsFalse(ContactValidator.Validar(contato, out var mensagem));
         StringAssert.Contains(mensagem, "Telefone");
     }
 
     [TestMethod]
     public void DeveAceitarContatoValido()
     {
-        var contato = new Agenda.Contato { Nome = "Ana", Telefone = "(47) 99999-9999" };
+        var contato = new Contact { Nome = "Ana", Telefone = "(47) 99999-9999" };
 
-        Assert.IsTrue(Agenda.ValidarContato.Validar(contato, out var mensagem));
+        Assert.IsTrue(ContactValidator.Validar(contato, out var mensagem));
         Assert.AreEqual(string.Empty, mensagem);
     }
 }

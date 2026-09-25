@@ -92,14 +92,15 @@ especiais nos nomes e reduzindo o risco de injeção SQL.
 
 | Arquivo | Responsabilidade |
 | --- | --- |
-| `Agenda/Form1.cs` | Tela principal e operações do CRUD |
-| `Agenda/Form1.Designer.cs` | Componentes visuais da tela principal |
-| `Agenda/Form2.cs` | Tela Sobre |
-| `Agenda/Contato.cs` | Modelo de dados de um contato |
-| `Agenda/DBAgenda.cs` | Criação do banco e operações SQLite |
-| `Agenda/ValidarContato.cs` | Regras de validação dos contatos |
-| `Agenda/Program.cs` | Ponto de entrada da aplicação |
-| `Agenda.Tests/` | Testes automatizados |
+| `Agenda/Forms/MainForm.cs` | Tela principal e operações do CRUD |
+| `Agenda/Forms/MainForm.Designer.cs` | Componentes visuais da tela principal |
+| `Agenda/Forms/AboutForm.cs` | Tela Sobre |
+| `Agenda/Models/Contact.cs` | Modelo de dados de um contato |
+| `Agenda/Data/AgendaDatabase.cs` | Criação do banco e operações SQLite |
+| `Agenda/Services/ContactValidator.cs` | Regras de validação dos contatos |
+| `Agenda/ApplicationEntryPoint.cs` | Ponto de entrada da aplicação |
+| `Agenda.Tests/Data/AgendaDatabaseTests.cs` | Testes da persistência e do CRUD |
+| `Agenda.Tests/Services/ContactValidatorTests.cs` | Testes das regras de validação |
 
 ## Como executar
 

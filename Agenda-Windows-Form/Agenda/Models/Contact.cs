@@ -1,6 +1,6 @@
-namespace Agenda
+namespace Agenda.Models
 {
-    internal class Contato
+    internal class Contact
     {
         public int Id { get; set; }
 

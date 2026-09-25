@@ -1,9 +1,11 @@
 using System.Data;
 using System.Data.SQLite;
 
-namespace Agenda
+using Agenda.Models;
+
+namespace Agenda.Data
 {
-    internal static class DBAgenda
+    internal static class AgendaDatabase
     {
         public static string DatabasePath { get; set; } =
             Path.Combine(AppContext.BaseDirectory, "banco.sqlite");
@@ -72,7 +74,7 @@ namespace Agenda
             return FillTable(cmd);
         }
 
-        public static int InserirContato(Contato contato)
+        public static int InserirContato(Contact contato)
         {
             using var conn = DataBaseconnection();
             const string sql =
@@ -83,7 +85,7 @@ namespace Agenda
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
 
-        public static void AlterarContato(Contato contato)
+        public static void AlterarContato(Contact contato)
         {
             using var conn = DataBaseconnection();
             const string sql =

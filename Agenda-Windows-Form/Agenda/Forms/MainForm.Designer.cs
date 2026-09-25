@@ -1,6 +1,6 @@
-﻿namespace Agenda
+namespace Agenda.Forms
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -211,7 +211,7 @@
             label4.Text = "Id gerado automaticamente.";
             label4.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // Form1
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -230,9 +230,9 @@
             Controls.Add(label2);
             Controls.Add(label1);
             ForeColor = SystemColors.ActiveCaptionText;
-            Name = "Form1";
+            Name = "MainForm";
             Text = "Agenda";
-            Load += Form1_Load;
+            Load += MainForm_Load;
             ((System.ComponentModel.ISupportInitialize)dGDados).EndInit();
             ResumeLayout(false);
             PerformLayout();

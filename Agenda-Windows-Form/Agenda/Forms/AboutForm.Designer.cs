@@ -1,6 +1,6 @@
-namespace Agenda
+namespace Agenda.Forms
 {
-    partial class Form2
+    partial class AboutForm
     {
         /// <summary>
         /// Required designer variable.
@@ -52,14 +52,14 @@ namespace Agenda
             label2.Text = "Cadastro de contatos com persistência local em SQLite.";
             label2.TextAlign = ContentAlignment.MiddleCenter;
             //
-            // Form2
+            // AboutForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(label2);
             Controls.Add(label1);
-            Name = "Form2";
+            Name = "AboutForm";
             Text = "Sobre";
             ResumeLayout(false);
             PerformLayout();

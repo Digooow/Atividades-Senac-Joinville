@@ -1,14 +1,17 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
+using Agenda.Data;
+using Agenda.Models;
+using Agenda.Services;
 
-namespace Agenda
+namespace Agenda.Forms
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private int idSelecionado = 0;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
@@ -22,10 +25,10 @@ namespace Agenda
             btExcluir.Enabled = false;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            DBAgenda.CriarDataBase();
-            DBAgenda.CriarTabela();
+            AgendaDatabase.CriarDataBase();
+            AgendaDatabase.CriarTabela();
             ExibirDados();
         }
 
@@ -33,7 +36,7 @@ namespace Agenda
         {
             try
             {
-                dGDados.DataSource = DBAgenda.GetContatos();
+                dGDados.DataSource = AgendaDatabase.GetContatos();
             }
             catch (Exception ex)
             {
@@ -45,13 +48,13 @@ namespace Agenda
         {
             try
             {
-                Contato contato = new Contato
+                Contact contato = new Contact
                 {
                     Nome = mtbNome.Text,
                     Telefone = mtbTelefone.Text
                 };
 
-                if (!ValidarContato.Validar(contato, out string mensagem))
+                if (!ContactValidator.Validar(contato, out string mensagem))
                 {
                     MessageBox.Show(mensagem, "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     if (string.IsNullOrWhiteSpace(contato.Nome))
@@ -61,7 +64,7 @@ namespace Agenda
                     return;
                 }
 
-                DBAgenda.InserirContato(contato);
+                AgendaDatabase.InserirContato(contato);
                 ExibirDados();
 
                 mtbNome.Clear();
@@ -88,14 +91,14 @@ namespace Agenda
                     return;
                 }
 
-                Contato contato = new Contato
+                Contact contato = new Contact
                 {
                     Id = idSelecionado,
                     Nome = mtbNome.Text,
                     Telefone = mtbTelefone.Text
                 };
 
-                if (!ValidarContato.Validar(contato, out string mensagem))
+                if (!ContactValidator.Validar(contato, out string mensagem))
                 {
                     MessageBox.Show(mensagem, "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     if (string.IsNullOrWhiteSpace(contato.Nome))
@@ -105,7 +108,7 @@ namespace Agenda
                     return;
                 }
 
-                DBAgenda.AlterarContato(contato);
+                AgendaDatabase.AlterarContato(contato);
                 ExibirDados();
 
                 idSelecionado = 0;
@@ -131,7 +134,7 @@ namespace Agenda
                     return;
                 }
 
-                var table = DBAgenda.PesquisarContatos(mtbNome.Text, mtbTelefone.Text);
+                var table = AgendaDatabase.PesquisarContatos(mtbNome.Text, mtbTelefone.Text);
                 dGDados.DataSource = table;
                 if (table.Rows.Count == 0)
                 {
@@ -170,7 +173,7 @@ namespace Agenda
                 if (resultado != DialogResult.Yes)
                     return;
 
-                DBAgenda.ExcluirContato(idSelecionado);
+                AgendaDatabase.ExcluirContato(idSelecionado);
                 ExibirDados();
 
                 idSelecionado = 0;
@@ -188,8 +191,8 @@ namespace Agenda
 
         private void btNext_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2();
-            form2.Show();
+            var aboutForm = new AboutForm();
+            aboutForm.Show();
         }
 
         private void dGDados_SelectionChanged(object sender, EventArgs e)

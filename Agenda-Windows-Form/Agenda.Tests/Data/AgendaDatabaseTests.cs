@@ -1,9 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Agenda.Data;
+using Agenda.Models;
 
-namespace Agenda.Tests;
+namespace Agenda.Tests.Data;
 
 [TestClass]
-public class DBAgendaTests
+public class AgendaDatabaseTests
 {
     private string databasePath = string.Empty;
 
@@ -11,9 +13,9 @@ public class DBAgendaTests
     public void SetUp()
     {
         databasePath = Path.Combine(Path.GetTempPath(), $"agenda-{Guid.NewGuid():N}.sqlite");
-        Agenda.DBAgenda.DatabasePath = databasePath;
-        Agenda.DBAgenda.CriarDataBase();
-        Agenda.DBAgenda.CriarTabela();
+        AgendaDatabase.DatabasePath = databasePath;
+        AgendaDatabase.CriarDataBase();
+        AgendaDatabase.CriarTabela();
     }
 
     [TestCleanup]
@@ -26,18 +28,18 @@ public class DBAgendaTests
     [TestMethod]
     public void DeveExecutarCrudDeContato()
     {
-        var contato = new Agenda.Contato { Nome = "D'Ávila", Telefone = "(47) 99999-9999" };
-        var id = Agenda.DBAgenda.InserirContato(contato);
+        var contato = new Contact { Nome = "D'Ávila", Telefone = "(47) 99999-9999" };
+        var id = AgendaDatabase.InserirContato(contato);
 
-        Assert.AreEqual(1, Agenda.DBAgenda.GetContatos().Rows.Count);
-        Assert.AreEqual(1, Agenda.DBAgenda.PesquisarContatos("D'Ávila", "").Rows.Count);
+        Assert.AreEqual(1, AgendaDatabase.GetContatos().Rows.Count);
+        Assert.AreEqual(1, AgendaDatabase.PesquisarContatos("D'Ávila", "").Rows.Count);
 
         contato.Id = id;
         contato.Nome = "Maria";
-        Agenda.DBAgenda.AlterarContato(contato);
-        Assert.AreEqual("Maria", Agenda.DBAgenda.GetContatoById(id).Rows[0]["Nome"]);
+        AgendaDatabase.AlterarContato(contato);
+        Assert.AreEqual("Maria", AgendaDatabase.GetContatoById(id).Rows[0]["Nome"]);
 
-        Agenda.DBAgenda.ExcluirContato(id);
-        Assert.AreEqual(0, Agenda.DBAgenda.GetContatos().Rows.Count);
+        AgendaDatabase.ExcluirContato(id);
+        Assert.AreEqual(0, AgendaDatabase.GetContatos().Rows.Count);
     }
 }
