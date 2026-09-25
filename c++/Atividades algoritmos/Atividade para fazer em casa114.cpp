@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <iomanip> // Para configurar as casas decimais
+#include <iomanip>
 
 using namespace std;
 
@@ -20,7 +20,7 @@ int main() {
 
     float media = soma / qtdNotas;
 
-    cout << fixed << setprecision(2); // Deixa a média com 2 casas decimais
+    cout << fixed << setprecision(2);
     cout << "\nA média final é: " << media << endl;
 
     if (media >= 7.0) {
