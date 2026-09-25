@@ -1,6 +1,4 @@
-﻿using System;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace Agenda
 {
@@ -14,6 +12,12 @@ namespace Agenda
             if (string.IsNullOrWhiteSpace(contato.Nome))
             {
                 mensagemErro = "O campo Nome é obrigatório.";
+                return false;
+            }
+
+            if (contato.Nome.Trim().Length > 50)
+            {
+                mensagemErro = "O nome deve ter no máximo 50 caracteres.";
                 return false;
             }
 

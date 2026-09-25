@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Agenda
@@ -34,8 +33,7 @@ namespace Agenda
         {
             try
             {
-                DataTable table = DBAgenda.GetContatos();
-                dGDados.DataSource = table;
+                dGDados.DataSource = DBAgenda.GetContatos();
             }
             catch (Exception ex)
             {
@@ -133,8 +131,18 @@ namespace Agenda
                     return;
                 }
 
-                DataTable table = DBAgenda.GetContatoById(idSelecionado);
+                var table = DBAgenda.PesquisarContatos(mtbNome.Text, mtbTelefone.Text);
                 dGDados.DataSource = table;
+                if (table.Rows.Count == 0)
+                {
+                    MessageBox.Show("Nenhum contato encontrado.", "Pesquisa",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                idSelecionado = 0;
+                btAlterar.Enabled = false;
+                btExcluir.Enabled = false;
             }
             catch (Exception ex)
             {
