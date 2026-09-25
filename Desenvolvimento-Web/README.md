@@ -10,6 +10,7 @@ O diretório reúne páginas estáticas feitas com **HTML**, **CSS** e **JavaScr
 Desenvolvimento-Web/
 ├── Atividades Curso Desenvolvimento Web SENAC/
 │   ├── Atividade 1/
+│   ├── Atividade UXUI/
 │   ├── Atividade formulario JavaScript/
 │   ├── Atividade html sem ia/
 │   └── site-figma-based/
@@ -24,6 +25,10 @@ Desenvolvimento-Web/
 ### Atividade 1
 
 Conjunto de páginas HTML independentes (`Atividade 1.html` até `Atividade 9.html`) para praticar a construção de documentos e interfaces com HTML e CSS.
+
+### Atividade UX/UI
+
+Atividade de experiência e interface do usuário, disponível no arquivo [`Atividade UxUI.pdf`](<Atividades Curso Desenvolvimento Web SENAC/Atividade UXUI/Atividade UxUI.pdf>).
 
 ### Formulário JavaScript
 
