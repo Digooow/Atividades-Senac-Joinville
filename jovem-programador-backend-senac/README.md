@@ -1,3 +1,7 @@
+## Contexto da aula
+
+Este repositório registra minhas atividades da aula de programação do curso Jovem Programador. A lista abaixo foi disponibilizada pelo professor e serve como base para praticar os fundamentos da programação, acompanhando meu aprendizado ao longo das atividades.
+
 ## 🧠 **Lista de Exercícios para Iniciantes**
 
 > Dica: Não foque no certo ou errado, foque em praticar os conceitos apresentado em cada uma das etapas. Teste e reteste hipóteses sem medo de errar ou pressa de chegar ao resultado correto. O que importa nos exercícios é a jornada e não a resposta certa.
