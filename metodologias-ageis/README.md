@@ -11,7 +11,7 @@ de desenvolvimento ágil: entender um problema real, levantar as necessidades
 dos usuários, transformar essas necessidades em histórias, priorizar entregas,
 dividir o trabalho em sprints e validar o resultado continuamente.
 
-> O sistema pronto está na pasta [`../Projeto-Integrador2`](../Projeto-Integrador2).
+> O sistema pronto está no repositório do GitHub: [Projeto Integrador 2](https://github.com/Digooow/Projeto-Integrador2).
 > Este README documenta somente o processo da disciplina e a evolução da
 > atividade, não a implementação técnica do sistema.
 
@@ -243,8 +243,8 @@ somente dividir tarefas ou usar um quadro. Ela envolve:
 
 ## Referências usadas
 
-- [Projeto Integrador 2](../Projeto-Integrador2)
-- [História de usuário](../Projeto-Integrador2/frontend/historia_do_usuario.md)
-- [Análise do projeto](../Projeto-Integrador2/ANALISE-PROJETO.md)
-- [Roadmap de ações](../Projeto-Integrador2/ROADMAP-ACOES.md)
-- [Roadmap atual](../Projeto-Integrador2/ROADMAP-ATUAL.md)
+- [Projeto Integrador 2](https://github.com/Digooow/Projeto-Integrador2)
+- [História de usuário](https://github.com/Digooow/Projeto-Integrador2/blob/main/frontend/historia_do_usuario.md)
+- [Análise do projeto](https://github.com/Digooow/Projeto-Integrador2/blob/main/ANALISE-PROJETO.md)
+- [Roadmap de ações](https://github.com/Digooow/Projeto-Integrador2/blob/main/ROADMAP-ACOES.md)
+- [Roadmap atual](https://github.com/Digooow/Projeto-Integrador2/blob/main/ROADMAP-ATUAL.md)
