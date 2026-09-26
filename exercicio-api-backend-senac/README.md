@@ -118,8 +118,13 @@ router, do service, do model e das validações correspondentes.
 4. Inicie a aplicação:
 
    ```bash
-   node index.js
+   npm run dev
    ```
+
+   O script `dev` inicia o servidor com `node --watch`, reiniciando a
+   aplicação automaticamente quando os arquivos forem alterados. Para executar
+   o arquivo diretamente, sem esse reinício automático, também é possível usar
+   `node index.js`.
 
 O servidor está configurado para utilizar a porta `3000`. Quando a
 implementação estiver concluída, as requisições poderão ser feitas no endereço:
