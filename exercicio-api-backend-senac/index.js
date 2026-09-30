@@ -11,4 +11,4 @@ app.listen(port, (req, res) => {
 
     console.log(`Servidor rodando em https://localhost:${port}`)
 
-})
+});

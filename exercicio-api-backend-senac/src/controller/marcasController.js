@@ -1,4 +1,4 @@
-import ServiceMarca from '../services/marcasService.js';
+import ServiceMarca from '../service/marcasService.js';
 
 class ControllerMarca {
 
@@ -48,4 +48,16 @@ class ControllerMarca {
             res.send({ error: error.message });
         }
     }
+
+    Deletar(req, res) {
+        try {
+            const id = req.params.id;
+            ServiceMarca.Deletar(id);
+            res.send({ message: 'Marca deletada com sucesso!' });
+        } catch (error) {
+            res.send({ message: error.message });
+        }
+    }
 }
+
+export default new ControllerMarca();
