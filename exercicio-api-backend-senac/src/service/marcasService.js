@@ -1,26 +1,28 @@
 import MarcasModel from '../model/marcasModel.js';
 
+const marcas = new MarcasModel();
+
 class ServiceMarca {
 
     Buscar() {
-        return MarcasModel.Buscar();
+        return marcas.Buscar();
     }
 
     BuscarPorId(id) {
-        return MarcasModel.BuscarPorId(id);
+        return marcas.BuscarPorId(id);
     }
 
     Criar(marca) {
-        return MarcasModel.Criar(marca);
+        return marcas.Criar(marca);
     }
 
     Atualizar(id, marca) {
-        return MarcasModel.Atualizar(id, marca);
+        return marcas.Atualizar(id, marca);
     }
 
     Deletar(id) {
-        return MarcasModel.Deletar(id);
+        return marcas.Deletar(id);
     }
 }
 
-export default new ServiceMarca();
+export default ServiceMarca;

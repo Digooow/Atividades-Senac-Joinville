@@ -24,4 +24,4 @@ class MarcasService {
 }
 
 
-export default new MarcasService();
+export default MarcasService;
