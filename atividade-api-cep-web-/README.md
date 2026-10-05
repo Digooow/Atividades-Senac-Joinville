@@ -14,8 +14,8 @@ Atividade prática desenvolvida no SENAC Joinville com o objetivo de construir u
    - Cidade (cidade / localidade)
    - Estado (estado / uf)
 4. Tratar erros de CEP inexistente, exibindo mensagem amigável e limpando os campos.
-5. Salvar automaticamente as consultas realizadas em um arquivo JSON através de uma API em Node.js.
-6. Permitir salvar o endereço completo informando o número.
+5. Permitir salvar as consultas realizadas em um arquivo JSON através de uma API em Node.js.
+6. Permitir salvar o endereço completo informando o número, evitando duplicidade para o mesmo CEP e número.
 7. Disponibilizar na interface uma área para consultar, filtrar e recarregar os endereços cadastrados no histórico.
 8. Garantir a confiabilidade com testes automatizados para o modelo, rotas da API e validação de dados.
 
@@ -71,13 +71,19 @@ atividade-api-cep-web-/
 │   │   └── enderecoController.js
 │   ├── models/
 │   │   └── enderecoModel.js
-│   └── routes/
+│   ├── routes/
 │       └── enderecoRoutes.js
+│   └── utils/
+│       └── enderecoValidation.js
 │
 └── test/
     ├── cepValidation.test.js
     ├── enderecoApi.test.js
-    └── enderecoModel.test.js
+    ├── enderecoModel.test.js
+    ├── enderecoValidation.test.js
+    ├── frontendModel.test.js
+    ├── frontendController.test.js
+    └── frontendView.test.js
 ```
 
 ---
@@ -86,7 +92,12 @@ atividade-api-cep-web-/
 
 - GET /api/enderecos: retorna todos os endereços salvos no arquivo JSON.
 - GET /api/enderecos?busca=joinville: filtra os endereços por CEP, rua, bairro, cidade ou estado.
-- POST /api/enderecos: salva um novo endereço no arquivo JSON.
+- GET /api/enderecos?pagina=1&limite=20: retorna uma página com até 20 registros.
+- POST /api/enderecos: salva um novo endereço no arquivo JSON e retorna 409 quando o mesmo CEP e número já estão cadastrados.
+
+Os dados recebidos pelo POST são validados no backend. O CEP precisa conter oito dígitos, todos os campos do endereço devem ser textos, logradouro, número, bairro e cidade não podem ficar vazios e o estado deve ser uma das 27 siglas oficiais brasileiras. A busca do histórico ignora diferenças entre maiúsculas, minúsculas e acentos.
+
+O servidor aceita a variável `CORS_ORIGIN` para restringir a origem permitida. Sem essa variável, o CORS permanece aberto para facilitar o desenvolvimento local. O corpo JSON é limitado a 10 KB; requisições acima desse limite retornam HTTP 413. Erros inesperados da API retornam respostas JSON padronizadas. Os arquivos públicos e o arquivo JSON são resolvidos a partir da localização do projeto, independentemente do diretório em que o comando é executado.
 
 ---
 
@@ -124,6 +135,25 @@ http://localhost:3000
 
 Também é possível abrir diretamente o arquivo index.html no navegador ou através da extensão Live Server no VS Code, pois a API possui suporte a CORS habilitado.
 
+Para restringir o CORS em um ambiente específico, defina a variável antes de iniciar o servidor:
+
+```bash
+CORS_ORIGIN=http://localhost:5500 npm start
+```
+
+No PowerShell do Windows, use:
+
+```powershell
+$env:CORS_ORIGIN = "http://localhost:5500"
+npm start
+```
+
+O caminho dos arquivos públicos e de `dados/enderecos.json` é resolvido a partir da localização do projeto, e não do diretório em que o comando foi executado.
+
+## Limitações da persistência em JSON
+
+A persistência em arquivo JSON atende ao objetivo didático da atividade, mas não é indicada para produção. Embora a API ofereça paginação na leitura, o arquivo não possui índices, requisições de processos diferentes podem disputar a escrita e o arquivo pode ser corrompido em caso de interrupção durante a gravação. Em uma aplicação real, recomenda-se utilizar um banco de dados com transações, índices e controle de concorrência.
+
 ---
 
 ## Testes Automatizados
@@ -141,6 +171,8 @@ npm test
 - test/cepValidation.test.js: validação de tamanho, formato, limpeza de máscara e tratamento de erros do campo CEP.
 - test/enderecoModel.test.js: testes unitários de persistência, leitura, escrita e filtragem no arquivo JSON.
 - test/enderecoApi.test.js: testes de integração das rotas HTTP (GET e POST de /api/enderecos), verificando status codes e respostas.
+- A suíte também verifica CEP inválido, tipos incorretos, campos obrigatórios e duplicidade por CEP e número.
+- Os testes de frontend verificam a API relativa, propagação de falhas, cancelamento de buscas, renderização de dados incompletos e o comportamento após falha na atualização do histórico. A API também testa limite de corpo, paginação, parâmetros inválidos e execução independente do diretório atual.
 
 ---
 

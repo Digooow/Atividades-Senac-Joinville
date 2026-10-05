@@ -1,19 +1,31 @@
 class EnderecoModel {
     constructor() {
-        this.apiBackend = window.location.origin.includes("localhost:3000")
-            ? "/api/enderecos"
-            : "http://localhost:3000/api/enderecos";
+        this.apiBackend = "/api/enderecos";
     }
 
     async buscarViaCep(cep) {
-        const cepLimpo = cep.replace(/\D/g, "");
+        const cepLimpo = String(cep || "").replace(/\D/g, "");
 
         if (cepLimpo.length !== 8) {
             throw new Error("Digite um CEP válido com 8 dígitos.");
         }
 
         const url = `https://viacep.com.br/ws/${cepLimpo}/json/`;
-        const resposta = await fetch(url);
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 8000);
+        let resposta;
+
+        try {
+            resposta = await fetch(url, { signal: controller.signal });
+        } catch (erro) {
+            if (erro.name === "AbortError") {
+                throw new Error("A consulta ao ViaCEP excedeu o tempo limite.");
+            }
+
+            throw new Error("Não foi possível conectar ao ViaCEP.");
+        } finally {
+            clearTimeout(timeout);
+        }
 
         if (!resposta.ok) {
             throw new Error("Erro ao consultar a API.");
@@ -30,21 +42,29 @@ class EnderecoModel {
             logradouro: dados.logradouro || "",
             bairro: dados.bairro || "",
             cidade: dados.localidade || "",
-            estado: dados.estado || dados.uf || ""
+            estado: dados.uf || dados.estado || ""
         };
     }
 
-    async listarCadastrados(busca = "") {
+    async listarCadastrados(busca = "", signal) {
+        const url = busca ? `${this.apiBackend}?busca=${encodeURIComponent(busca)}` : this.apiBackend;
+        let resposta;
+
         try {
-            const url = busca ? `${this.apiBackend}?busca=${encodeURIComponent(busca)}` : this.apiBackend;
-            const resposta = await fetch(url);
-            if (!resposta.ok) {
-                return [];
+            resposta = await fetch(url, { signal });
+        } catch (erro) {
+            if (erro.name === "AbortError") {
+                throw erro;
             }
-            return await resposta.json();
-        } catch {
-            return [];
+            throw new Error("Não foi possível conectar ao servidor.");
         }
+
+        if (!resposta.ok) {
+            const erro = await resposta.json().catch(() => ({}));
+            throw new Error(erro.mensagem || "Não foi possível consultar os endereços.");
+        }
+
+        return await resposta.json();
     }
 
     async salvarNoBackend(dados) {
@@ -58,12 +78,20 @@ class EnderecoModel {
             });
 
             if (!resposta.ok) {
-                return null;
+                const erro = await resposta.json().catch(() => ({}));
+                throw new Error(erro.mensagem || "Não foi possível salvar no servidor.");
             }
 
             return await resposta.json();
-        } catch {
-            return null;
+        } catch (erro) {
+            if (erro instanceof Error) {
+                throw erro;
+            }
+
+            throw new Error("Não foi possível conectar ao servidor.");
         }
     }
+
 }
+
+this.EnderecoModel = EnderecoModel;

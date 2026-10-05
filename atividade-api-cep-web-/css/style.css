@@ -66,7 +66,8 @@ label {
     font-weight: normal;
 }
 
-input {
+input,
+select {
     width: 100%;
     padding: 10px 12px;
     border: 1px solid #d6d9de;
@@ -113,6 +114,11 @@ button:active {
     background-color: #1d4ed8;
 }
 
+button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
 .btn-secundario {
     background-color: #10b981;
 }
@@ -123,6 +129,10 @@ button:active {
 
 .btn-secundario:active {
     background-color: #047857;
+}
+
+.btn-secundario:disabled {
+    background-color: #10b981;
 }
 
 #mensagem {

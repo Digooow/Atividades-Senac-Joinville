@@ -1,57 +1,110 @@
 import fs from "fs/promises";
 import path from "path";
+import { randomUUID } from "crypto";
+import { fileURLToPath } from "url";
 
-const arquivoJson = path.resolve("dados", "enderecos.json");
+const diretorioAtual = path.dirname(fileURLToPath(import.meta.url));
+const arquivoJson = path.resolve(diretorioAtual, "..", "..", "dados", "enderecos.json");
+let filaGravacao = Promise.resolve();
+
+function normalizarTexto(texto) {
+    return String(texto || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+}
 
 export class EnderecoModel {
     static async obterTodos() {
         try {
             const conteudo = await fs.readFile(arquivoJson, "utf-8");
-            return JSON.parse(conteudo);
-        } catch {
+            const dados = JSON.parse(conteudo);
+            if (!Array.isArray(dados)) {
+                throw new Error("O arquivo de endereços deve conter uma lista.");
+            }
+            return dados;
+        } catch (erro) {
+            if (erro.code !== "ENOENT") {
+                throw erro;
+            }
+
             await fs.mkdir(path.dirname(arquivoJson), { recursive: true });
             await fs.writeFile(arquivoJson, JSON.stringify([]));
             return [];
         }
     }
 
-    static async filtrar(termo) {
+    static async filtrar(termo, opcoes = {}) {
         const lista = await this.obterTodos();
-        if (!termo) {
-            return lista;
+        let resultados = lista;
+
+        if (termo) {
+            const termoNormalizado = normalizarTexto(termo.trim());
+            if (!termoNormalizado) {
+                resultados = [];
+            } else {
+                resultados = lista.filter((item) => {
+                    const cepLimpo = (item.cep || "").replace(/\D/g, "");
+                    const buscaLimpa = termoNormalizado.replace(/\D/g, "");
+
+                    return (
+                        (buscaLimpa && cepLimpo.includes(buscaLimpa)) ||
+                        normalizarTexto(item.logradouro).includes(termoNormalizado) ||
+                        normalizarTexto(item.bairro).includes(termoNormalizado) ||
+                        normalizarTexto(item.cidade).includes(termoNormalizado) ||
+                        normalizarTexto(item.estado).includes(termoNormalizado)
+                    );
+                });
+            }
         }
 
-        const termoNormalizado = termo.toLowerCase().trim();
-        return lista.filter((item) => {
-            const cepLimpo = (item.cep || "").replace(/\D/g, "");
-            const buscaLimpa = termoNormalizado.replace(/\D/g, "");
+        if (opcoes.pagina === undefined && opcoes.limite === undefined) {
+            return resultados;
+        }
 
-            return (
-                (buscaLimpa && cepLimpo.includes(buscaLimpa)) ||
-                (item.logradouro && item.logradouro.toLowerCase().includes(termoNormalizado)) ||
-                (item.bairro && item.bairro.toLowerCase().includes(termoNormalizado)) ||
-                (item.cidade && item.cidade.toLowerCase().includes(termoNormalizado)) ||
-                (item.estado && item.estado.toLowerCase().includes(termoNormalizado))
-            );
-        });
+        const limite = opcoes.limite || 20;
+        const pagina = opcoes.pagina || 1;
+        const inicio = (pagina - 1) * limite;
+        return resultados.slice(inicio, inicio + limite);
     }
 
     static async salvar(dados) {
-        const lista = await this.obterTodos();
+        const salvar = async () => {
+            const lista = await this.obterTodos();
+            const cepNormalizado = String(dados.cep).replace(/\D/g, "");
+            const numeroNormalizado = String(dados.numero || "").trim().toLowerCase();
 
-        const novoEndereco = {
-            id: Date.now(),
-            cep: dados.cep,
-            logradouro: dados.logradouro || "",
-            numero: dados.numero || "",
-            bairro: dados.bairro || "",
-            cidade: dados.cidade || "",
-            estado: dados.estado || "",
-            dataConsulta: new Date().toLocaleString("pt-BR")
+            const duplicado = lista.some((item) => {
+                const cepExistente = String(item.cep || "").replace(/\D/g, "");
+                const numeroExistente = String(item.numero || "").trim().toLowerCase();
+
+                return cepExistente === cepNormalizado && numeroExistente === numeroNormalizado;
+            });
+
+            if (duplicado) {
+                const erro = new Error("Este CEP e número já estão cadastrados.");
+                erro.statusCode = 409;
+                throw erro;
+            }
+
+            const novoEndereco = {
+                id: randomUUID(),
+                cep: dados.cep,
+                logradouro: dados.logradouro || "",
+                numero: dados.numero || "",
+                bairro: dados.bairro || "",
+                cidade: dados.cidade || "",
+                estado: dados.estado || "",
+                dataConsulta: new Date().toISOString()
+            };
+
+            lista.unshift(novoEndereco);
+            await fs.writeFile(arquivoJson, JSON.stringify(lista, null, 2), "utf-8");
+            return novoEndereco;
         };
 
-        lista.unshift(novoEndereco);
-        await fs.writeFile(arquivoJson, JSON.stringify(lista, null, 2), "utf-8");
-        return novoEndereco;
+        const operacao = filaGravacao.then(salvar, salvar);
+        filaGravacao = operacao.catch(() => {});
+        return operacao;
     }
 }

@@ -36,11 +36,20 @@ test("EnderecoModel.salvar deve cadastrar um novo endereço com id e data", asyn
     assert.equal(salvo.cep, "89221-340");
     assert.equal(salvo.logradouro, "Rua Joaçaba");
     assert.equal(salvo.numero, "150");
-    assert.ok(salvo.dataConsulta);
+    assert.match(salvo.dataConsulta, /^\d{4}-\d{2}-\d{2}T/);
 
     const lista = await EnderecoModel.obterTodos();
     assert.equal(lista.length, 1);
     assert.equal(lista[0].cep, "89221-340");
+});
+
+test("EnderecoModel.obterTodos deve propagar JSON corrompido", async () => {
+    await fs.writeFile(arquivoJson, "{ inválido");
+
+    await assert.rejects(
+        EnderecoModel.obterTodos(),
+        SyntaxError
+    );
 });
 
 test("EnderecoModel.filtrar deve retornar os endereços correspondentes ao termo", async () => {
@@ -63,6 +72,13 @@ test("EnderecoModel.filtrar deve retornar os endereços correspondentes ao termo
     const resultadoJoinville = await EnderecoModel.filtrar("joinville");
     assert.equal(resultadoJoinville.length, 1);
     assert.equal(resultadoJoinville[0].cidade, "Joinville");
+
+    const resultadoSemAcento = await EnderecoModel.filtrar("sao paulo");
+    assert.equal(resultadoSemAcento.length, 1);
+    assert.equal(resultadoSemAcento[0].cidade, "São Paulo");
+
+    const resultadoPontuacao = await EnderecoModel.filtrar("---");
+    assert.equal(resultadoPontuacao.length, 0);
 
     const resultadoCep = await EnderecoModel.filtrar("01001");
     assert.equal(resultadoCep.length, 1);
