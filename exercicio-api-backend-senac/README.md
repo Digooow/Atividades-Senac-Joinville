@@ -4,10 +4,6 @@ Atividade prática desenvolvida nas aulas do curso técnico do Senac Joinville
 para estudar a criação e a organização de uma API REST utilizando Node.js,
 Express e o padrão arquitetural **MVC (Model-View-Controller)**.
 
-> **Status da atividade:** em desenvolvimento.
-> A implementação será finalizada durante as aulas ao longo da semana. Este
-> README documenta a organização atual do projeto e a proposta da atividade,
-> sem antecipar funcionalidades que ainda não foram implementadas.
 
 ## Objetivo da atividade
 
