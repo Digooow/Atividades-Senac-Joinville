@@ -1,0 +1,16 @@
+{
+  "name": "atividade-api-cep-web",
+  "version": "1.0.0",
+  "description": "Atividade de consulta e cadastro de endereços com ViaCEP e Node.js",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
