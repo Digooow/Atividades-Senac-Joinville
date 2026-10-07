@@ -2,34 +2,20 @@
 
 Atividade prática desenvolvida nas aulas do curso técnico do Senac Joinville
 para estudar a criação e a organização de uma API REST utilizando Node.js,
-Express e o padrão arquitetural **MVC (Model-View-Controller)**.
+Express e o padrão arquitetural MVC (Model-View-Controller).
 
-
-## Objetivo da atividade
-
-O objetivo é aprender a estruturar um projeto backend separando cada
-responsabilidade em sua própria camada. A API deste exercício está sendo
-organizada para trabalhar com o recurso de **marcas**.
-
-Com essa separação, o fluxo esperado de uma requisição é:
-
-1. O cliente envia uma requisição HTTP para a API.
-2. O **router** identifica a rota e o método HTTP.
-3. O **controller** recebe a requisição, acessa os dados enviados e prepara a
-   resposta.
-4. O **service** concentra as regras de negócio.
-5. O **model** representa e manipula os dados do recurso.
-6. A API devolve uma resposta HTTP ao cliente em formato JSON.
+Neste projeto, a API trabalha com o recurso `marcas`, representado por nomes
+de marcas de veículos.
 
 ## Tecnologias utilizadas
 
 - [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
-- JavaScript com módulos ES (`import`/`export`)
+- JavaScript com módulos ES (`import` e `export`)
 - API REST
-- Arquitetura MVC
+- Arquitetura em camadas inspirada no padrão MVC
 
-## Estrutura de pastas
+## Como o projeto está organizado
 
 ```text
 exercicio-api-backend-senac/
@@ -37,6 +23,7 @@ exercicio-api-backend-senac/
 ├── package.json
 ├── package-lock.json
 ├── .gitignore
+├── README.md
 └── src/
     ├── controller/
     │   └── marcasController.js
@@ -48,61 +35,432 @@ exercicio-api-backend-senac/
         └── marcasService.js
 ```
 
-### Responsabilidade de cada arquivo
+O caminho de uma requisição é:
 
-- **`index.js`**: ponto de entrada da aplicação. Cria o servidor Express,
-  habilita o recebimento de JSON e registra o router no prefixo `/api`.
-- **`src/router/marcasRouter.js`**: responsável por declarar as rotas do
-  recurso `marcas` e encaminhar cada requisição para o controller.
-- **`src/controller/marcasController.js`**: camada responsável por interpretar
-  requisições HTTP, chamar o service e montar as respostas.
-- **`src/service/marcasService.js`**: camada destinada às regras de negócio,
-  validações e operações do recurso.
-- **`src/model/marcasModel.js`**: camada destinada à representação e ao acesso
-  aos dados de marcas.
+1. O cliente envia uma requisição HTTP.
+2. O `marcasRouter.js` identifica o método e a URL.
+3. O `marcasController.js` recebe `req` e `res`.
+4. O controller chama o `marcasService.js`.
+5. O service encaminha a operação para o `marcasModel.js`.
+6. O model consulta ou altera o array de marcas.
+7. A resposta volta pelo controller para o cliente em JSON ou texto.
 
-## Organização MVC
+Essa separação evita colocar todas as responsabilidades em um único arquivo:
+as rotas cuidam dos endereços, o controller cuida do HTTP, o service faz a
+ponte da regra da aplicação e o model cuida dos dados.
 
-### Model
+## Explicação dos arquivos
 
-O model representa os dados da aplicação. Neste exercício, ele será utilizado
-para definir como uma marca será armazenada e consultada. A camada de model
-deve evitar concentrar regras de requisição HTTP, mantendo seu foco nos dados.
+### 1. `index.js`
 
-### View
+O arquivo [index.js](./index.js) é o ponto de entrada da aplicação. Ele é o
+primeiro arquivo executado quando o servidor é iniciado.
 
-Em uma API REST, a view não é necessariamente uma página HTML. A resposta
-enviada pelo controller, normalmente em JSON, cumpre o papel de apresentar os
-dados ao cliente.
+#### Importações
 
-### Controller
+```js
+import express from 'express';
+import router from './src/router/marcasRouter.js';
+```
 
-O controller funciona como intermediário entre as requisições e as regras da
-aplicação. Ele deve receber os parâmetros, o corpo da requisição e os dados
-necessários, chamar o service adequado e retornar o status HTTP e a resposta.
+- `express` importa o framework Express, usado para criar o servidor HTTP.
+- `router` importa o conjunto de rotas criado em `marcasRouter.js`.
+- A extensão `.js` é utilizada porque o projeto trabalha com módulos ES.
 
-### Service
+#### Criação da aplicação
 
-O service concentra a lógica da aplicação. Essa separação permite que as
-regras de negócio não fiquem misturadas com os detalhes do Express ou das
-rotas.
+```js
+const app = express();
+const port = 3000;
+```
 
-## API REST planejada
+- `express()` cria a aplicação Express.
+- `app` passa a ser o objeto que recebe configurações, middlewares e rotas.
+- `port` define que o servidor escutará na porta `3000`.
 
-O recurso trabalhado é `marcas`. As operações previstas no controller atual
-indicam a implementação das seguintes ações:
+#### Leitura de JSON
 
-| Método              | Rota planejada      | Objetivo                            |
-| -------------------- | ------------------- | ----------------------------------- |
-| `GET`              | `/api/marcas`     | Listar marcas                       |
-| `GET`              | `/api/marcas/:id` | Buscar uma marca pelo identificador |
-| `POST`             | `/api/marcas`     | Criar uma marca                     |
-| `PUT` ou `PATCH` | `/api/marcas/:id` | Atualizar uma marca                 |
+```js
+app.use(express.json());
+```
 
-Essas rotas são uma referência da atividade e ainda dependem da finalização do
-router, do service, do model e das validações correspondentes.
+`express.json()` é um middleware que permite interpretar o corpo de
+requisições enviadas no formato JSON. Ele é necessário, por exemplo, para que
+o controller consiga acessar `req.body.marca` em uma requisição `POST` ou
+`PUT`.
 
-## Como executar o projeto
+#### Prefixo das rotas
+
+```js
+app.use('/api', router);
+```
+
+Esse comando registra o router na aplicação usando o prefixo `/api`. Portanto,
+a rota declarada no router como `/marcas` fica disponível externamente como
+`/api/marcas`.
+
+#### Inicialização do servidor
+
+```js
+app.listen(port, (req, res) => {
+    console.log(`Servidor rodando em https://localhost:${port}`)
+});
+```
+
+`app.listen` inicia o servidor na porta `3000`. Quando o servidor começa a
+escutar, a mensagem é exibida no terminal.
+
+> A aplicação está configurada como HTTP, não HTTPS. Portanto, as requisições
+> devem ser feitas em `http://localhost:3000`, mesmo que a mensagem exibida no
+> terminal atualmente contenha `https://`.
+
+### 2. `src/router/marcasRouter.js`
+
+O arquivo [marcasRouter.js](./src/router/marcasRouter.js) define os endereços
+da API e associa cada combinação de método HTTP e URL a um método do
+controller.
+
+#### Importações e criação do router
+
+```js
+import express from "express";
+import ControllerMarca from "../controller/marcasController.js";
+
+const router = express.Router();
+```
+
+- `express` fornece a função usada para criar um router separado.
+- `ControllerMarca` importa o controller que executará cada operação.
+- `express.Router()` cria um objeto para agrupar as rotas de marcas.
+
+#### Rotas disponíveis
+
+```js
+router.get('/marcas', ControllerMarca.Buscar);
+router.get('/marcas/:id', ControllerMarca.BuscarPorId);
+router.post('/marcas', ControllerMarca.Criar);
+router.put('/marcas/:id', ControllerMarca.Atualizar);
+router.delete('/marcas/:id', ControllerMarca.Deletar);
+```
+
+- `GET /marcas`: chama `Buscar` para listar todas as marcas.
+- `GET /marcas/:id`: chama `BuscarPorId`. O trecho `:id` é um parâmetro
+  dinâmico, acessível pelo controller através de `req.params.id`.
+- `POST /marcas`: chama `Criar` para adicionar uma marca.
+- `PUT /marcas/:id`: chama `Atualizar` para substituir uma marca existente.
+- `DELETE /marcas/:id`: chama `Deletar` para remover uma marca.
+
+Como o router é registrado com `/api` no `index.js`, as URLs completas são,
+por exemplo, `/api/marcas` e `/api/marcas/2`.
+
+#### Exportação
+
+```js
+export default router;
+```
+
+Exporta o router para que o `index.js` possa registrá-lo na aplicação.
+
+### 3. `src/controller/marcasController.js`
+
+O arquivo [marcasController.js](./src/controller/marcasController.js) é a
+camada que conversa diretamente com o Express. Ele recebe a requisição,
+retira os dados necessários, chama o service e envia a resposta.
+
+#### Instância do service
+
+```js
+import ServiceMarca from '../service/marcasService.js';
+
+const marcas = new ServiceMarca();
+```
+
+O controller importa a classe do service e cria uma instância. A variável
+`marcas` será utilizada para chamar os métodos de negócio.
+
+#### Método `Buscar`
+
+```js
+Buscar(req, res) {
+    try {
+        const nomes = marcas.Buscar();
+        res.send(nomes);
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+}
+```
+
+Esse método atende ao `GET /api/marcas`.
+
+- `req` representa a requisição recebida e `res` representa a resposta.
+- `marcas.Buscar()` solicita ao service a lista completa.
+- `res.send(nomes)` envia a lista ao cliente.
+- Se ocorrer um erro, o bloco `catch` retorna o status HTTP `500` com a
+  mensagem do erro.
+
+#### Método `BuscarPorId`
+
+```js
+const { id } = req.params;
+const marca = marcas.BuscarPorId(id);
+res.send(marca);
+```
+
+Esse método atende ao `GET /api/marcas/:id`.
+
+- `req.params` contém os parâmetros escritos na URL.
+- A desestruturação obtém o valor de `id`.
+- O controller passa o ID ao service.
+- O resultado é enviado ao cliente.
+
+#### Método `Criar`
+
+```js
+const marca = req.body.marca;
+marcas.Criar(marca);
+res.send({ message: 'Marca registrada com sucesso!' });
+```
+
+Esse método atende ao `POST /api/marcas`.
+
+- `express.json()` interpreta o JSON enviado.
+- `req.body.marca` acessa a propriedade `marca` do corpo.
+- O valor é enviado ao service para ser adicionado.
+- Depois, o controller retorna uma mensagem de sucesso.
+
+Exemplo de corpo:
+
+```json
+{
+  "marca": "Volkswagen"
+}
+```
+
+#### Método `Atualizar`
+
+```js
+const id = req.params.id;
+const marca = req.body.marca;
+marcas.Atualizar(id, marca);
+res.send({ message: 'Marca atualizada com sucesso!' });
+```
+
+Esse método atende ao `PUT /api/marcas/:id`. Ele obtém o ID da URL e o novo
+nome do corpo JSON, envia os dois valores ao service e retorna uma mensagem
+confirmando a atualização.
+
+#### Método `Deletar`
+
+```js
+const id = req.params.id;
+marcas.Deletar(id);
+res.send({ message: 'Marca deletada com sucesso!' });
+```
+
+Esse método atende ao `DELETE /api/marcas/:id`. Ele obtém o ID, chama o service
+para remover o item e retorna uma mensagem de sucesso.
+
+#### Exportação do controller
+
+```js
+export default new ControllerMarca();
+```
+
+Em vez de exportar a classe, o arquivo exporta uma única instância dela. Assim,
+o router consegue usar diretamente `ControllerMarca.Buscar`,
+`ControllerMarca.Criar` e os demais métodos.
+
+### 4. `src/service/marcasService.js`
+
+O arquivo [marcasService.js](./src/service/marcasService.js) representa a
+camada de serviço. Seu papel é fazer a ponte entre o controller e o model.
+Neste exercício, os métodos ainda são simples encaminhamentos, mas essa é a
+camada onde normalmente ficam validações e regras de negócio.
+
+#### Importação e instância do model
+
+```js
+import MarcasModel from '../model/marcasModel.js';
+
+const marcas = new MarcasModel();
+```
+
+O service importa o model e cria uma instância dele. A partir daí, cada método
+do service pode chamar o método equivalente do model.
+
+#### Métodos de encaminhamento
+
+```js
+Buscar() {
+    return marcas.Buscar();
+}
+```
+
+Retorna ao controller o resultado da consulta feita pelo model.
+
+```js
+BuscarPorId(id) {
+    return marcas.BuscarPorId(id);
+}
+```
+
+Recebe um ID e solicita ao model a marca correspondente.
+
+```js
+Criar(marca) {
+    return marcas.Criar(marca);
+}
+```
+
+Envia uma nova marca para o model. O `return` permite repassar ao controller
+qualquer resultado que o model venha a retornar.
+
+```js
+Atualizar(id, marca) {
+    return marcas.Atualizar(id, marca);
+}
+```
+
+Envia o ID e o novo valor para o model atualizar o item.
+
+```js
+Deletar(id) {
+    return marcas.Deletar(id);
+}
+```
+
+Envia o ID para o model remover a marca.
+
+#### Exportação
+
+```js
+export default ServiceMarca;
+```
+
+Exporta a classe para que o controller possa criar sua instância.
+
+### 5. `src/model/marcasModel.js`
+
+O arquivo [marcasModel.js](./src/model/marcasModel.js) é responsável por
+representar e manipular os dados. Neste projeto, os dados não são salvos em
+um banco de dados: eles ficam em um array mantido na memória do processo.
+
+#### Lista inicial
+
+```js
+const marcas = new Array(
+  "Chevrolet", "Fiat", "Ford", "Honda", "Hyundai",
+  "Jeep", "Nissan", "Peugeot", "Renault", "Toyota"
+);
+```
+
+Cria o array com dez marcas iniciais. Cada posição do array funciona como o
+identificador usado pelas rotas. Por exemplo, `"Chevrolet"` está no índice
+`0` e `"Fiat"` está no índice `1`.
+
+#### Método `Buscar`
+
+```js
+Buscar() {
+    return marcas;
+}
+```
+
+Retorna o array completo com todas as marcas.
+
+#### Método `BuscarPorId`
+
+```js
+BuscarPorId(id) {
+    return marcas[id];
+}
+```
+
+Usa o ID recebido como índice do array e retorna o item daquela posição. Como
+os parâmetros de rota chegam como texto, o JavaScript converte valores como
+`"2"` para o índice numérico correspondente.
+
+#### Método `Criar`
+
+```js
+Criar(marca) {
+    marcas.push(marca);
+}
+```
+
+`push` adiciona a nova marca ao final do array.
+
+#### Método `Atualizar`
+
+```js
+Atualizar(id, marca) {
+    marcas[id] = marca;
+}
+```
+
+Substitui o valor armazenado no índice indicado pelo ID.
+
+#### Método `Deletar`
+
+```js
+Deletar(id) {
+    marcas.splice(id, 1);
+}
+```
+
+`splice` remove um item do array. O primeiro argumento indica a posição e o
+segundo (`1`) indica que apenas um item deve ser removido.
+
+#### Exportação
+
+```js
+export default MarcasModel;
+```
+
+Exporta a classe do model para ser utilizada pelo service.
+
+> Como os dados ficam somente na memória, todas as marcas criadas, alteradas ou
+> removidas são perdidas quando o servidor é encerrado ou reiniciado. Além
+> disso, como o ID é o índice do array, a remoção de um item pode alterar os
+> índices dos itens seguintes.
+
+## Endpoints da API
+
+Todas as rotas possuem o prefixo `/api`.
+
+| Método    | Endpoint            | Função                     |
+| ---------- | ------------------- | ---------------------------- |
+| `GET`    | `/api/marcas`     | Lista todas as marcas        |
+| `GET`    | `/api/marcas/:id` | Busca uma marca pelo índice |
+| `POST`   | `/api/marcas`     | Adiciona uma marca           |
+| `PUT`    | `/api/marcas/:id` | Atualiza uma marca           |
+| `DELETE` | `/api/marcas/:id` | Remove uma marca             |
+
+Exemplos usando `curl`:
+
+```bash
+# Listar marcas
+curl http://localhost:3000/api/marcas
+
+# Buscar a marca do índice 0
+curl http://localhost:3000/api/marcas/0
+
+# Criar uma marca
+curl -X POST http://localhost:3000/api/marcas ^
+  -H "Content-Type: application/json" ^
+  -d "{\"marca\":\"Volkswagen\"}"
+
+# Atualizar a marca do índice 0
+curl -X PUT http://localhost:3000/api/marcas/0 ^
+  -H "Content-Type: application/json" ^
+  -d "{\"marca\":\"Chevrolet Atualizada\"}"
+
+# Deletar a marca do índice 0
+curl -X DELETE http://localhost:3000/api/marcas/0
+```
+
+## Como executar
 
 1. Instale o Node.js.
 2. Abra um terminal na pasta do projeto.
@@ -117,48 +475,25 @@ router, do service, do model e das validações correspondentes.
    npm run dev
    ```
 
-   O script `dev` inicia o servidor com `node --watch`, reiniciando a
-   aplicação automaticamente quando os arquivos forem alterados. Para executar
-   o arquivo diretamente, sem esse reinício automático, também é possível usar
-   `node index.js`.
+O script `dev` utiliza `node --watch`, reiniciando a aplicação quando os
+arquivos são alterados. Também é possível iniciar diretamente com:
 
-O servidor está configurado para utilizar a porta `3000`. Quando a
-implementação estiver concluída, as requisições poderão ser feitas no endereço:
-
-```text
-http://localhost:3000/api
+```bash
+node index.js
 ```
 
-> No estado atual, a atividade ainda não está pronta para uso completo. A
-> existência do arquivo de entrada não significa que todas as rotas e
-> operações já estejam disponíveis.
+Depois, acesse a API em:
 
-## Pendências para a próxima aula
+```text
+http://localhost:3000/api/marcas
+```
 
-- Finalizar o model de marcas.
-- Implementar as operações do service.
-- Completar e exportar o router.
-- Ajustar a integração entre router, controller, service e model.
-- Revisar os nomes dos caminhos de importação.
-- Implementar as operações de listar, buscar por ID, criar e atualizar.
-- Definir a estrutura dos objetos de marca e suas validações.
-- Padronizar os códigos de status e as mensagens de erro.
-- Testar as rotas com uma ferramenta de requisições HTTP.
-- Adicionar testes automatizados quando a implementação estiver concluída.
+## Resumo da responsabilidade de cada arquivo
 
-## Aprendizados da aula
-
-Esta atividade reforça:
-
-- a importância de separar responsabilidades em pastas;
-- o funcionamento básico de uma API HTTP com Express;
-- o papel de cada camada do padrão MVC;
-- a diferença entre rota, controller, service e model;
-- a organização de endpoints seguindo a ideia de uma API REST;
-- a manutenção e a evolução de um projeto backend com uma estrutura mais clara.
-
-## Observação
-
-O projeto representa o andamento da atividade em sala de aula. As partes
-incompletas são intencionais e serão desenvolvidas posteriormente durante a
-semana.
+| Arquivo                                                    | Responsabilidade                                                    |
+| ---------------------------------------------------------- | ------------------------------------------------------------------- |
+| [index.js](./index.js)                                      | Cria e inicia o servidor Express, habilita JSON e registra o router |
+| [marcasRouter.js](./src/router/marcasRouter.js)             | Declara métodos HTTP e URLs                                        |
+| [marcasController.js](./src/controller/marcasController.js) | Processa requisições e monta respostas                            |
+| [marcasService.js](./src/service/marcasService.js)          | Faz a ponte e concentra regras da aplicação                       |
+| [marcasModel.js](./src/model/marcasModel.js)                | Armazena e altera os dados em memória                              |
