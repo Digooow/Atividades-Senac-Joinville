@@ -1,0 +1,16 @@
+{
+  "name": "avaliacao-node-api2",
+  "version": "1.0.0",
+  "description": "avaliacao 2 api dessa vez sem recuperação",
+  "license": "ISC",
+  "author": "Rodrigo da Cruz Godinho",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
