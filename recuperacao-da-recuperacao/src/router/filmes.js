@@ -11,6 +11,8 @@ router.post('/criar',ControllerFilmes.Criar);
 
 router.put('/alterar/:id', ControllerFilmes.Alterar);
 
+router.put('/alterarstatus/:id', ControllerFilmes.AlterarStatus);
+
 router.delete('/deletar/:id', ControllerFilmes.Deletar);
 
 

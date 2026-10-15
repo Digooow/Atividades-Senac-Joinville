@@ -24,6 +24,10 @@ class Filmes {
         filmes[id].lancamento = lancamento;
     }
 
+    AlterarStatus(id) {
+        filmes[id].classificacao = !filmes[id].classificacao;
+    }
+
     Deletar(id) {
         filmes.splice(id, 1);
     }

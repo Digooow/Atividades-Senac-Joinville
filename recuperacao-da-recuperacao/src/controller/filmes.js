@@ -58,6 +58,22 @@ class ControllerFilmes {
         }
     }
 
+    AlterarStatus(req, res) {
+
+         try {
+
+            const id = req.params.id;
+
+            ServiceFilmes.AlterarStatus(id);
+            res.send({ mensagem: 'Status do filme alterado com sucesso!' });
+
+
+        } catch (error) {
+            res.send({ mensagem: error.mensagem });
+        }
+
+    }
+
     Deletar(req, res) {
         try {
             const id = req.params.id;

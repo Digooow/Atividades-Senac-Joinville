@@ -1,4 +1,5 @@
 import express from 'express';
+import router from './src/router/filmes.js';
 
 const app = express();
 

@@ -28,6 +28,14 @@ class ServiceFilmes {
         Filmes.Alterar(id, titulo, classificacao, descricao, lancamento);
     }
 
+    AlterarStatus(id) {
+        if (!id || isNaN(id)) {
+            throw new Error('Informe um ID válido para alterar o status do filme.');
+        }
+
+        Filmes.AlterarStatus(id);
+    }
+
     Deletar(id) {
         if (!id || isNaN(id)) {
             throw new Error('Informe um ID válido para deletar o filme.');
