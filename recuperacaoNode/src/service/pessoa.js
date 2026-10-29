@@ -3,43 +3,59 @@ import Pessoa from '../model/pessoa.js'
 class ServicePessoa {
 
 
-    Buscar() {
-        return Pessoa.Buscar()
+    async Buscar() {
+        return Pessoa.findAll()
     }
 
 
-    BuscarUm(id) {
+
+    async BuscarUm(id) {
         if (!id || isNaN(id)) {
             throw new Error("Id incorreto.")
         }
-        return Pessoa.BuscarUm(id)
+        return await Pessoa.findByPk(id)
     }
 
 
-    Criar(nome) {
+
+
+    async Criar(nome, idade) {
         if (!nome) {
             throw new Error("Favor informar o nome")
         }
+        if (!idade) {
+            throw new Error("Favor informar a idade")
+        }
 
-        Pessoa.Criar(nome)
+        await Pessoa.create({ nome, idade })
     }
 
 
-    Alterar(id, nome) {
+
+    async Alterar(id, nome) {
         if (!id || isNaN(id) || !nome) {
             throw new Error("Informar todos os dados corretamente")
         }
-        
-        Pessoa.Alterar(id, nome)
+        const pessoaAlterar = await Pessoa.findByPk(id)
+        if (!pessoaAlterar) {
+            throw new Error("Pessoa não encontrada")
+        }
+        pessoaAlterar.nome = nome
+        await pessoaAlterar.save()
     }
 
 
-    Deletar(id) {
+    async Deletar(id) {
         if (!id || isNaN(id)) {
             throw new Error("Informar o Id corretamente")
         }
+
+        const pessoaDelete = await Pessoa.findByPk(id)
+        if (!pessoaDelete) {
+            throw new Error("Pessoa não encontrada")
+        }
         
-        Pessoa.Deletar(id)
+        await pessoaDelete.destroy()
     }
 
 
