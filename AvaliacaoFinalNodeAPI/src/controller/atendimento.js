@@ -17,7 +17,7 @@ class ControllerAtendimento {
 
         try{
             const id = req.params.id
-            const soma = await ServiceAtendimento.BuscarUm(id)
+            const nome = await ServiceAtendimento.BuscarUm(id)
             res.send({ nome })
         }catch (error) {
             res.send({ message: error.message})
