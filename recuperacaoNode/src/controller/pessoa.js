@@ -1,82 +1,58 @@
 import ServicePessoa from '../service/pessoa.js'
 
-
 class ControllerPessoa {
 
     async Buscar(req, res) {
         try {
             const nomes = await ServicePessoa.Buscar()
-
-            res.send({ nomes })
+            return res.status(200).send({ nomes })
         } catch (error) {
-            res.send({ message: error.message})
+            return res.status(500).send({ message: error.message })
         }
-        
     }
-
 
     async BuscarUm(req, res) {
-
         try {
             const id = req.params.id
-            const soma = await ServicePessoa.BuscarUm(id)
-            res.send({ nome })
-           
+            const pessoa = await ServicePessoa.BuscarUm(id)
+            if (!pessoa) {
+                return res.status(404).send({ message: 'Pessoa não encontrada.' })
+            }
+            return res.status(200).send({ pessoa })
         } catch (error) {
-            res.send({ message: error.message })
-
+            return res.status(400).send({ message: error.message })
         }
     }
-
-
-
 
     async Criar(req, res) {
-
         try {
-
-            const nome = req.body.nome
-            const idade = req.body.idade
-            
+            const { nome, idade } = req.body
             await ServicePessoa.Criar(nome, idade)
-            
-            res.send({ message: "Criado com sucesso!"})
-
-
+            return res.status(201).send({ message: "Criado com sucesso!" })
         } catch (error) {
-            res.send({ message: error.message })
+            return res.status(400).send({ message: error.message })
         }
     }
 
-
-
     async Alterar(req, res) {
-
         try {
             const id = req.params.id
-            const nome = req.body.nome
-
+            const { nome } = req.body
             await ServicePessoa.Alterar(id, nome)
-            res.send({ message: "Alterado com sucesso!"})
+            return res.status(200).send({ message: "Alterado com sucesso!" })
         } catch (error) {
-            res.send({ message: error.message })
+            return res.status(400).send({ message: error.message })
         }
-
     }
 
     async Deletar(req, res) {
-
         try {
             const id = req.params.id
-
             await ServicePessoa.Deletar(id)
-            res.send({ message: "Deletado com sucesso!" })
-           
-
+            return res.status(200).send({ message: "Deletado com sucesso!" })
         } catch (error) {
-            res.send({ message: error.message })
+            return res.status(400).send({ message: error.message })
         }
-
     }
 }
 

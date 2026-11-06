@@ -5,82 +5,63 @@ class ControllerFilmes {
     Buscar(req, res) {
         try {
             const filmes = ServiceFilmes.Buscar();
-
-            res.send({ filmes });
+            return res.status(200).send({ filmes });
         } catch (error) {
-            res.send({ mensagem: error.mensagem });
+            return res.status(500).send({ mensagem: error.message });
         }
-
     }
 
     BuscarPorId(req, res) {
         try {
             const id = req.params.id;
             const filme = ServiceFilmes.BuscarPorId(id);
-
-            res.send({ filme });
+            if (!filme) {
+                return res.status(404).send({ mensagem: 'Filme não encontrado.' });
+            }
+            return res.status(200).send({ filme });
         } catch (error) {
-            res.send({ mensagem: error.mensagem });
+            return res.status(400).send({ mensagem: error.message });
         }
     }
 
     Criar(req, res) {
         try {
-            
-            const titulo = req.body.titulo;
-            const classificacao = req.body.classificacao;
-            const descricao = req.body.descricao;
-            const lancamento = req.body.lancamento;
-
+            const { titulo, classificacao, descricao, lancamento } = req.body;
             ServiceFilmes.Criar(titulo, classificacao, descricao, lancamento);
-            res.send({ mensagem: 'Filme criado com sucesso!' });
-
+            return res.status(201).send({ mensagem: 'Filme criado com sucesso!' });
         } catch (error) {
-            res.send({ mensagem: error.mensagem });
+            return res.status(400).send({ mensagem: error.message });
         }
     }
 
     Alterar(req, res) {
         try {
-
             const id = req.params.id;
-            const titulo = req.body.titulo;
-            const classificacao = req.body.classificacao;
-            const descricao = req.body.descricao;
-            const lancamento = req.body.lancamento;
-
+            const { titulo, classificacao, descricao, lancamento } = req.body;
             ServiceFilmes.Alterar(id, titulo, classificacao, descricao, lancamento);
-            res.send({ mensagem: 'Filme alterado com sucesso!' });
-
-
+            return res.status(200).send({ mensagem: 'Filme alterado com sucesso!' });
         } catch (error) {
-            res.send({ mensagem: error.mensagem });
+            return res.status(400).send({ mensagem: error.message });
         }
     }
 
     AlterarStatus(req, res) {
-
-         try {
-
+        try {
             const id = req.params.id;
-
             ServiceFilmes.AlterarStatus(id);
-            res.send({ mensagem: 'Status do filme alterado com sucesso!' });
-
-
+            return res.status(200).send({ mensagem: 'Status do filme alterado com sucesso!' });
         } catch (error) {
-            res.send({ mensagem: error.mensagem });
+            return res.status(400).send({ mensagem: error.message });
         }
-
     }
 
     Deletar(req, res) {
         try {
             const id = req.params.id;
             ServiceFilmes.Deletar(id);
-            res.send({ mensagem: 'Filme deletado com sucesso!' });
+            return res.status(200).send({ mensagem: 'Filme deletado com sucesso!' });
         } catch (error) {
-            res.send({ mensagem: error.mensagem });
+            return res.status(400).send({ mensagem: error.message });
         } 
     }
 }
