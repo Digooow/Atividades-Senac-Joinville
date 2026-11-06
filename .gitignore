@@ -47,3 +47,14 @@ dist/
 build/
 bin/
 obj/
+**/bin/
+**/obj/
+*.exe
+*.o
+*.obj
+*.out
+*.dll
+*.pdb
+*.a
+*.so
+*.dylib
