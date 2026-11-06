@@ -58,3 +58,7 @@ obj/
 *.a
 *.so
 *.dylib
+*.pdf
+*.pptx
+*.docx
+
