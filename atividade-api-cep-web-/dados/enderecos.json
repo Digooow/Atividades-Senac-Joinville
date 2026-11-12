@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "cbf80336-08d3-4eab-8f51-ff622b9cc739",
+    "cep": "89207-400",
+    "logradouro": "Rua Eleotério Maia",
+    "numero": "555",
+    "bairro": "Guanabara",
+    "cidade": "Joinville",
+    "estado": "SC",
+    "dataConsulta": "2026-11-11T01:58:49.420Z"
+  }
+]
