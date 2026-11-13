@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biblioteca - Exemplo de API REST</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-2: #334155;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --primary: #38bdf8;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+    }
+
+    header h1 {
+      margin: 0 0 6px;
+      font-size: 1.6rem;
+    }
+
+    header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 10px;
+    }
+
+    @media (max-width: 680px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    input {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+    }
+
+    input:focus {
+      outline: 2px solid var(--primary);
+      border-color: transparent;
+    }
+
+    button {
+      border: none;
+      border-radius: 6px;
+      padding: 9px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    button:hover {
+      opacity: 0.88;
+    }
+
+    .btn-primary { background: var(--primary); color: #0f172a; }
+    .btn-secondary { background: var(--surface-2); color: var(--text); }
+    .btn-warning { background: var(--warning); color: #0f172a; }
+    .btn-danger { background: var(--danger); color: #fff; }
+
+    .lista-livros {
+      display: grid;
+      gap: 10px;
+    }
+
+    .livro-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .livro-info strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .livro-info span {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .livro-acoes {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .badge-ok { background: rgba(34, 197, 94, 0.2); color: var(--success); }
+    .badge-off { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+
+    .erro-conexao {
+      display: none;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--danger);
+      color: #fecaca;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+    }
+
+    pre {
+      margin: 0;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      max-height: 260px;
+    }
+
+    .vazio {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Biblioteca — Cliente da API REST</h1>
+      <p>Front-end consumindo <code>http://localhost:3000/livros</code> via <code>fetch()</code>.</p>
+    </header>
+
+    <div id="erroConexao" class="erro-conexao">
+      Não foi possível conectar ao back-end em <strong>http://localhost:3000</strong>.
+      Execute <code>node backend.js</code> no terminal e tente novamente.
+    </div>
+
+    <section class="card">
+      <h2>Cadastrar novo livro (<code>POST /livros</code>)</h2>
+      <form id="formCadastro">
+        <input id="inputTitulo" type="text" placeholder="Título do livro" required />
+        <input id="inputAutor" type="text" placeholder="Autor" required />
+        <button type="submit" class="btn-primary">Cadastrar</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>
+        <span>Acervo de livros (<code>GET /livros</code>)</span>
+        <button id="btnRecarregar" type="button" class="btn-secondary">Atualizar lista</button>
+      </h2>
+      <div id="listaLivros" class="lista-livros"></div>
+    </section>
+
+    <section class="card">
+      <h2>Última comunicação HTTP (Requisição e Resposta)</h2>
+      <pre id="painelLog">Aguardando primeira requisição...</pre>
+    </section>
+  </div>
+
+  <script>
+    const API_URL = window.location.protocol === "file:"
+      ? "http://localhost:3000/livros"
+      : `${window.location.origin}/livros`;
+
+    const formCadastro = document.getElementById("formCadastro");
+    const inputTitulo = document.getElementById("inputTitulo");
+    const inputAutor = document.getElementById("inputAutor");
+    const btnRecarregar = document.getElementById("btnRecarregar");
+    const listaLivros = document.getElementById("listaLivros");
+    const painelLog = document.getElementById("painelLog");
+    const erroConexao = document.getElementById("erroConexao");
+
+    function registrarLog(metodo, url, payloadEnviado, status, dadosResposta) {
+      const linhas = [
+        `REQUISIÇÃO: ${metodo} ${url}`,
+        payloadEnviado ? `CORPO ENVIADO:\n${JSON.stringify(payloadEnviado, null, 2)}` : null,
+        `RESPOSTA: HTTP ${status}`,
+        dadosResposta !== null ? `JSON RECEBIDO:\n${JSON.stringify(dadosResposta, null, 2)}` : "(204 No Content - sem corpo)",
+      ].filter(Boolean);
+
+      painelLog.textContent = linhas.join("\n\n");
+    }
+
+    async function chamarApi(url, opcoes = {}, payloadEnviado = null) {
+      try {
+        erroConexao.style.display = "none";
+        const resposta = await fetch(url, opcoes);
+        const temConteudo = resposta.status !== 204;
+        const dados = temConteudo ? await resposta.json() : null;
+
+        registrarLog(opcoes.method || "GET", url, payloadEnviado, resposta.status, dados);
+
+        if (!resposta.ok) {
+          alert(dados?.erro || `Erro HTTP ${resposta.status}`);
+          return { ok: false, dados: null };
+        }
+        return { ok: true, dados };
+      } catch (erro) {
+        erroConexao.style.display = "block";
+        painelLog.textContent = `Erro de rede ao chamar ${url}: ${erro.message}`;
+        return { ok: false, dados: null };
+      }
+    }
+
+    function renderizarLivros(livros) {
+      listaLivros.replaceChildren();
+
+      if (!livros.length) {
+        const aviso = document.createElement("p");
+        aviso.className = "vazio";
+        aviso.textContent = "Nenhum livro cadastrado.";
+        listaLivros.appendChild(aviso);
+        return;
+      }
+
+      for (const livro of livros) {
+        const item = document.createElement("div");
+        item.className = "livro-item";
+
+        const info = document.createElement("div");
+        info.className = "livro-info";
+
+        const titulo = document.createElement("strong");
+        titulo.textContent = `#${livro.id} — ${livro.titulo}`;
+
+        const autor = document.createElement("span");
+        autor.textContent = `Autor: ${livro.autor}`;
+
+        info.append(titulo, autor);
+
+        const acoes = document.createElement("div");
+        acoes.className = "livro-acoes";
+
+        const badge = document.createElement("span");
+        badge.className = `badge ${livro.disponivel ? "badge-ok" : "badge-off"}`;
+        badge.textContent = livro.disponivel ? "Disponível" : "Emprestado";
+
+        const btnDetalhes = document.createElement("button");
+        btnDetalhes.type = "button";
+        btnDetalhes.className = "btn-secondary";
+        btnDetalhes.textContent = "GET :id";
+        btnDetalhes.addEventListener("click", () => buscarLivroPorId(livro.id));
+
+        const btnAlternar = document.createElement("button");
+        btnAlternar.type = "button";
+        btnAlternar.className = "btn-warning";
+        btnAlternar.textContent = livro.disponivel ? "Emprestar" : "Devolver";
+        btnAlternar.addEventListener("click", () => alternarDisponibilidade(livro));
+
+        const btnExcluir = document.createElement("button");
+        btnExcluir.type = "button";
+        btnExcluir.className = "btn-danger";
+        btnExcluir.textContent = "Excluir";
+        btnExcluir.addEventListener("click", () => excluirLivro(livro.id));
+
+        acoes.append(badge, btnDetalhes, btnAlternar, btnExcluir);
+        item.append(info, acoes);
+        listaLivros.appendChild(item);
+      }
+    }
+
+    async function carregarLivros() {
+      const resultado = await chamarApi(API_URL, { method: "GET" });
+      if (resultado.ok) {
+        renderizarLivros(resultado.dados);
+      }
+    }
+
+    async function buscarLivroPorId(id) {
+      await chamarApi(`${API_URL}/${id}`, { method: "GET" });
+    }
+
+    async function cadastrarLivro(evento) {
+      evento.preventDefault();
+      const payload = {
+        titulo: inputTitulo.value.trim(),
+        autor: inputAutor.value.trim(),
+      };
+
+      const resultado = await chamarApi(
+        API_URL,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+        payload
+      );
+
+      if (resultado.ok) {
+        formCadastro.reset();
+        await carregarLivros();
+      }
+    }
+
+    async function alternarDisponibilidade(livro) {
+      const payload = { disponivel: !livro.disponivel };
+      const resultado = await chamarApi(
+        `${API_URL}/${livro.id}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+        payload
+      );
+
+      if (resultado.ok) {
+        await carregarLivros();
+      }
+    }
+
+    async function excluirLivro(id) {
+      const resultado = await chamarApi(`${API_URL}/${id}`, { method: "DELETE" });
+      if (resultado.ok) {
+        await carregarLivros();
+      }
+    }
+
+    formCadastro.addEventListener("submit", cadastrarLivro);
+    btnRecarregar.addEventListener("click", carregarLivros);
+
+    // Carrega a lista inicial ao abrir a página
+    carregarLivros();
+  </script>
+</body>
+</html>
