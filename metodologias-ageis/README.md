@@ -244,7 +244,7 @@ somente dividir tarefas ou usar um quadro. Ela envolve:
 ## Referências usadas
 
 - [Projeto Integrador 2](https://github.com/Digooow/Projeto-Integrador2)
-- [História de usuário](https://github.com/Digooow/Projeto-Integrador2/blob/main/frontend/historia_do_usuario.md)
-- [Análise do projeto](https://github.com/Digooow/Projeto-Integrador2/blob/main/ANALISE-PROJETO.md)
-- [Roadmap de ações](https://github.com/Digooow/Projeto-Integrador2/blob/main/ROADMAP-ACOES.md)
-- [Roadmap atual](https://github.com/Digooow/Projeto-Integrador2/blob/main/ROADMAP-ATUAL.md)
+- [Metodologia Ágil](https://github.com/Digooow/Projeto-Integrador2/blob/main/docs/METODOLOGIA_AGIL.md)
+- [Arquitetura do Projeto](https://github.com/Digooow/Projeto-Integrador2/blob/main/docs/ARQUITETURA.md)
+- [Histórico de Decisões](https://github.com/Digooow/Projeto-Integrador2/blob/main/docs/HISTORICO.md)
+- [Roadmap](https://github.com/Digooow/Projeto-Integrador2/blob/main/docs/ROADMAP.md)

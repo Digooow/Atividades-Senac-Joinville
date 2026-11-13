@@ -1,6 +1,6 @@
 # Exercício de API Backend com Node.js
 
-Atividade prática desenvolvida nas aulas do curso técnico do Senac Joinville
+Atividade prática desenvolvida nas aulas do curso de Qualificação Profissional em Desenvolvimento de Sistemas (Programa Jovem Programador) na Faculdade de Tecnologia SENAC Joinville
 para estudar a criação e a organização de uma API REST utilizando Node.js,
 Express e o padrão arquitetural MVC (Model-View-Controller).
 
