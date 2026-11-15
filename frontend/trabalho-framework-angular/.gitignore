@@ -1,0 +1,46 @@
+# Compiled output
+dist/
+tmp/
+out-tsc/
+bazel-out/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/
+.history/
+
+# Angular
+.angular/
+.sass-cache/
+connect.lock
+coverage/
+typings/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Binary documents and presentations
+*.pdf
+*.pptx
+*.docx
+
+

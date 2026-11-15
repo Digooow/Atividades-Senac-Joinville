@@ -1,0 +1,485 @@
+<div class="app-layout">
+  <!-- HEADER PRINCIPAL -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-area">
+        <span class="angular-badge">ANGULAR 21</span>
+        <h1>Interactive Showcase & Toolkit</h1>
+      </div>
+      <p class="header-subtitle">
+        Aplicação autoexplicativa projetada para demonstrar na prática os pilares arquiteturais,
+        reatividade com Signals, diretivas modernas e sincronização do framework Google Angular.
+      </p>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- BARRA GLOBAL DE STATUS DO COMPONENTE -->
+    <div class="presentation-banner">
+      <div class="banner-pill">
+        <span class="dot live"></span> <strong>Live Demo Interativo:</strong> Altere os controles e observe os cards de binding reagindo instantaneamente no DOM.
+      </div>
+      <div class="banner-pill">
+        <strong>Paradigma:</strong> Reatividade Declarativa (Zero manipulação imperativa de DOM).
+      </div>
+    </div>
+
+    <div class="showcase-grid">
+
+      <!-- ========================================== -->
+      <!-- 1. OS 4 PILARES DO DATA BINDING -->
+      <!-- ========================================== -->
+      <section class="demo-card">
+        <div class="card-header">
+          <span class="section-tag tag-blue">Pilar 1</span>
+          <h2>Sincronização & Data Binding</h2>
+          <p class="concept-explanation">
+            Demonstração prática dos 4 mecanismos de ligação de dados entre o arquivo TypeScript e a camada visual HTML.
+          </p>
+        </div>
+
+        <div class="card-body">
+          <!-- Interpolation -->
+          <div class="sub-block">
+            <div class="control-group">
+              <label>1. Interpolação One-Way (Exemplo: <code>&lbrace;&lbrace; 'valor' &rbrace;&rbrace;</code>):</label>
+              <input type="text" [value]="textoInterpolar" (input)="aoDigitarInterpolar($event)" placeholder="Digite algo...">
+            </div>
+          </div>
+
+          <!-- Property Binding & Style Binding -->
+          <div class="sub-block">
+            <div class="control-group">
+              <label>2. Property & Style Binding <code>[disabled]</code> / <code>[style.fontSize.px]</code>:</label>
+              <div class="button-row">
+                <button class="btn btn-secondary" (click)="alternarDesabilitado()">
+                  Alternar Estado do Botão
+                </button>
+                <button class="btn btn-primary" [disabled]="botaoDesabilitado">
+                  Botão Alvo ({{ botaoDesabilitado ? 'Desabilitado' : 'Ativo' }})
+                </button>
+                <button class="btn btn-outline" (click)="alterarTamanhoFonte(2)">A+</button>
+                <button class="btn btn-outline" (click)="alterarTamanhoFonte(-2)">A-</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event Binding -->
+          <div class="sub-block">
+            <div class="control-group">
+              <label>3. Event Binding <code>(click)</code>:</label>
+              <div class="button-row">
+                <button class="btn btn-emerald" (click)="dispararClique('Ação Primária')">Disparar Evento 1</button>
+                <button class="btn btn-violet" (click)="dispararClique('Ação Secundária')">Disparar Evento 2</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two-Way Data Binding -->
+          <div class="sub-block">
+            <div class="control-group">
+              <label>4. Two-Way Data Binding <code>[(ngModel)]</code> (Banana in a box):</label>
+              <input type="text" [(ngModel)]="textoTwoWay" (ngModelChange)="aoMudarTwoWay()">
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD DINÂMICO AUTOEXPLICATIVO -->
+        <div class="dynamic-feedback-card">
+          <div class="feedback-title">
+            <span class="icon">⚡</span> CARD DINÂMICO: Estado em Tempo Real (TypeScript Memory)
+          </div>
+          <div class="feedback-grid">
+            <div class="fb-item">
+              <span class="fb-label">Template Renderizado:</span>
+              <p class="fb-value highlight" [style.fontSize.px]="tamanhoFonte">{{ textoInterpolar }}</p>
+            </div>
+            <div class="fb-item">
+              <span class="fb-label">Estado de [disabled]:</span>
+              <span class="badge" [ngClass]="botaoDesabilitado ? 'badge-danger' : 'badge-success'">
+                {{ botaoDesabilitado }}
+              </span>
+            </div>
+            <div class="fb-item">
+              <span class="fb-label">Último Evento Capturado (click):</span>
+              <p class="fb-value">{{ ultimoEvento }} (Total: {{ contadorEventos }})</p>
+            </div>
+            <div class="fb-item">
+              <span class="fb-label">Valor Sincronizado via [(ngModel)]:</span>
+              <p class="fb-value code-font">"{{ textoTwoWay }}"</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 2. REATIVIDADE MODERNA COM SIGNALS -->
+      <!-- ========================================== -->
+      <section class="demo-card">
+        <div class="card-header">
+          <span class="section-tag tag-violet">Angular Signals</span>
+          <h2>Reatividade de Granularidade Fina</h2>
+          <p class="concept-explanation">
+            Signals representam a evolução moderna do Angular: detecção de mudanças cirúrgica com <code>signal()</code> e <code>computed()</code> sem depender do Zone.js.
+          </p>
+        </div>
+
+        <div class="card-body">
+          <div class="signals-calculator">
+            <div class="calc-row">
+              <label>Quantidade <code>signal({{ quantidadeSignal() }})</code>:</label>
+              <div class="stepper">
+                <button class="btn btn-outline" (click)="alterarQuantidade(-1)">-</button>
+                <span class="stepper-value">{{ quantidadeSignal() }}</span>
+                <button class="btn btn-outline" (click)="alterarQuantidade(1)">+</button>
+              </div>
+            </div>
+
+            <div class="calc-row">
+              <label>Preço Unitário (R$):</label>
+              <div class="quick-chips">
+                <button class="chip" [class.active]="precoUnitarioSignal() === 29.9" (click)="alterarPreco(29.9)">R$ 29,90</button>
+                <button class="chip" [class.active]="precoUnitarioSignal() === 49.9" (click)="alterarPreco(49.9)">R$ 49,90</button>
+                <button class="chip" [class.active]="precoUnitarioSignal() === 99.9" (click)="alterarPreco(99.9)">R$ 99,90</button>
+              </div>
+            </div>
+
+            <div class="calc-row">
+              <label>Cupom de Desconto (%):</label>
+              <div class="quick-chips">
+                <button class="chip" [class.active]="cupomDescontoSignal() === 0" (click)="alterarDesconto(0)">0%</button>
+                <button class="chip" [class.active]="cupomDescontoSignal() === 10" (click)="alterarDesconto(10)">10%</button>
+                <button class="chip" [class.active]="cupomDescontoSignal() === 25" (click)="alterarDesconto(25)">25%</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD DINÂMICO SIGNALS -->
+        <div class="dynamic-feedback-card card-violet">
+          <div class="feedback-title">
+            <span class="icon">🔮</span> CARD DINÂMICO: Árvore Reativa de Computed Signals
+          </div>
+          <div class="signals-result-grid">
+            <div class="signal-box">
+              <span class="s-title">Subtotal computed()</span>
+              <span class="s-val">{{ subtotal() | currency:'BRL':'symbol':'1.2-2' }}</span>
+              <span class="s-formula">qtd ({{ quantidadeSignal() }}) × R$ {{ precoUnitarioSignal() }}</span>
+            </div>
+            <div class="signal-box">
+              <span class="s-title">Desconto computed()</span>
+              <span class="s-val text-amber">- {{ descontoValor() | currency:'BRL':'symbol':'1.2-2' }}</span>
+              <span class="s-formula">({{ cupomDescontoSignal() }}% aplicado)</span>
+            </div>
+            <div class="signal-box highlight-box">
+              <span class="s-title">TOTAL FINAL computed()</span>
+              <span class="s-val text-emerald">{{ totalFinal() | currency:'BRL':'symbol':'1.2-2' }}</span>
+              <span class="s-formula">Atualizado cirurgicamente no DOM</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 3. DIRETIVAS MODERNAS DE CONTROLE DE FLUXO -->
+      <!-- ========================================== -->
+      <section class="demo-card">
+        <div class="card-header">
+          <span class="section-tag tag-emerald">Control Flow</span>
+          <h2>Fluxo Estrutural Declarativo (&#64;for, &#64;if, &#64;switch)</h2>
+          <p class="concept-explanation">
+            A nova sintaxe de blocos do Angular substitui as antigas diretivas <code>*ngIf</code> e <code>*ngFor</code> por uma estrutura mais limpa, tipada e com maior performance de compilação.
+          </p>
+        </div>
+
+        <div class="card-body">
+          <div class="task-form">
+            <input type="text" [(ngModel)]="novaTarefaTitulo" placeholder="Nova atividade para demonstração..." (keyup.enter)="adicionarTarefa()">
+            <select [(ngModel)]="novaTarefaPrioridade">
+              <option value="BAIXA">Prioridade Baixa</option>
+              <option value="MEDIA">Prioridade Média</option>
+              <option value="ALTA">Prioridade Alta</option>
+            </select>
+            <button class="btn btn-emerald" (click)="adicionarTarefa()">Adicionar</button>
+          </div>
+
+          <div class="filter-bar">
+            <span>Filtrar por Prioridade:</span>
+            <div class="quick-chips">
+              <button class="chip" [class.active]="filtroPrioridade === 'TODAS'" (click)="filtroPrioridade = 'TODAS'">Todas</button>
+              <button class="chip" [class.active]="filtroPrioridade === 'ALTA'" (click)="filtroPrioridade = 'ALTA'">Alta</button>
+              <button class="chip" [class.active]="filtroPrioridade === 'MEDIA'" (click)="filtroPrioridade = 'MEDIA'">Média</button>
+              <button class="chip" [class.active]="filtroPrioridade === 'BAIXA'" (click)="filtroPrioridade = 'BAIXA'">Baixa</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD DINÂMICO DE LISTA RENDERIZADA -->
+        <div class="dynamic-feedback-card card-emerald">
+          <div class="feedback-title">
+            <span class="icon">📋</span> CARD DINÂMICO: Renderização Estrutural via Bloco &#64;for & &#64;switch
+          </div>
+
+          <div class="task-list">
+            @for (t of obterTarefasFiltradas(); track t.id) {
+              <div class="task-item" [class.done]="t.concluida">
+                <input type="checkbox" [checked]="t.concluida" (change)="alternarConclusao(t)">
+                <span class="task-title">{{ t.titulo }}</span>
+
+                @switch (t.prioridade) {
+                  @case ('ALTA') {
+                    <span class="badge badge-danger">ALTA</span>
+                  }
+                  @case ('MEDIA') {
+                    <span class="badge badge-warning">MÉDIA</span>
+                  }
+                  @case ('BAIXA') {
+                    <span class="badge badge-info">BAIXA</span>
+                  }
+                }
+
+                <button class="btn-remove" (click)="removerTarefa(t.id)" title="Remover item">✕</button>
+              </div>
+            } @empty {
+              <div class="empty-state">
+                Nenhuma tarefa correspondente ao filtro selecionado. O bloco <code>&#64;empty</code> é nativo no Angular moderno!
+              </div>
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 4. PIPES NATIVOS DO ANGULAR -->
+      <!-- ========================================== -->
+      <section class="demo-card">
+        <div class="card-header">
+          <span class="section-tag tag-cyan">Pipes de Transformação</span>
+          <h2>Pipes Nativos em Tempo Real</h2>
+          <p class="concept-explanation">
+            Pipes transformam dados declarativamente na camada de template sem modificar os valores originais armazenados no TypeScript.
+          </p>
+        </div>
+
+        <div class="card-body">
+          <div class="pipe-controls">
+            <div class="control-group">
+              <label>Valor Monetário Bruto:</label>
+              <input type="number" [(ngModel)]="valorMonetario" step="100">
+            </div>
+            <div class="control-group">
+              <label>Texto Bruto para Transformação:</label>
+              <input type="text" [(ngModel)]="textoParaPipes">
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD DINÂMICO DE PIPES -->
+        <div class="dynamic-feedback-card card-cyan">
+          <div class="feedback-title">
+            <span class="icon">✨</span> CARD DINÂMICO: Saída Formatada pelos Pipes Nativos
+          </div>
+          <table class="pipes-table">
+            <thead>
+              <tr>
+                <th>Pipe & Sintaxe</th>
+                <th>Dado Bruto (TS)</th>
+                <th>Transformação no HTML</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>| uppercase</code></td>
+                <td>{{ textoParaPipes }}</td>
+                <td class="pipe-out">{{ textoParaPipes | uppercase }}</td>
+              </tr>
+              <tr>
+                <td><code>| lowercase</code></td>
+                <td>{{ textoParaPipes }}</td>
+                <td class="pipe-out">{{ textoParaPipes | lowercase }}</td>
+              </tr>
+              <tr>
+                <td><code>| currency:'BRL'</code></td>
+                <td>{{ valorMonetario }}</td>
+                <td class="pipe-out text-emerald">{{ valorMonetario | currency:'BRL':'symbol':'1.2-2' }}</td>
+              </tr>
+              <tr>
+                <td><code>| date:'fullDate'</code></td>
+                <td>{{ dataAtual.toISOString() }}</td>
+                <td class="pipe-out">{{ dataAtual | date:'fullDate' }}</td>
+              </tr>
+              <tr>
+                <td><code>| json</code></td>
+                <td>[Objeto TypeScript complexo]</td>
+                <td class="pipe-out"><pre class="json-preview">{{ objetoParaPipe | json }}</pre></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 5. FORMULÁRIOS REATIVOS & VALIDAÇÃO -->
+      <!-- ========================================== -->
+      <section class="demo-card">
+        <div class="card-header">
+          <span class="section-tag tag-amber">Reactive Forms</span>
+          <h2>Formulários Reativos & Validação Rigorosa</h2>
+          <p class="concept-explanation">
+            Formulários orientados a modelos no TypeScript oferecem validação síncrona, previsibilidade e facilidade de testes unitários.
+          </p>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="cadastroForm" (ngSubmit)="submeterCadastro()" class="reactive-form">
+            <div class="form-row">
+              <label>Nome Completo (Mínimo 3 letras):</label>
+              <input type="text" formControlName="nome" placeholder="Ex: Fernando Santos">
+              @if (cadastroForm.get('nome')?.touched && cadastroForm.get('nome')?.invalid) {
+                <span class="error-msg">O nome é obrigatório e deve ter ao menos 3 caracteres.</span>
+              }
+            </div>
+
+            <div class="form-row">
+              <label>E-mail Corporativo:</label>
+              <input type="email" formControlName="email" placeholder="usuario@empresa.com">
+              @if (cadastroForm.get('email')?.touched && cadastroForm.get('email')?.invalid) {
+                <span class="error-msg">Informe um e-mail válido.</span>
+              }
+            </div>
+
+            <div class="form-row">
+              <label>Nível de Experiência com Frontend:</label>
+              <select formControlName="nivelExperiencia">
+                <option value="Iniciante">Iniciante (Vanilla JS)</option>
+                <option value="Intermediario">Intermediário (React / Vue)</option>
+                <option value="Avancado">Avançado (Angular Enterprise)</option>
+              </select>
+            </div>
+
+            <div class="form-row-checkbox">
+              <input type="checkbox" id="termos" formControlName="aceiteTermos">
+              <label for="termos">Declaro que compreendi a arquitetura do Angular</label>
+            </div>
+            @if (cadastroForm.get('aceiteTermos')?.touched && cadastroForm.get('aceiteTermos')?.invalid) {
+              <span class="error-msg">A aceitação dos termos é obrigatória para submeter.</span>
+            }
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" [disabled]="cadastroForm.invalid">
+                Submeter Formulário
+              </button>
+              <button type="button" class="btn btn-outline" (click)="resetarFormulario()">
+                Limpar Campos
+              </button>
+            </div>
+          </form>
+
+          @if (cadastroSucesso) {
+            <div class="success-banner">
+              Formulário validado e submetido com sucesso pelo motor reativo do Angular!
+            </div>
+          }
+        </div>
+
+        <!-- CARD DINÂMICO FORM STATE -->
+        <div class="dynamic-feedback-card card-amber">
+          <div class="feedback-title">
+            <span class="icon">🛡️</span> CARD DINÂMICO: Estado de Validação do FormGroup
+          </div>
+          <div class="form-state-grid">
+            <div class="f-state">
+              <span class="f-lbl">Validade Geral (.valid):</span>
+              <span class="badge" [ngClass]="cadastroForm.valid ? 'badge-success' : 'badge-danger'">
+                {{ cadastroForm.valid }}
+              </span>
+            </div>
+            <div class="f-state">
+              <span class="f-lbl">Modificado (.dirty):</span>
+              <span class="badge badge-info">{{ cadastroForm.dirty }}</span>
+            </div>
+            <div class="f-state">
+              <span class="f-lbl">Tocado (.touched):</span>
+              <span class="badge badge-info">{{ cadastroForm.touched }}</span>
+            </div>
+            <div class="f-state full-width">
+              <span class="f-lbl">Valores do Formulário (.value):</span>
+              <pre class="json-preview">{{ cadastroForm.value | json }}</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 6. CICLO DE VIDA & INJEÇÃO DE DEPENDÊNCIAS -->
+      <!-- ========================================== -->
+      <section class="demo-card">
+        <div class="card-header">
+          <span class="section-tag tag-pink">Lifecycle & DI</span>
+          <h2>Injeção de Dependências & Ciclo de Vida</h2>
+          <p class="concept-explanation">
+            Demonstração do ciclo <code>ngOnInit</code> e <code>ngOnDestroy</code> montando e desmontando componentes no DOM sob demanda, além do compartilhamento de dados via Serviço Injetável singleton.
+          </p>
+        </div>
+
+        <div class="card-body">
+          <div class="lifecycle-controls">
+            <button class="btn" [ngClass]="exibirFilho ? 'btn-danger' : 'btn-emerald'" (click)="alternarComponenteFilho()">
+              {{ exibirFilho ? 'Desmontar Componente Filho (ngOnDestroy)' : 'Montar Componente Filho (ngOnInit)' }}
+            </button>
+          </div>
+
+          <div class="component-host">
+            @if (exibirFilho) {
+              <app-lifecycle-demo
+                [instanceName]="'CardFilho_Demo1'"
+                (eventoDisparado)="receberMensagemFilho($event)">
+              </app-lifecycle-demo>
+            } @else {
+              <div class="unmounted-placeholder">
+                Componente destruído da árvore do DOM. Todos os listeners e timers associados foram liberados para prevenir memory leaks.
+              </div>
+            }
+          </div>
+
+          <div class="child-comm-box">
+            <span class="lbl">Comunicação Filho → Pai (&#64;Output):</span>
+            <p class="msg">{{ ultimaMsgFilho }}</p>
+          </div>
+        </div>
+
+        <!-- CARD DINÂMICO SERVICE LOGS -->
+        <div class="dynamic-feedback-card card-pink">
+          <div class="feedback-title-row">
+            <div class="feedback-title">
+              <span class="icon">📜</span> CARD DINÂMICO: Event Logger Service (Singleton Injetado)
+            </div>
+            <button class="btn-clear" (click)="limparLogs()">Limpar Histórico</button>
+          </div>
+
+          <div class="log-stream">
+            @for (l of logger.logs(); track l.id) {
+              <div class="log-row">
+                <span class="log-time">{{ l.timestamp }}</span>
+                <span class="log-src">{{ l.source }}</span>
+                <span class="log-act">{{ l.action }}</span>
+                <span class="log-pay">{{ l.payload }}</span>
+              </div>
+            } @empty {
+              <div class="empty-state">Nenhum evento registrado ainda. Interaja com a aplicação para ver o log reativo!</div>
+            }
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>Seminário Técnico Angular • Aplicação SPA Didática para Apresentação Acadêmica</p>
+      <p class="copyright">Construído com Angular 21 Standalone Components & Signals.</p>
+    </div>
+  </footer>
+</div>
