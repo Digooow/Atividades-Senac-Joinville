@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokédex — Pesquisa de Pokémon</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+
+<body>
+  <div class="cenarios-fundo" aria-hidden="true">
+    <img
+      class="cenario-imagem is-active"
+      data-cenario-id="hoenn"
+      src="assets/backgrounds/mirante-hoenn.jpg"
+      alt=""
+      decoding="async"
+      fetchpriority="high"
+    >
+    <img
+      class="cenario-imagem"
+      data-cenario-id="cidade"
+      src="assets/backgrounds/cidade-anime.jpg"
+      alt=""
+      decoding="async"
+    >
+    <img
+      class="cenario-imagem"
+      data-cenario-id="vila"
+      src="assets/backgrounds/vila-pallet.jpg"
+      alt=""
+      decoding="async"
+    >
+    <img
+      class="cenario-imagem"
+      data-cenario-id="floresta"
+      src="assets/backgrounds/floresta-sol.jpg"
+      alt=""
+      decoding="async"
+    >
+    <div class="cenario-vinheta"></div>
+  </div>
+
+  <a href="#conteudo-principal" class="skip-link visually-hidden">Pular para o conteúdo principal</a>
+
+  <nav class="barra-cenarios" aria-label="Cenários de fundo">
+    <div class="barra-cenarios-botoes">
+      <button type="button" class="btn-cenario is-active" data-cenario="hoenn" aria-pressed="true">
+        Hoenn
+      </button>
+      <button type="button" class="btn-cenario" data-cenario="cidade" aria-pressed="false">
+        Cidade
+      </button>
+      <button type="button" class="btn-cenario" data-cenario="vila" aria-pressed="false">
+        Vila
+      </button>
+      <button type="button" class="btn-cenario" data-cenario="floresta" aria-pressed="false">
+        Floresta
+      </button>
+      <button
+        type="button"
+        id="btn-auto-cenario"
+        class="btn-cenario-auto"
+        aria-pressed="true"
+        title="Alternar cenários automaticamente"
+      >
+        Auto: ON
+      </button>
+    </div>
+  </nav>
+
+  <main id="conteudo-principal" class="pokedex-palco" tabindex="-1">
+    <section
+      id="pokedex-aparelho"
+      class="pokedex-aparelho"
+      data-aberta="false"
+      aria-label="Dispositivo Pokédex"
+    >
+      <div class="pokedex-palco-3d">
+        <div id="pokedex-livro" class="pokedex-livro">
+
+          <div
+            id="pokedex-ala-base"
+            class="pokedex-ala pokedex-ala--base"
+            inert
+            title="Clique na carcaça para fechar a Pokédex"
+          >
+            <header class="ala-topo ala-topo--base">
+              <div class="pokedex-titulo-grupo">
+                <span class="hud-etiqueta-topo">PokéAPI</span>
+                <h1>Pokédex</h1>
+              </div>
+              <span class="saidas-som saidas-som--superior" aria-hidden="true"></span>
+            </header>
+
+            <section id="resultado-area" class="painel-resultado" aria-labelledby="titulo-resultado">
+              <div class="painel-cabecalho">
+                <h2 id="titulo-resultado" class="painel-titulo">Visor de Resultados</h2>
+                <span id="status-badge" class="status-badge status-badge--aguardando">Aguardando busca</span>
+              </div>
+
+              <div id="resultado-conteudo" class="resultado-conteudo" aria-live="polite" aria-busy="false">
+                <div class="estado-vazio">
+                  <svg class="estado-icone" viewBox="0 0 64 64" width="44" height="44" aria-hidden="true">
+                    <circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" stroke-width="4" />
+                    <path d="M4 32h20m16 0h20" stroke="currentColor" stroke-width="4" />
+                    <circle cx="32" cy="32" r="8" fill="none" stroke="currentColor" stroke-width="4" />
+                  </svg>
+                  <h3>Nenhum Pokémon no visor</h3>
+                  <p>
+                    Pesquise um Pokémon no módulo de busca ao lado ou selecione um da lista para exibir
+                    os dados da PokéAPI aqui no visor.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <div id="pokedex-rodape-direito" class="pokedex-rodape-direito">
+              <fieldset
+                id="grade-slots-azuis"
+                class="grade-botoes-azuis controle-interativo"
+              >
+                <legend class="visually-hidden">Botões azuis para gravar e selecionar Pokémon</legend>
+                <button type="button" class="btn-slot-azul" data-slot-index="0" aria-label="Slot 01 livre — clique para gravar o Pokémon exibido" title="Slot 01 livre — clique para gravar o Pokémon exibido"></button>
+                <button type="button" class="btn-slot-azul" data-slot-index="1" aria-label="Slot 02 livre — clique para gravar o Pokémon exibido" title="Slot 02 livre — clique para gravar o Pokémon exibido"></button>
+                <button type="button" class="btn-slot-azul" data-slot-index="2" aria-label="Slot 03 livre — clique para gravar o Pokémon exibido" title="Slot 03 livre — clique para gravar o Pokémon exibido"></button>
+                <button type="button" class="btn-slot-azul" data-slot-index="3" aria-label="Slot 04 livre — clique para gravar o Pokémon exibido" title="Slot 04 livre — clique para gravar o Pokémon exibido"></button>
+                <button type="button" class="btn-slot-azul" data-slot-index="4" aria-label="Slot 05 livre — clique para gravar o Pokémon exibido" title="Slot 05 livre — clique para gravar o Pokémon exibido"></button>
+                <button type="button" class="btn-slot-azul" data-slot-index="5" aria-label="Slot 06 livre — clique para gravar o Pokémon exibido" title="Slot 06 livre — clique para gravar o Pokémon exibido"></button>
+                <button type="button" class="btn-slot-azul" data-slot-index="6" aria-label="Slot 07 livre — clique para gravar o Pokémon exibido" title="Slot 07 livre — clique para gravar o Pokémon exibido"></button>
+                <button type="button" class="btn-slot-azul" data-slot-index="7" aria-label="Slot 08 livre — clique para gravar o Pokémon exibido" title="Slot 08 livre — clique para gravar o Pokémon exibido"></button>
+                <button type="button" class="btn-slot-azul" data-slot-index="8" aria-label="Slot 09 livre — clique para gravar o Pokémon exibido" title="Slot 09 livre — clique para gravar o Pokémon exibido"></button>
+                <button type="button" class="btn-slot-azul" data-slot-index="9" aria-label="Slot 10 livre — clique para gravar o Pokémon exibido" title="Slot 10 livre — clique para gravar o Pokémon exibido"></button>
+              </fieldset>
+              <div class="mini-indicadores-inferiores">
+                <button
+                  type="button"
+                  id="btn-config-slots"
+                  class="mini-visor-amarelo controle-interativo"
+                  aria-pressed="false"
+                  aria-label="Configurar Pokémon salvos nos botões"
+                  title="Editar ou remover Pokémon salvos"
+                ></button>
+                <span class="saidas-som" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+
+          <div id="pokedex-aba-giratoria" class="pokedex-aba-giratoria">
+
+            <div id="tampa-frente" class="aba-face aba-face--frente">
+              <button
+                type="button"
+                id="btn-abrir-pokedex"
+                class="pokedex-tampa-fechada"
+                aria-expanded="false"
+                aria-controls="pokedex-ala-base pokedex-ala-scanner"
+                aria-label="Abrir Pokédex"
+              >
+                <span class="ala-topo ala-topo--capa">
+                  <span class="pokedex-titulo-grupo">
+                    <span class="capa-titulo">Pokédex</span>
+                  </span>
+                  <span class="pokedex-luzes" aria-hidden="true">
+                    <span class="camera-lente-principal">
+                      <span class="camera-anel-externo">
+                        <span class="camera-barril-optico">
+                          <span class="camera-vidro-safira"></span>
+                        </span>
+                      </span>
+                    </span>
+                    <span class="luz-trio">
+                      <span class="luz luz--vermelha"></span>
+                      <span class="luz luz--amarela"></span>
+                      <span class="luz luz--verde"></span>
+                    </span>
+                  </span>
+                </span>
+
+                <span class="tampa-corpo">
+                  <span class="tampa-dobradica-lateral" aria-hidden="true"></span>
+
+                  <span class="tampa-superficie">
+                    <span class="tampa-parafusos" aria-hidden="true">
+                      <span class="tampa-parafuso tampa-parafuso--sup-esq"></span>
+                      <span class="tampa-parafuso tampa-parafuso--sup-dir"></span>
+                      <span class="tampa-parafuso tampa-parafuso--inf-esq"></span>
+                      <span class="tampa-parafuso tampa-parafuso--inf-dir"></span>
+                    </span>
+
+                    <span class="tampa-placa-frontal" aria-hidden="true">
+                      <span class="tampa-linha-circuito"></span>
+                      <span class="tampa-emblema">
+                        <span class="emblema-faixa"></span>
+                        <span class="emblema-miolo"></span>
+                      </span>
+                      <span class="tampa-linha-circuito"></span>
+                    </span>
+
+                    <span class="tampa-trava-lateral" aria-hidden="true">
+                      <span class="trava-triangulo"></span>
+                    </span>
+
+                    <span class="tampa-rodape-hardware" aria-hidden="true">
+                      <span class="tampa-led-barra"></span>
+                      <span class="tampa-ranhuras">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </span>
+                      <span class="tampa-grade-eletronica"></span>
+                    </span>
+                  </span>
+                </span>
+              </button>
+            </div>
+
+            <div
+              id="pokedex-ala-scanner"
+              class="aba-face aba-face--verso pokedex-ala pokedex-ala--scanner"
+              inert
+              title="Clique na carcaça fora das telas e botões para fechar a Pokédex"
+            >
+              <header class="ala-topo ala-topo--scanner">
+                <div class="pokedex-luzes" aria-hidden="true">
+                  <span class="camera-lente-principal">
+                    <span class="camera-anel-externo">
+                      <span class="camera-barril-optico">
+                        <span class="camera-vidro-safira"></span>
+                      </span>
+                    </span>
+                  </span>
+                  <span class="luz-trio">
+                    <span class="luz luz--vermelha"></span>
+                    <span class="luz luz--amarela"></span>
+                    <span class="luz luz--verde"></span>
+                  </span>
+                </div>
+                <div class="pokedex-titulo-grupo">
+                  <span class="capa-titulo">Módulo de Busca</span>
+                </div>
+              </header>
+
+              <section class="painel-busca" aria-labelledby="titulo-busca">
+                <div id="painel-busca-form" class="painel-busca-form">
+                  <div class="painel-cabecalho">
+                    <h2 id="titulo-busca" class="painel-titulo">Pesquisar Pokémon</h2>
+                  </div>
+
+                  <search>
+                    <form id="form-pokedex" class="form-pokedex" novalidate>
+                      <label for="pokemon-input" class="campo-label">
+                        Nome ou ID <span aria-hidden="true">*</span>
+                      </label>
+                      <div class="campo-linha">
+                        <input
+                          type="text"
+                          id="pokemon-input"
+                          name="pokemon"
+                          class="campo-input"
+                          placeholder="Ex.: pikachu, pikaxu ou 25"
+                          required
+                          pattern=".*\S.*"
+                          autocorrect="off"
+                          autocapitalize="none"
+                          spellcheck="false"
+                          enterkeyhint="search"
+                          aria-describedby="pokemon-dica"
+                          aria-invalid="false"
+                          data-error="pokemon-erro-campo"
+                        >
+                        <button type="submit" id="btn-buscar" class="btn-primario">
+                          Buscar Pokémon
+                        </button>
+                      </div>
+                      <p id="pokemon-dica" class="campo-dica">
+                        Filtre a lista abaixo ao digitar (aceita aproximação) ou use as setas para navegar.
+                      </p>
+                      <div id="pokemon-erro-campo" class="mensagem-campo-erro">
+                        <span aria-hidden="true">❌</span>
+                        <span id="pokemon-erro-texto">Informe o nome de um Pokémon antes de pesquisar.</span>
+                      </div>
+                    </form>
+                  </search>
+                </div>
+
+                <div id="pokemon-catalogo-area" class="pokemon-catalogo-area">
+                  <div class="catalogo-cabecalho">
+                    <span id="catalogo-status" class="catalogo-status">Carregando lista da PokéAPI...</span>
+                    <button type="button" id="btn-recarregar-catalogo" class="btn-catalogo-recarregar" hidden>
+                      Recarregar
+                    </button>
+                  </div>
+                  <ul
+                    id="pokemon-catalogo"
+                    class="pokemon-catalogo-lista"
+                    aria-label="Lista de Pokémon disponíveis na PokéAPI"
+                  ></ul>
+                </div>
+              </section>
+
+              <div class="pokedex-controles-fisicos">
+                <fieldset class="controle-dpad controle-interativo">
+                  <legend class="visually-hidden">Navegar pelos menus e botões da Pokédex</legend>
+                  <button
+                    type="button"
+                    id="btn-dpad-cima"
+                    class="dpad-btn dpad-btn--cima"
+                    aria-label="Mover seleção para cima"
+                    title="Cima (↑)"
+                  >
+                    ▲
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-dpad-direita"
+                    class="dpad-btn dpad-btn--direita"
+                    aria-label="Mover seleção para a direita"
+                    title="Direita (→)"
+                  >
+                    ▶
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-dpad-baixo"
+                    class="dpad-btn dpad-btn--baixo"
+                    aria-label="Mover seleção para baixo"
+                    title="Baixo (↓)"
+                  >
+                    ▼
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-dpad-esquerda"
+                    class="dpad-btn dpad-btn--esquerda"
+                    aria-label="Mover seleção para a esquerda"
+                    title="Esquerda (←)"
+                  >
+                    ◀
+                  </button>
+                  <span class="dpad-miolo" aria-hidden="true"></span>
+                </fieldset>
+
+                <div class="controle-fendas controle-interativo">
+                  <button
+                    type="button"
+                    id="btn-limpar-form"
+                    class="btn-fenda btn-fenda--vermelha"
+                    aria-label="Voltar menu ou limpar formulário"
+                    title="Botão vermelho: voltar menu/tela (na raiz, limpa o formulário)"
+                  ></button>
+                  <button
+                    type="button"
+                    id="btn-limpar-visor"
+                    class="btn-fenda btn-fenda--azul"
+                    aria-label="Avançar menu ou limpar visor"
+                    title="Botão azul: entrar na tela selecionada (dentro da tela, limpa o visor)"
+                  ></button>
+                </div>
+
+                <button
+                  type="button"
+                  id="btn-controle-selecionar"
+                  class="controle-botao-a controle-interativo"
+                  aria-label="Confirmar ou selecionar item destacado"
+                  title="Confirmar / Selecionar (Enter)"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>
+      HTML5, CSS3 e JavaScript • Dados obtidos em tempo real via
+      <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">PokéAPI</a>.
+    </p>
+  </footer>
+</body>
+
+</html>
