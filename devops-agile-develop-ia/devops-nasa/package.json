@@ -1,0 +1,21 @@
+{
+  "name": "diario-do-cosmos",
+  "version": "1.0.0",
+  "description": "Aplicacao web Diário do Cosmos que consome a API APOD da NASA com seguranca via proxy Express.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "keywords": [
+    "nasa",
+    "apod",
+    "astronomy",
+    "express",
+    "copilot"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "express": "^4.22.3"
+  }
+}

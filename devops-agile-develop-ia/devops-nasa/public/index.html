@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Diário do Cosmos: explore a Imagem Astronômica do Dia (APOD) da NASA com suporte a imagens, vídeos e seleção de datas.">
+  <title>Diário do Cosmos — NASA APOD</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="brand-badge">NASA APOD</span>
+        <h1>Diário do Cosmos</h1>
+      </div>
+      <p class="subtitle">Arquivo astronômico oficial desde 16/06/1995</p>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <section class="controls-panel" aria-label="Seleção de data do APOD">
+      <form id="date-form" class="date-form">
+        <div class="date-input-group">
+          <label for="apod-date" class="control-label sr-only">Escolher data</label>
+          <div class="input-action-row">
+            <input
+              type="date"
+              id="apod-date"
+              name="date"
+              min="1995-06-16"
+              aria-describedby="date-help"
+            >
+            <button type="submit" id="fetch-date-btn" class="btn btn-primary">
+              Ver data
+            </button>
+          </div>
+          <small id="date-help" class="control-help">Escolha qualquer data a partir de 16/06/1995.</small>
+        </div>
+
+        <fieldset class="nav-buttons">
+          <legend class="sr-only">Navegação rápida entre datas</legend>
+          <button type="button" id="prev-day-btn" class="btn btn-secondary">
+            <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m15 18-6-6 6-6"></path>
+            </svg>
+            <span>Dia Anterior</span>
+          </button>
+          <button type="button" id="today-btn" class="btn btn-secondary">
+            Hoje
+          </button>
+          <button type="button" id="next-day-btn" class="btn btn-secondary">
+            <span>Próximo Dia</span>
+            <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </button>
+          <button type="button" id="random-day-btn" class="btn btn-ghost">
+            <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 3h5v5"></path>
+              <path d="M4 20 21 3"></path>
+              <path d="M21 16v5h-5"></path>
+              <path d="M15 15 21 21"></path>
+              <path d="M4 4 9 9"></path>
+            </svg>
+            <span>Data Aleatória</span>
+          </button>
+        </fieldset>
+      </form>
+    </section>
+
+    <output
+      id="loading-state"
+      class="status-card loading-card"
+      aria-live="polite"
+      hidden
+    >
+      <span class="cosmic-spinner" aria-hidden="true"></span>
+      <span class="status-title">Carregando registro do cosmos...</span>
+      <span class="status-text">Consultando os arquivos da NASA com segurança. Aguarde um instante.</span>
+    </output>
+
+    <div
+      id="error-state"
+      class="status-card error-card"
+      role="alert"
+      hidden
+    >
+      <div class="error-icon" aria-hidden="true">!</div>
+      <h2>Não foi possível carregar o APOD</h2>
+      <p id="error-message">Ocorreu um erro ao buscar os dados astronômicos.</p>
+      <div class="error-actions">
+        <button type="button" id="retry-btn" class="btn btn-primary">
+          Tentar novamente
+        </button>
+        <button type="button" id="error-today-btn" class="btn btn-secondary">
+          Voltar para Hoje
+        </button>
+      </div>
+    </div>
+
+    <article id="apod-content" class="apod-card" hidden>
+      <div class="apod-layout">
+        <figure class="apod-media-figure">
+          <div id="apod-media-container" class="apod-media-container"></div>
+          <figcaption id="apod-copyright" class="apod-copyright" hidden></figcaption>
+        </figure>
+
+        <div class="apod-editorial-col">
+          <header class="apod-header">
+            <div class="apod-meta">
+              <time id="apod-date-display" class="apod-date-badge"></time>
+              <span class="meta-separator" aria-hidden="true">•</span>
+              <span id="apod-media-badge" class="media-type-badge"></span>
+            </div>
+            <h2 id="apod-title" class="apod-title">Registro Astronômico do Dia</h2>
+          </header>
+
+          <section class="apod-details" aria-label="Explicação astronômica">
+            <h3 class="section-heading sr-only">Explicação do Astrônomo</h3>
+            <p id="apod-explanation" class="apod-explanation"></p>
+          </section>
+
+          <div id="apod-media-actions" class="apod-media-actions"></div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>
+        Diário do Cosmos — Dados fornecidos pela API pública
+        <a href="https://api.nasa.gov/" target="_blank" rel="noopener noreferrer">NASA APOD</a>
+        através de proxy backend protegido.
+      </p>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
