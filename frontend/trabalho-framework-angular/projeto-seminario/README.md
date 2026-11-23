@@ -1,59 +1,51 @@
-# ProjetoSeminario
+# Angular Interactive Showcase & Toolkit (`projeto-seminario`)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.27.
+![Angular](https://img.shields.io/badge/Angular-21.2-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Vitest](https://img.shields.io/badge/Tests-Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)
 
-## Development server
+Aplicação **Single Page Application (SPA)** desenvolvida em **Angular 21.2** com *Standalone Components* para demonstração prática durante o seminário técnico de Angular do curso **Jovem Programador (SENAC Joinville)**.
 
-To start a local development server, run:
+> Documentação completa do seminário e dos 6 cards interativos: [`../readme.md`](../readme.md) · [`../ORGANIZACAO_SOFTWARE.md`](../ORGANIZACAO_SOFTWARE.md)
 
-```bash
-ng serve
+## Estrutura Principal
+
+```text
+projeto-seminario/
+├── src/
+│   ├── app/
+│   │   ├── components/
+│   │   │   └── lifecycle-demo.component.ts   # Componente filho (ngOnInit / ngOnDestroy / @Output)
+│   │   ├── services/
+│   │   │   └── event-logger.service.ts       # Serviço Singleton reativo com Signals
+│   │   ├── app.ts                            # Componente raiz standalone
+│   │   ├── app.html                          # Template com os 6 pilares demonstrativos
+│   │   ├── app.css                           # Estilos encapsulados
+│   │   ├── app.config.ts                     # Configuração de provedores da aplicação
+│   │   └── app.spec.ts                       # Testes unitários com Vitest
+│   ├── main.ts                               # Bootstrap client-side
+│   ├── main.server.ts                        # Bootstrap SSR
+│   └── server.ts                             # Servidor Express para SSR
+├── angular.json
+└── package.json
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Scripts Disponíveis
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Instale as dependências antes do primeiro uso:
 
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+| Comando | Descrição |
+| :--- | :--- |
+| `npm start` | Inicia o servidor de desenvolvimento (`ng serve`) em `http://localhost:4200` |
+| `npm run build` | Gera o build otimizado de produção em `dist/projeto-seminario` |
+| `npm run watch` | Compila continuamente em modo desenvolvimento |
+| `npm test` | Executa os testes unitários com **Vitest** via `ng test` |
+| `npm run serve:ssr:projeto-seminario` | Executa a versão SSR gerada pelo build em Node.js |
 
-```bash
-ng generate --help
-```
+---
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+[← Voltar para trabalho-framework-angular](../readme.md) · [← Voltar ao repositório principal](../../../README.md)

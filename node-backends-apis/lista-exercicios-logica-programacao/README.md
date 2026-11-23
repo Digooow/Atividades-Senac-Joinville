@@ -1,6 +1,38 @@
+# Lista de Exercícios — Lógica de Programação com API Express
+
+![Node.js](https://img.shields.io/badge/Node.js-ES%20Modules-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-5.x-000000?style=for-the-badge&logo=express&logoColor=white)
+
 ## Contexto da aula
 
-Este repositório registra minhas atividades da aula de programação do curso Jovem Programador. A lista abaixo foi disponibilizada pelo professor e serve como base para praticar os fundamentos da programação, acompanhando meu aprendizado ao longo das atividades.
+Este diretório registra atividades da disciplina de lógica de programação e fundamentos de backend do curso **Jovem Programador (SENAC Joinville)**. Além do enunciado completo da lista de exercícios proposta pelo professor, o arquivo [`index.js`](./index.js) implementa os exercícios iniciais e desafios como **rotas HTTP `POST` em Express**.
+
+## Como executar a API
+
+```bash
+npm install
+npm run dev
+```
+
+O servidor inicia em `http://localhost:3000`.
+
+## Endpoints implementados (`index.js`)
+
+| Exercício | Método & Rota | Corpo (JSON) | Descrição |
+| :--- | :--- | :--- | :--- |
+| Ex. 1 | `POST /api/somar` | `{"num1": 10, "num2": 5}` | Soma dois números |
+| Ex. 2 | `POST /api/salario` | `{"valor": 25, "hora": 160}` | Calcula salário mensal |
+| Ex. 3 | `POST /api/peso/pessoas` | `{"peso1", "peso2", "peso3", "peso4", "peso5"}` | Média de peso de 5 pessoas |
+| Ex. 4 | `POST /api/conversor` | `{"celsius": 25}` | Converte Celsius para Fahrenheit |
+| Ex. 5 | `POST /api/distancia` | `{"milha": 10}` | Converte milhas para quilômetros |
+| Ex. 6 | `POST /api/duracao` | `{"segundos": 3665}` | Converte segundos em horas, minutos e segundos |
+| Ex. 7 | `POST /api/distanciametro` | `{"quilometro": 2}` | Converte km em metros e centímetros |
+| Ex. 8 | `POST /api/tabuada` | `{"numero": 7}` | Retorna a tabuada de 1 a 10 |
+| Desafio 0 | `POST /api/idade` | `{"anos": 20}` | Converte anos em meses e dias |
+| Desafio 1 | `POST /api/troca` | `{"a": 1, "b": 2}` | Troca os valores entre A e B |
+| Desafio 2 | `POST /api/maior` | `{"num1": 8, "num2": 12}` | Informa qual número é maior |
+
+---
 
 ## 🧠 **Lista de Exercícios para Iniciantes**
 
@@ -204,3 +236,7 @@ Perguntas:
 **34.** Peça uma letra e informe se ela é **vogal** ou **consoante**.
 
 **35.** Peça um número de 1 a 5 e mostre o nome de uma fruta correspondente.
+
+---
+
+[← Voltar ao repositório principal](../../README.md)

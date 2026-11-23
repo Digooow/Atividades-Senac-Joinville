@@ -9,8 +9,8 @@ Este documento especifica a identidade visual, paleta de cores, tipografia, íco
 - **Tema**: **Fenda do Biquíni / Bob Esponja** — unindo o universo submarino do abacaxi mais famoso do mar com a gestão da Fazenda de Abacaxis.
 - **Abordagem**: **CSS Puro + Canvas HTML5 + SVG Inline** (zero frameworks pesados de UI ou pacotes extras de ícones/animações).
 - **Arquivos Visuais Centrais**:
-  - [`src/styles.css`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/styles.css) — todas as regras globais, paleta e componentes.
-  - [`src/FundoBiquini.jsx`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/FundoBiquini.jsx) — cenário subaquático animado e interativo ao mouse/clique.
+  - [`src/styles.css`](src/styles.css) — todas as regras globais, paleta e componentes.
+  - [`src/FundoBiquini.jsx`](src/FundoBiquini.jsx) — cenário subaquático animado e interativo ao mouse/clique.
 
 ---
 
@@ -66,7 +66,7 @@ Este documento especifica a identidade visual, paleta de cores, tipografia, íco
 
 - **Zero Bibliotecas Externas**: Sem pacotes de ícones NPM.
 - **Emojis Nativos**: `🍍` (marca principal e favicon SVG inline no `index.html`) e `🧽` (badge de usuário no header).
-- **Bandeiras de Idioma em SVG Inline ([`src/i18n.jsx`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/i18n.jsx))**:
+- **Bandeiras de Idioma em SVG Inline ([`src/i18n.jsx`](src/i18n.jsx))**:
   - Componentes vetoriais `BandeiraBrasil`, `BandeiraEUA` e `BandeiraChina` (`28×20px`), exibindo **somente as bandeiras sem siglas de texto** (evitando que o Windows renderize letras `BR`/`US`/`CN`).
 
 ---

@@ -1,4 +1,26 @@
-# Metodologias Ágeis — Projeto Integrador 2
+# DevOps, Metodologias Ágeis & Desenvolvimento com IA
+
+![GitHub Actions](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+![Cloudflare Pages](https://img.shields.io/badge/Deploy-Cloudflare%20Pages%20%26%20Render-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)
+![Scrum](https://img.shields.io/badge/Agile-Scrum%20%26%20Kanban-10B981?style=for-the-badge)
+![Copilot](https://img.shields.io/badge/AI-GitHub%20Copilot-8B5CF6?style=for-the-badge&logo=githubcopilot&logoColor=white)
+
+Este diretório concentra os projetos práticos das disciplinas de **DevOps**, **Desenvolvimento Orientado a IA** e **Metodologias Ágeis** do curso **Jovem Programador (SENAC Joinville)**.
+
+## Projetos e atividades deste módulo
+
+| Projeto / Pasta | Descrição | Destaques Técnicos | Documentação |
+| :--- | :--- | :--- | :--- |
+| [**Digooow.github.io**](./Digooow.github.io/) | Portfólio interativo com telemetria real da API do GitHub e terminal CLI assíncrono | HTML5, Tailwind, ES Modules, Canvas 2D, CI/CD (`deploy.yml`), Cloudflare Pages & Lighthouse CI | [readme.md](./Digooow.github.io/readme.md) |
+| [**devops-abacaxi**](./devops-abacaxi/) | Sistema full-stack *Fazenda de Abacaxis* (tema Fenda do Biquíni) para deploy em plano gratuito | React 18, Vite 6, Canvas/SVG, i18n (PT/EN/ZH), Express 5, Sequelize (MySQL/Postgres), JWT & Swagger | [README.md](./devops-abacaxi/README.md) |
+| [**devops-nasa**](./devops-nasa/) | *Diário do Cosmos* — galeria responsiva consumindo a API NASA APOD com proxy BFF seguro | Express 4, proteção de API Key em `.env`, cache em memória, mobile-first & Copilot instructions | [README.md](./devops-nasa/README.md) |
+| [**aula-exemplo-ia**](./aula-exemplo-ia/) | API REST nativa de Biblioteca (zero dependências) + cliente web dark mode com log HTTP | `node:http` nativo, CRUD de livros em memória, `fetch()` e inspetor JSON | [readme.md](./aula-exemplo-ia/readme.md) |
+| [**Atividade GitHub**](./Atividade%20GitHub/) | Guia passo a passo de inicialização Git, commits e publicação de repositórios no GitHub | `git init`, `git add`, `git commit`, `git remote` e `git push` | [readme.md](./Atividade%20GitHub/readme.md) |
+| **Projeto Integrador 2 (Externo)** | Sistema de Reserva de Salas documentado nesta disciplina de Metodologias Ágeis | Sprints, Backlog, Histórias de Usuário, JWT e testes E2E | [GitHub: Projeto-Integrador2](https://github.com/Digooow/Projeto-Integrador2) |
+
+---
+
+## Metodologias Ágeis — Projeto Integrador 2
 
 ## Sobre a atividade
 
@@ -248,3 +270,7 @@ somente dividir tarefas ou usar um quadro. Ela envolve:
 - [Arquitetura do Projeto](https://github.com/Digooow/Projeto-Integrador2/blob/main/docs/ARQUITETURA.md)
 - [Histórico de Decisões](https://github.com/Digooow/Projeto-Integrador2/blob/main/docs/HISTORICO.md)
 - [Roadmap](https://github.com/Digooow/Projeto-Integrador2/blob/main/docs/ROADMAP.md)
+
+---
+
+[← Voltar ao repositório principal](../README.md)

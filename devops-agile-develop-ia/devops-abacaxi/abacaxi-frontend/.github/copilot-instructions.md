@@ -13,7 +13,7 @@ Estas instruções aplicam-se a qualquer alteração ou criação de código den
 - **Proibição de Novas Bibliotecas**:
   - **NÃO adicione** bibliotecas de estilização (Tailwind, Bootstrap, styled-components, Sass/SCSS).
   - **NÃO adicione** bibliotecas de roteamento (`react-router-dom`). A troca de telas é intencionalmente baseada em estado (`useState`) para funcionar em qualquer servidor estático sem necessidade de configuração de *rewrite/SPA fallback*.
-  - **NÃO adicione** bibliotecas HTTP (`axios`, `swr`, `react-query`). Use exclusivamente o helper `api()` de [`src/api.js`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/api.js).
+  - **NÃO adicione** bibliotecas HTTP (`axios`, `swr`, `react-query`). Use exclusivamente o helper `api()` de [`src/api.js`](../src/api.js).
   - **NÃO adicione** pacotes de ícones (`lucide-react`, `heroicons`, `font-awesome`, `@mui/icons-material`).
   - **NÃO adicione** gerenciadores de estado (`redux`, `zustand`) ou validação de formulários (`formik`, `zod`, `react-hook-form`).
 - **Idioma**: Todos os textos de interface (labels, botões, mensagens, títulos), nomes de variáveis, estados e funções devem ser escritos em **Português (pt-BR)**.
@@ -25,7 +25,7 @@ Estas instruções aplicam-se a qualquer alteração ou criação de código den
 Consulte o guia completo em [`STYLEGUIDE.md`](../STYLEGUIDE.md), que descreve detalhadamente cada token visual, variante de botão, espaçamentos e componentes. Toda implementação de interface deve ser 100% aderente a ele.
 
 ### 2.1 Arquivo Central de CSS
-- Todas as regras visuais devem ser mantidas exclusivamente em [`src/styles.css`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/styles.css).
+- Todas as regras visuais devem ser mantidas exclusivamente em [`src/styles.css`](../src/styles.css).
 - Não crie arquivos `.module.css` nem estilizações inline repetitivas. Consulte as classes prontas documentadas no [`STYLEGUIDE.md`](../STYLEGUIDE.md) (`.card`, `.formulario`, `.tabela`, `.indicadores`, `.login`, `.erro`, `.dica`, `button.excluir`, `button.ativo`).
 
 ### 2.2 Paleta de Cores e Tema Fenda do Biquíni
@@ -56,7 +56,7 @@ Reutilize as classes e estilos existentes:
 ## 3. Padrões de Componentes e Estrutura React
 
 ### 3.1 Adicionando Novas Telas
-A navegação é centralizada em [`src/App.jsx`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/App.jsx):
+A navegação é centralizada em [`src/App.jsx`](../src/App.jsx):
 1. Crie o componente da tela dentro de `src/pages/NomeDaPagina.jsx`.
 2. Adicione a chave no objeto `PAGINAS` em `src/App.jsx`:
    ```javascript
@@ -105,7 +105,7 @@ Sempre envolva a `table` em uma div `.card.tabela`:
 
 ---
 
-## 4. Comunicação com a API e Helpers ([src/api.js](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/api.js))
+## 4. Comunicação com a API e Helpers ([src/api.js](../src/api.js))
 
 - **Consumo HTTP**:
   ```javascript

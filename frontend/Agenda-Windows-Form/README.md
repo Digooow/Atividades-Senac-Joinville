@@ -1,4 +1,9 @@
-# Agenda
+# Agenda de Contatos — Windows Forms & SQLite
+
+![C#](https://img.shields.io/badge/C%23-.NET%2010-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+![Windows Forms](https://img.shields.io/badge/UI-Windows%20Forms-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![MSTest](https://img.shields.io/badge/Tests-MSTest-10B981?style=for-the-badge)
 
 Aplicação desktop de agenda de contatos desenvolvida como atividade prática do
 curso do Senac. O projeto foi criado em **C#**, utilizando **Windows Forms** para
@@ -146,3 +151,7 @@ Os testes verificam:
 - aceitação de um contato válido;
 - inserção, pesquisa, alteração e exclusão de contatos;
 - tratamento correto de nomes que possuem apóstrofo.
+
+---
+
+[← Voltar ao repositório principal](../../README.md)

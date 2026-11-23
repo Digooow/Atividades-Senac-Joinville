@@ -1,23 +1,32 @@
-# 🍍 DevOps Abacaxi — Fazenda de Abacaxis
+# 🍍 DevOps Abacaxi — Fazenda de Abacaxis (Tema Fenda do Biquíni)
 
-Projeto didático para aprender **deploy de uma aplicação web no [Render](https://render.com)** usando **apenas o plano gratuito**.
+![React](https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react&logoColor=000000)
+![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-Express%205-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Sequelize](https://img.shields.io/badge/Sequelize-MySQL%20%2F%20Postgres-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-OpenAPI%203.0-85EA2D?style=for-the-badge&logo=swagger&logoColor=000000)
 
-O sistema controla uma fazenda de abacaxis: tem **login**, registro de **colheitas** (data e quantidade) e registro de **vendas**, com controle de estoque e faturamento.
+Projeto full-stack didático criado para ensinar **deploy em nuvem no [Render](https://render.com)** usando **apenas o plano gratuito**, com interface temática interativa inspirada na **Fenda do Biquíni**, suporte a **3 idiomas (Português, Inglês e Chinês)** e API REST documentada com **Swagger UI (`/docs`)**.
 
-## O que tem neste repositório
+O sistema controla uma fazenda de abacaxis: possui **login JWT**, registro de **colheitas** (data e quantidade), registro de **vendas** com validação dinâmica de estoque e painel de faturamento.
 
-```
+## O que tem neste projeto
+
+```text
 devops-abacaxi/
-├── abacaxi-backend/    → API em Node.js + Express (MySQL local / PostgreSQL no Render)
-└── abacaxi-frontend/   → Site em React + Vite
+├── abacaxi-backend/    → API em Node.js + Express 5 + Sequelize + Swagger (MySQL local / PostgreSQL no Render)
+├── abacaxi-frontend/   → SPA em React 18 + Vite 6 + Canvas/SVG interativo + i18n (PT/EN/ZH)
+├── dev.js              → Orquestrador único que prepara .env, dependências, MySQL Docker e inicia API + Site
+├── package.json        → Scripts de automação na raiz (npm run dev / setup / build)
+└── README.md           → Documentação principal do projeto
 ```
 
-O frontend e o backend estão **separados**: cada um é um projeto independente, com o próprio `package.json`, e é publicado como um **serviço diferente** no Render. Eles só ficam no mesmo repositório para facilitar.
+O frontend e o backend estão **separados**: cada um é um projeto independente, com o próprio `package.json`, e é publicado como um **serviço diferente** no Render.
 
-| Pasta | O que é | Serviço no Render (Free) |
-|---|---|---|
-| [abacaxi-backend](abacaxi-backend) | API (regras, login, banco de dados) | **Web Service** + **Postgres** |
-| [abacaxi-frontend](abacaxi-frontend) | Telas que rodam no navegador | **Static Site** |
+| Pasta | O que é | Serviço no Render (Free) | Documentação |
+| :--- | :--- | :--- | :--- |
+| [abacaxi-backend](abacaxi-backend) | API (regras, JWT, estoque, Swagger `/docs`, Sequelize) | **Web Service** + **Postgres** | [README do backend](abacaxi-backend/README.md) |
+| [abacaxi-frontend](abacaxi-frontend) | Telas React, cenário Fenda do Biquíni e i18n (PT/EN/ZH) | **Static Site** | [README do frontend](abacaxi-frontend/README.md) · [STYLEGUIDE](abacaxi-frontend/STYLEGUIDE.md) |
 
 ## Arquitetura
 
@@ -101,4 +110,8 @@ Siga **nesta ordem**, porque cada passo usa uma informação do anterior:
 - O banco Postgres gratuito **expira 30 dias após a criação**, e cada conta só pode ter **1 banco gratuito**.
 - O Static Site (frontend) é gratuito e não dorme.
 
-Mais detalhes no [README do backend](abacaxi-backend/README.md).
+Mais detalhes no [README do backend](abacaxi-backend/README.md) e no [README do frontend](abacaxi-frontend/README.md).
+
+---
+
+[← Voltar ao módulo DevOps, Ágil & IA](../README.md) · [← Voltar ao repositório principal](../../README.md)

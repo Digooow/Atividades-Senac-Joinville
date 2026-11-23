@@ -1,5 +1,9 @@
 # Exercício de API Backend com Node.js
 
+![Node.js](https://img.shields.io/badge/Node.js-ES%20Modules-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-5.x-000000?style=for-the-badge&logo=express&logoColor=white)
+![Architecture](https://img.shields.io/badge/Architecture-MVC-6366F1?style=for-the-badge)
+
 Atividade prática desenvolvida nas aulas do curso de Qualificação Profissional em Desenvolvimento de Sistemas (Programa Jovem Programador) na Faculdade de Tecnologia SENAC Joinville
 para estudar a criação e a organização de uma API REST utilizando Node.js,
 Express e o padrão arquitetural MVC (Model-View-Controller).
@@ -497,3 +501,7 @@ http://localhost:3000/api/marcas
 | [marcasController.js](./src/controller/marcasController.js) | Processa requisições e monta respostas                            |
 | [marcasService.js](./src/service/marcasService.js)          | Faz a ponte e concentra regras da aplicação                       |
 | [marcasModel.js](./src/model/marcasModel.js)                | Armazena e altera os dados em memória                              |
+
+---
+
+[← Voltar ao repositório principal](../../README.md)

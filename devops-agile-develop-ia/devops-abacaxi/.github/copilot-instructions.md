@@ -44,7 +44,7 @@ devops-abacaxi/
 ## Backend (`abacaxi-backend/`)
 
 > 📖 **Instruções Detalhadas do Backend:**
-> Consulte [Instruções do Copilot para Backend](abacaxi-backend/copilot-instructions.md) para convenções de models, rotas, regras de estoque dinâmico e ports de banco.
+> Consulte [Instruções do Copilot para Backend](../abacaxi-backend/copilot-instructions.md) para convenções de models, rotas, regras de estoque dinâmico e ports de banco.
 
 ### Stack e Convenções de Código
 - **Runtime e Módulos**: Node.js `>=20` usando **CommonJS** (`require` / `module.exports`). Não misture sintaxe ES Modules (`import`/`export`) no backend.
@@ -77,8 +77,8 @@ devops-abacaxi/
 ## Frontend (`abacaxi-frontend/`)
 
 > 📖 **Documentação Visual & Instruções Detalhadas:**
-> - [Guia de Estilo Visual & Design System](abacaxi-frontend/STYLEGUIDE.md) — cores, fontes, ícones, botões e componentes.
-> - [Instruções do Copilot para Frontend](abacaxi-frontend/copilot-instructions.md) — regras específicas para criação e manutenção do frontend.
+> - [Guia de Estilo Visual & Design System](../abacaxi-frontend/STYLEGUIDE.md) — cores, fontes, ícones, botões e componentes.
+> - [Instruções do Copilot para Frontend](../abacaxi-frontend/copilot-instructions.md) — regras específicas para criação e manutenção do frontend.
 
 ### Stack e Convenções de Código
 - **React 18 + Vite 6** com **ES Modules** (`"type": "module"`). Zero dependências extras em produção além de `react` e `react-dom`.

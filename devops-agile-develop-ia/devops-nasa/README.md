@@ -1,5 +1,9 @@
 # Diário do Cosmos — NASA APOD
 
+![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-BFF%20Proxy-000000?style=for-the-badge&logo=express&logoColor=white)
+![NASA API](https://img.shields.io/badge/API-NASA%20APOD-0B3D91?style=for-the-badge&logo=nasa&logoColor=white)
+
 Aplicação web responsiva que exibe a **Imagem Astronômica do Dia (APOD — Astronomy Picture of the Day)** utilizando a API oficial da NASA (`https://api.nasa.gov/planetary/apod`), construída com o apoio do GitHub Copilot a partir de diretrizes técnicas e de segurança previamente definidas.
 
 ---
@@ -112,3 +116,7 @@ http://localhost:3000
 - **Ocultação da API Key (Padrão BFF / Proxy):** O navegador se comunica apenas com `/api/apod` no servidor Express; a variável `NASA_API_KEY` permanece apenas no ambiente do servidor (`process.env.NASA_API_KEY`).
 - **Prevenção de XSS:** O frontend não utiliza `innerHTML` para dados externos; todos os textos usam `textContent` e todas as URLs de mídia são validadas (`http:` / `https:`) antes de serem atribuídas a `src` ou `href`.
 - **Sanitização de Erros:** Falhas externas retornam mensagens tratadas em português sem expor chaves, URLs completas com parâmetros secretos ou stack traces.
+
+---
+
+[← Voltar ao módulo DevOps, Ágil & IA](../README.md) · [← Voltar ao repositório principal](../../README.md)

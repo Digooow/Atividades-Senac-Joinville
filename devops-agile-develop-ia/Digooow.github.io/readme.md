@@ -1,5 +1,10 @@
 # Rodrigo da Cruz Godinho — Portfólio Interativo & Engenharia DevOps
 
+![CI/CD Pipeline](https://img.shields.io/github/actions/workflow/status/Digooow/Atividades-Senac-Joinville/deploy.yml?branch=main&style=for-the-badge&label=CI%2FCD%20Deploy)
+![Cloudflare Pages](https://img.shields.io/badge/Cloudflare%20Pages-Edge%20CDN-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)
+![Lighthouse CI](https://img.shields.io/badge/Audit-Lighthouse%20CI-F44B21?style=for-the-badge&logo=lighthouse&logoColor=white)
+![ES Modules](https://img.shields.io/badge/JavaScript-ES%20Modules-F7DF1E?style=for-the-badge&logo=javascript&logoColor=000000)
+
 Aplicação web estática, interativa e orientada a telemetria em tempo real, desenvolvida na disciplina de **DevOps com IA** para demonstrar na prática um ciclo completo de **Integração Contínua e Entrega Contínua (CI/CD)** no GitHub Actions, aliado a consumo assíncrono da **GitHub REST API v3**, animações procedurais em Canvas 2D e auditoria automatizada pós-deploy com **Lighthouse CI**.
 
 ---
@@ -149,3 +154,7 @@ Qualificação Profissional em Desenvolvimento de Sistemas (Programa Jovem Progr
 - **GitHub:** [@Digooow](https://github.com/Digooow)
 - **LinkedIn:** [linkedin.com/in/digooow](https://linkedin.com/in/digooow)
 - **LeetCode:** [leetcode.com/digooow](https://leetcode.com/digooow)
+
+---
+
+[← Voltar ao módulo DevOps, Ágil & IA](../README.md) · [← Voltar ao repositório principal](../../README.md)

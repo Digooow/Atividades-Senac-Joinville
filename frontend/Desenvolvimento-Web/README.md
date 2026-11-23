@@ -1,13 +1,21 @@
 # Atividades de Desenvolvimento Web
 
+![HTML5](https://img.shields.io/badge/HTML5-Semantic-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-Responsive-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-DOM%20%26%20Events-F7DF1E?style=for-the-badge&logo=javascript&logoColor=000000)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3.8-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+
 Exercícios e pequenos projetos desenvolvidos durante os estudos de Desenvolvimento Web no SENAC Joinville e no curso **HTML Essentials**, da Cisco.
 
-O diretório reúne páginas estáticas feitas com **HTML**, **CSS** e **JavaScript**, com exemplos de estrutura semântica, estilização responsiva, formulários, validação de dados, eventos do navegador e composição de interfaces.
+O diretório reúne páginas estáticas feitas com **HTML**, **CSS**, **Bootstrap** e **JavaScript**, com exemplos de estrutura semântica, estilização responsiva, formulários, validação de dados, eventos do navegador e composição de interfaces.
 
 ## Conteúdo
 
 ```text
 Desenvolvimento-Web/
+├── Atividade Calculadora/
+│   ├── calculadora.html
+│   └── script.js
 ├── Atividades Curso Desenvolvimento Web SENAC/
 │   ├── Atividade 1/
 │   ├── Atividade UXUI/
@@ -19,6 +27,13 @@ Desenvolvimento-Web/
 │   └── Atividade 2/
 └── README.md
 ```
+
+## Calculadora Web (Bootstrap + JavaScript)
+
+Aplicação interativa de calculadora com duas entradas numéricas e quatro operações básicas (`+`, `-`, `*`, `/`), estilizada com **Bootstrap 5.3.8**:
+
+- [`calculadora.html`](<Atividade Calculadora/calculadora.html>): layout responsivo centralizado com rótulos acessíveis e cartões de resultado;
+- [`script.js`](<Atividade Calculadora/script.js>): captura os cliques via `data-op`, valida números com `Number.isNaN`, impede divisão por zero, formata a saída com duas casas decimais e implementa o botão **Limpar**.
 
 ## Atividades do Desenvolvimento Web SENAC
 
@@ -87,3 +102,5 @@ Algumas páginas carregam fontes ou imagens hospedadas externamente e, por isso,
 ---
 
 Este diretório faz parte do repositório [Atividades-Senac-Joinville](https://github.com/Digooow/Atividades-Senac-Joinville).
+
+[← Voltar ao repositório principal](../../README.md)

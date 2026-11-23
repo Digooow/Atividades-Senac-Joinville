@@ -3,7 +3,7 @@
 Estas instruções aplicam-se a qualquer alteração ou criação de código dentro do diretório `abacaxi-frontend/`.
 
 > 🎨 **REFERÊNCIA VISUAL OBRIGATÓRIA:**
-> O arquivo [`STYLEGUIDE.md`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/STYLEGUIDE.md) é o **Guia Oficial de Estilo Visual e Design System** deste frontend. Sempre consulte e siga estritamente suas definições para paleta de cores, tipografia, ícones/emojis, botões, formulários, tabelas e layouts antes de gerar ou modificar código visual.
+> O arquivo [`STYLEGUIDE.md`](STYLEGUIDE.md) é o **Guia Oficial de Estilo Visual e Design System** deste frontend. Sempre consulte e siga estritamente suas definições para paleta de cores, tipografia, ícones/emojis, botões, formulários, tabelas e layouts antes de gerar ou modificar código visual.
 
 ---
 
@@ -13,7 +13,7 @@ Estas instruções aplicam-se a qualquer alteração ou criação de código den
 - **Proibição de Novas Bibliotecas**:
   - **NÃO adicione** bibliotecas de estilização (Tailwind, Bootstrap, styled-components, Sass/SCSS).
   - **NÃO adicione** bibliotecas de roteamento (`react-router-dom`). A troca de telas é intencionalmente baseada em estado (`useState`) para funcionar em qualquer servidor estático sem necessidade de configuração de *rewrite/SPA fallback*.
-  - **NÃO adicione** bibliotecas HTTP (`axios`, `swr`, `react-query`). Use exclusivamente o helper `api()` de [`src/api.js`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/api.js).
+  - **NÃO adicione** bibliotecas HTTP (`axios`, `swr`, `react-query`). Use exclusivamente o helper `api()` de [`src/api.js`](src/api.js).
   - **NÃO adicione** pacotes de ícones (`lucide-react`, `heroicons`, `font-awesome`, `@mui/icons-material`).
   - **NÃO adicione** gerenciadores de estado (`redux`, `zustand`) ou validação de formulários (`formik`, `zod`, `react-hook-form`).
 - **Idioma**: Todos os textos de interface (labels, botões, mensagens, títulos), nomes de variáveis, estados e funções devem ser escritos em **Português (pt-BR)**.
@@ -22,15 +22,15 @@ Estas instruções aplicam-se a qualquer alteração ou criação de código den
 
 ## 2. Design System e Estilização Obrigatória
 
-Consulte o guia completo em [`STYLEGUIDE.md`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/STYLEGUIDE.md), que descreve detalhadamente cada token visual, variante de botão, espaçamentos e componentes. Toda implementação de interface deve ser 100% aderente a ele.
+Consulte o guia completo em [`STYLEGUIDE.md`](STYLEGUIDE.md), que descreve detalhadamente cada token visual, variante de botão, espaçamentos e componentes. Toda implementação de interface deve ser 100% aderente a ele.
 
 ### 2.1 Arquivo Central de CSS
-- Todas as regras visuais devem ser mantidas exclusivamente em [`src/styles.css`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/styles.css).
-- Não crie arquivos `.module.css` nem estilizações inline repetitivas. Consulte as classes prontas documentadas no [`STYLEGUIDE.md`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/STYLEGUIDE.md) (`.card`, `.formulario`, `.tabela`, `.indicadores`, `.login`, `.erro`, `.dica`, `button.excluir`, `button.ativo`).
+- Todas as regras visuais devem ser mantidas exclusivamente em [`src/styles.css`](src/styles.css).
+- Não crie arquivos `.module.css` nem estilizações inline repetitivas. Consulte as classes prontas documentadas no [`STYLEGUIDE.md`](STYLEGUIDE.md) (`.card`, `.formulario`, `.tabela`, `.indicadores`, `.login`, `.erro`, `.dica`, `button.excluir`, `button.ativo`).
 
 ### 2.2 Paleta de Cores e Tema Fenda do Biquíni
-Sempre reutilize o tema submarino/Bob Esponja definido no [`STYLEGUIDE.md`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/STYLEGUIDE.md):
-- **Oceano Tropical (`#1bc8e8` → `#055280`)**: Gradiente fixo de fundo acompanhado pelo cenário interativo [`src/FundoBiquini.jsx`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/FundoBiquini.jsx) (flores do céu, bolhas, águas-vivas e fundo de areia com casa de abacaxi).
+Sempre reutilize o tema submarino/Bob Esponja definido no [`STYLEGUIDE.md`](STYLEGUIDE.md):
+- **Oceano Tropical (`#1bc8e8` → `#055280`)**: Gradiente fixo de fundo acompanhado pelo cenário interativo [`src/FundoBiquini.jsx`](src/FundoBiquini.jsx) (flores do céu, bolhas, águas-vivas e fundo de areia com casa de abacaxi).
 - **Amarelo Bob Esponja (`#ffe135` / `#ffbe0b`)**: Botões principais cartoon 3D (`button`), abas ativas (`header nav button.ativo`) e bordas de destaque.
 - **Azul Lagoa (`rgba(6, 68, 112, 0.88)`)**: Header translúcido com `backdrop-filter: blur(10px)`.
 - **Creme Pérola (`rgba(255, 252, 235, 0.92)`)**: Superfície translúcida dos cards (`.card`).
@@ -42,7 +42,7 @@ Sempre reutilize o tema submarino/Bob Esponja definido no [`STYLEGUIDE.md`](file
 - Corpo, inputs e tabelas: `font-family: 'Nunito', system-ui, sans-serif;`.
 
 ### 2.4 Ícones, Bandeiras e Favicon
-- Utilize emojis nativos pontuais (`🍍`, `🧽`) e **SVG inline** para bandeiras de idioma (`BandeiraBrasil`, `BandeiraEUA`, `BandeiraChina` em [`src/i18n.jsx`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/i18n.jsx), sempre sem letras no botão).
+- Utilize emojis nativos pontuais (`🍍`, `🧽`) e **SVG inline** para bandeiras de idioma (`BandeiraBrasil`, `BandeiraEUA`, `BandeiraChina` em [`src/i18n.jsx`](src/i18n.jsx), sempre sem letras no botão).
 
 ### 2.5 Padrão de Botões
 Reutilize as classes e estilos existentes:
@@ -56,7 +56,7 @@ Reutilize as classes e estilos existentes:
 ## 3. Padrões de Componentes e Estrutura React
 
 ### 3.1 Adicionando Novas Telas
-A navegação é centralizada em [`src/App.jsx`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/App.jsx):
+A navegação é centralizada em [`src/App.jsx`](src/App.jsx):
 1. Crie o componente da tela dentro de `src/pages/NomeDaPagina.jsx`.
 2. Adicione a chave no objeto `PAGINAS` em `src/App.jsx`:
    ```javascript
@@ -105,7 +105,7 @@ Sempre envolva a `table` em uma div `.card.tabela`:
 
 ---
 
-## 4. Comunicação com a API e Helpers ([src/api.js](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-frontend/src/api.js))
+## 4. Comunicação com a API e Helpers ([src/api.js](src/api.js))
 
 - **Consumo HTTP**:
   ```javascript

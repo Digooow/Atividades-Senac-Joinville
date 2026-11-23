@@ -1,5 +1,10 @@
 # 🍍 Fazenda de Abacaxis — Backend (API)
 
+![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-5.x-000000?style=for-the-badge&logo=express&logoColor=white)
+![Sequelize](https://img.shields.io/badge/Sequelize-MySQL%20%2F%20Postgres-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)
+![JWT](https://img.shields.io/badge/Auth-JWT%20%2B%20Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=000000)
+
 API em **Node.js + Express** do sistema da Fazenda de Abacaxis. Ela faz:
 
 - **Login** com usuário e senha (token JWT)
@@ -219,3 +224,7 @@ A cada `git push` na branch `main` que altere arquivos da pasta `abacaxi-backend
 | `SSL/TLS required` | Você usou a **External** URL: adicione `DB_SSL=true` |
 | O navegador mostra erro de **CORS** | `FRONTEND_URL` está diferente da URL do frontend (confira `https` e tire a barra do final) |
 | `Could not read package.json` / `ENOENT` no build | O campo **Root Directory** não foi preenchido com `abacaxi-backend` |
+
+---
+
+[← Voltar para devops-abacaxi](../README.md) · [← Voltar ao repositório principal](../../../README.md)

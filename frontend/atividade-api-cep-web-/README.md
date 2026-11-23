@@ -1,5 +1,10 @@
 # Cadastro e Consulta de Endereços — ViaCEP com Node.js
 
+![Node.js](https://img.shields.io/badge/Node.js-ES%20Modules-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.21-000000?style=for-the-badge&logo=express&logoColor=white)
+![Architecture](https://img.shields.io/badge/Architecture-Full--Stack%20MVC-6366F1?style=for-the-badge)
+![Tests](https://img.shields.io/badge/Tests-node%3Atest%20(7%20suites)-10B981?style=for-the-badge)
+
 Atividade prática desenvolvida no SENAC Joinville com o objetivo de construir um sistema de cadastro e consulta de endereços integrado à API pública do ViaCEP, aplicando o padrão arquitetural MVC (Model-View-Controller) tanto no front-end quanto no back-end em Node.js, persistindo as consultas em um arquivo JSON e incluindo suíte de testes automatizados.
 
 ---
@@ -186,3 +191,7 @@ npm test
 - CORS
 - API ViaCEP
 - Persistência em JSON (fs/promises)
+
+---
+
+[← Voltar ao repositório principal](../../README.md)

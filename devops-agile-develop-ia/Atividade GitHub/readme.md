@@ -1,5 +1,8 @@
 # Atividade: Publicação de um repositório no GitHub
 
+![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-Repository%20Workflow-181717?style=for-the-badge&logo=github&logoColor=white)
+
 ## Sobre a atividade
 
 Esta atividade apresenta o fluxo básico de trabalho com **Git** e **GitHub**. O objetivo é configurar o Git no computador, transformar uma pasta local em um repositório, criar um repositório remoto no GitHub e publicar os arquivos locais nele.
@@ -183,3 +186,7 @@ Ao concluir a atividade, o projeto deverá:
 - possuir pelo menos um commit;
 - estar conectado a um repositório remoto no GitHub;
 - ter seus arquivos publicados na branch `main`.
+
+---
+
+[← Voltar ao módulo DevOps, Ágil & IA](../README.md) · [← Voltar ao repositório principal](../../README.md)

@@ -17,7 +17,7 @@ Estas instruções aplicam-se a qualquer alteração ou criação de código den
 
 ---
 
-## 2. Banco de Dados Dual e Portabilidade ([src/database.js](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-backend/src/database.js))
+## 2. Banco de Dados Dual e Portabilidade ([src/database.js](../src/database.js))
 
 - **PostgreSQL em Produção**: Se a variável `process.env.DATABASE_URL` estiver preenchida (ambiente Render), a API conecta automaticamente no PostgreSQL via driver `pg`. `DB_SSL=true` é usado apenas para a External URL.
 - **MySQL em Desenvolvimento Local**: Sem `DATABASE_URL`, a API conecta ao MySQL via `mysql2` usando as variáveis `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` e `DB_PASSWORD`.
@@ -28,7 +28,7 @@ Estas instruções aplicam-se a qualquer alteração ou criação de código den
 
 ---
 
-## 3. Inicialização Zero-CLI ([src/server.js](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-backend/src/server.js))
+## 3. Inicialização Zero-CLI ([src/server.js](../src/server.js))
 
 - No plano Free do Render **não há acesso a Terminal SSH nem Pre-Deploy Command**.
 - Por isso, a função `iniciar()` roda `sequelize.sync()` para criar tabelas automaticamente e `criarAdmin()` para semear o usuário inicial com senha hash via `bcryptjs`.
@@ -38,7 +38,7 @@ Estas instruções aplicam-se a qualquer alteração ou criação de código den
 
 ## 4. Regras de Negócio e Contratos de API
 
-### 4.1 Cálculo Dinâmico de Estoque ([src/estoque.js](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-backend/src/estoque.js))
+### 4.1 Cálculo Dinâmico de Estoque ([src/estoque.js](../src/estoque.js))
 - O estoque nunca é armazenado em coluna física para evitar inconsistências.
 - `calcularEstoque()` calcula dinamicamente:
   `colhido = sum('quantidade') de Colheita`
@@ -54,7 +54,7 @@ Estas instruções aplicam-se a qualquer alteração ou criação de código den
 
 ### 4.3 Autenticação e Rotas Protegidas
 - Rota pública de healthcheck: `GET /` -> `{ status: 'ok', mensagem: 'API da Fazenda de Abacaxis 🍍' }`.
-- Documentação Swagger / OpenAPI: `GET /docs` (Swagger UI) e `GET /docs.json`, definidos em [`src/swagger.js`](file:///c:/Users/rodrigo62289216/Desktop/devops-abacaxi/abacaxi-backend/src/swagger.js). Ao criar ou alterar rotas, atualize `src/swagger.js`.
+- Documentação Swagger / OpenAPI: `GET /docs` (Swagger UI) e `GET /docs.json`, definidos em [`src/swagger.js`](../src/swagger.js). Ao criar ou alterar rotas, atualize `src/swagger.js`.
 - Rota pública de login: `POST /auth/login` -> `{ token, usuario }` (token JWT assinado com `JWT_SECRET`, expira em `8h`).
 - Rotas protegidas devem incluir o middleware `auth`:
   ```javascript

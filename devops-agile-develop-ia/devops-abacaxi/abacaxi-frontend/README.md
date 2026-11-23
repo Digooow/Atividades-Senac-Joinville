@@ -1,13 +1,17 @@
 # 🍍 Fazenda de Abacaxis — Frontend
 
-Interface web em **React + Vite** do sistema da Fazenda de Abacaxis. Tem as telas:
+![React](https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react&logoColor=000000)
+![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![i18n](https://img.shields.io/badge/i18n-PT%20%7C%20EN%20%7C%20ZH-F59E0B?style=for-the-badge)
+
+Interface web em **React 18 + Vite 6** do sistema da Fazenda de Abacaxis, com identidade visual temática da **Fenda do Biquíni** (cenário submarino animado em Canvas 2D + SVG interativo), suporte multilíngue (**Português, Inglês e Chinês**) com bandeiras em SVG inline e design system documentado em [`STYLEGUIDE.md`](STYLEGUIDE.md). Tem as telas:
 
 - **Login** (usuário e senha)
 - **Painel** com total colhido, vendido, estoque e faturamento
 - **Colheitas**: registrar data e quantidade de abacaxis colhidos
 - **Vendas**: registrar vendas (data, quantidade, preço, cliente)
 
-Este projeto só exibe as telas. Os dados vêm da API, que fica na pasta [../abacaxi-backend](../abacaxi-backend) do mesmo repositório (**devops-abacaxi**).
+Este projeto só exibe as telas. Os dados vêm da API, que fica na pasta [../abacaxi-backend](../abacaxi-backend) do mesmo projeto (**devops-abacaxi**).
 
 ## Como o frontend encontra a API?
 
@@ -22,17 +26,24 @@ Pela variável de ambiente **`VITE_API_URL`**. Veja [src/api.js](src/api.js).
 
 ## Estrutura
 
-```
-src/
-├── main.jsx          # ponto de entrada
-├── App.jsx           # menu e troca de páginas
-├── api.js            # função que chama a API (usa VITE_API_URL)
-├── styles.css
-└── pages/
-    ├── Login.jsx
-    ├── Painel.jsx
-    ├── Colheitas.jsx
-    └── Vendas.jsx
+```text
+abacaxi-frontend/
+├── index.html
+├── STYLEGUIDE.md                # Guia oficial de estilo e tokens visuais
+├── package.json
+└── src/
+    ├── main.jsx                 # ponto de entrada
+    ├── App.jsx                  # menu, navegação por estado e troca de idioma
+    ├── api.js                   # função que chama a API (usa VITE_API_URL)
+    ├── i18n.jsx                 # dicionário PT/EN/ZH e bandeiras em SVG inline
+    ├── FundoBiquini.jsx         # cenário submarino interativo em Canvas + SVG
+    ├── personagensBiquini.js    # animação de personagens e trânsito submarino
+    ├── styles.css               # regras globais e componentes do tema cartoon 3D
+    └── pages/
+        ├── Login.jsx
+        ├── Painel.jsx
+        ├── Colheitas.jsx
+        └── Vendas.jsx
 ```
 
 ---
@@ -163,3 +174,7 @@ O Static Site (este frontend) não dorme: ele carrega sempre na hora.
 | Mudei `VITE_API_URL` e nada mudou | As variáveis do Vite valem a partir do build: faça um novo deploy |
 | A requisição vai para `localhost:3001` mesmo no Render | `VITE_API_URL` não foi configurada no Render antes do build |
 | `Could not read package.json` / `ENOENT` no build | O campo **Root Directory** não foi preenchido com `abacaxi-frontend` |
+
+---
+
+[← Voltar para devops-abacaxi](../README.md) · [← Voltar ao repositório principal](../../../README.md)

@@ -1,62 +1,90 @@
-# 🚀 Guia Prático do Seminário: Framework Angular
+# 🚀 Seminário Técnico: Angular Interactive Showcase & Toolkit (Angular 21)
 
-## 1. Roteiro da Apresentação (Meta: 30 Minutos)
+![Angular](https://img.shields.io/badge/Angular-21.2-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9%20Strict-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Signals](https://img.shields.io/badge/Reactivity-Angular%20Signals-8B5CF6?style=for-the-badge)
+![Vitest](https://img.shields.io/badge/Tests-Vitest%204-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)
 
-### Parte 1 — Conhecendo a tecnologia (Membro 1 | ~10 minutos)
-* **O que é?** Um framework web completo mantido pelo Google. Diferente de uma simples biblioteca visual, ele fornece a fundação arquitetural completa da aplicação ("Batteries Included").
-* **Para que serve e problemas que resolve?** Criação de Single Page Applications (SPAs) de alta escalabilidade. Resolve o "código espaguete" e o gargalo de manipulação manual do DOM comum no desenvolvimento tradicional com Vanilla JS.
-* **Quem criou e quando?** Criado pelo Google. A versão original (AngularJS) nasceu em 2010. Em 2016, foi completamente reescrito e modernizado para o Angular atual com TypeScript por padrão.
-* **Onde é utilizado?** Em sistemas corporativos de grande porte: Google Cloud Console, Gmail, bancos digitais, ERPs e plataformas de missão crítica.
-* **Vantagens:** Arquitetura consistente baseada em componentes, injeção de dependências nativa, tipagem forte com TypeScript, reatividade moderna com Signals e ferramentas nativas de roteamento, validação e formulários.
-* **Limitações:** Curva de aprendizado inicial mais íngreme e tamanho inicial de pacote superior ao de bibliotecas minimalistas.
-* **Por que escolher Angular em vez de React/Vue?** Pela padronização corporativa. Em equipes médias e grandes, o Angular impõe uma convenção clara, permitindo que qualquer desenvolvedor leia e mantenha o código de outro colega com facilidade.
-* **Por que não usar JavaScript puro?** O TypeScript traz tipagem estática, detecção de erros em tempo de compilação e autocomplete completo, evitando bugs em produção.
+## 📌 Visão Geral do Software
 
----
+O **Angular Interactive Showcase & Toolkit** é uma *Single Page Application* (SPA) interativa e autoexplicativa desenvolvida para o seminário técnico sobre o framework **Angular** no curso **Jovem Programador (SENAC Joinville)**.
 
-### Parte 2 — Preparando o ambiente (Membro 2 / 3 | ~5 minutos)
-* **O que é necessário instalar?** Node.js (com o gerenciador NPM) e uma IDE moderna como o Visual Studio Code.
-* **Como criar um projeto do zero?**
-  * `npm install -g @angular/cli` (instala a CLI do Angular).
-  * `ng new nome-do-projeto` (gera a estrutura completa de arquivos).
-* **Principais pastas e arquivos:**
-  * `src/`: Pasta com o código-fonte da aplicação.
-  * `src/app/`: Onde ficam os componentes, serviços e templates.
-  * `angular.json`: Arquivo de configuração de compilação da CLI.
-  * `package.json`: Manifesto de dependências e scripts (`start`, `build`, `test`).
-* **Como executar no navegador?** O comando `ng serve` (ou `npm start`) compila o projeto e inicia o servidor local em `http://localhost:4200` com *Hot Reload*.
+Em vez de focar em uma regra de negócio externa genérica, a aplicação funciona como um **laboratório vivo das ferramentas do Angular**: cada bloco contém botões e formulários interativos que alimentam um **Card Dinâmico de Diagnóstico**, refletindo em tempo real o estado em memória do TypeScript e as atualizações cirúrgicas no DOM.
 
 ---
 
-### Parte 3 — Colocando a mão na massa (Membro 2 | ~10 minutos)
-* **Apresentação do Exemplo:** Demonstrar no navegador a SPA **Angular Interactive Showcase & Toolkit**, uma aplicação autoexplicativa focada em revelar o poder do framework.
-* **Explicação do Código e Funcionalidades:**
-  1. **Data Binding Interativo:** Demonstrar no primeiro card os 4 pilares (Interpolação `{{ }}`, Property Binding `[disabled]`, Event Binding `(click)` e Two-Way Binding `[(ngModel)]`), acompanhando o Card Dinâmico que atualiza a memória em tempo real.
-  2. **Reatividade Moderna com Signals:** Exibir o mini simulador de preços onde `signal()` e `computed()` recalculam subtotal e descontos cirurgicamente no DOM.
-  3. **Diretivas Modernas de Controle de Fluxo (`@for`, `@if`, `@switch`):** Adicionar uma tarefa ao vivo e filtrar prioridades com o bloco `@empty`.
-  4. **Pipes em Tempo Real:** Demonstrar como o Angular formata moedas (`| currency`), datas (`| date`) e JSON declarativamente na tela.
-  5. **Formulários Reativos:** Mostrar a validação em tempo real de e-mail e regras de negócio com o estado do `FormGroup`.
-  6. **Ciclo de Vida & DI:** Clicar no botão de desmontar o componente filho para provar a atuação do `ngOnDestroy()` limpando timers e o `EventLoggerService` registrando o histórico de eventos.
-* **Modificação ao Vivo:** Alterar uma cor ou texto no VS Code e demonstrar a atualização instantânea pelo *Hot Module Replacement (HMR)*.
+## 📂 Documentos e Materiais do Seminário
+
+| Artefato | Descrição |
+| :--- | :--- |
+| [`projeto-seminario/`](./projeto-seminario/README.md) | Código-fonte da SPA em Angular 21 (`ng serve`, SSR e testes com Vitest) |
+| [`ORGANIZACAO_SOFTWARE.md`](./ORGANIZACAO_SOFTWARE.md) | Especificação técnica completa da arquitetura, componentes e serviços |
+| [`ORGANIZACAO_ATIVIDADE.md`](./ORGANIZACAO_ATIVIDADE.md) | Planejamento do seminário, divisão de papéis e cronograma de 30 minutos |
+| [`Apresentação framework Angular.pdf`](./Apresenta%C3%A7%C3%A3o%20framework%20Angular.pdf) | Slides oficiais da apresentação |
+| [`Roteiro de Leitura - Apresentação Angular.pdf`](./Roteiro%20de%20Leitura%20-%20Apresenta%C3%A7%C3%A3o%20Angular.pdf) | Roteiro de leitura para apoio durante a apresentação |
 
 ---
 
-### Parte 4 — Conclusão (Todo o Grupo | ~5 minutos)
-* **O que muda em relação a HTML, CSS e JavaScript puros?** Saída do modelo imperativo (manipulação manual elemento por elemento via `document.getElementById`) para o modelo reativo declarativo (a tela é consequência direta dos dados na memória).
-* **Em que tipo de projeto seria útil?** SPAs corporativas, dashboards analíticos, plataformas financeiras e sistemas que precisam durar anos com estabilidade.
-* **Maior facilidade encontrada:** O ecossistema integrado da CLI e a sintaxe intuitiva dos novos blocos `@if` e `@for`.
-* **Maior dificuldade encontrada:** A compreensão inicial do ciclo de vida dos componentes e a mentalidade de injeção de dependências.
+## 🛠️ Stack Tecnológica da SPA
+
+- **Framework Frontend:** Angular 21.2 (Arquitetura moderna de *Standalone Components* e suporte a SSR)
+- **Linguagem:** TypeScript 5.9 com tipagem estática rigorosa
+- **Reatividade:** Signals nativos (`signal`, `computed`) com atualização granular do DOM
+- **Marcação e Estilo:** HTML5 semântico com controle de fluxo moderno (`@if`, `@for`, `@switch`, `@empty`) e CSS3 encapsulado
+- **Serviços Globais:** Injeção de dependências (`@Injectable`) com padrão Singleton (`EventLoggerService`)
+- **Testes:** Vitest
 
 ---
 
-## 2. Como Executar a Aplicação
+## ✨ Os 6 Pilares Demonstrados na Aplicação
 
-1. No terminal, acesse a pasta da aplicação:
+1. **Os 4 Pilares de Data Binding:** Interpolação (`{{ }}`), Property & Style Binding (`[disabled]`, `[style.fontSize.px]`), Event Binding (`(click)`) e Two-Way Data Binding (`[(ngModel)]`) com Card Dinâmico em tempo real.
+2. **Reatividade com Signals (`signal()` e `computed()`):** Calculadora interativa com recalculo cirúrgico de subtotal, descontos e total final.
+3. **Diretivas Modernas de Controle de Fluxo (`@for`, `@if`, `@switch`, `@empty`):** Lista de tarefas com adição, remoção e filtro dinâmico por prioridade.
+4. **Pipes Nativos de Transformação:** Formatação declarativa com `uppercase`, `lowercase`, `currency:'BRL'`, `date:'fullDate'` e `json`.
+5. **Formulários Reativos & Validação:** `FormGroup` com validação em tempo real e inspeção das propriedades `.valid`, `.dirty`, `.touched` e `.value`.
+6. **Injeção de Dependências & Ciclo de Vida:** Demonstração de `ngOnInit()` e `ngOnDestroy()` no componente filho `<app-lifecycle-demo>`, comunicação via `@Output()` e stream de eventos no `EventLoggerService`.
+
+---
+
+## 🎤 Roteiro Resumido da Apresentação (30 Minutos)
+
+1. **Parte 1 — Conhecendo a tecnologia (~10 min):** Origem (AngularJS 2010 → Angular 2+ em 2016), arquitetura *Batteries Included*, vantagens corporativas, limitações e comparativo com React, Vue e Vanilla JS.
+2. **Parte 2 — Preparando o ambiente (~5 min):** Instalação de Node.js + `@angular/cli`, criação com `ng new` e anatomia das pastas (`src/app/`, `angular.json`, `package.json`).
+3. **Parte 3 — Colocando a mão na massa (~10 min):** Live Demo dos 6 cards interativos da SPA e modificação ao vivo com *Hot Module Replacement (HMR)*.
+4. **Parte 4 — Conclusão (~5 min):** Transição do modelo imperativo para o declarativo, casos de uso corporativos, facilidades e desafios do grupo.
+
+---
+
+## 💻 Como Executar a Aplicação
+
+1. Acesse a pasta da aplicação Angular:
+
    ```bash
-   cd projeto-seminario
+   cd frontend/trabalho-framework-angular/projeto-seminario
    ```
-2. Inicie o servidor:
+
+2. Instale as dependências:
+
+   ```bash
+   npm install
+   ```
+
+3. Inicie o servidor local de desenvolvimento:
+
    ```bash
    npm start
    ```
-3. Abra o navegador em `http://localhost:4200`.
+
+4. Abra o navegador em `http://localhost:4200`.
+
+5. Para build de produção e testes unitários:
+
+   ```bash
+   npm run build
+   npm test
+   ```
+
+---
+
+[← Voltar ao repositório principal](../../README.md)
