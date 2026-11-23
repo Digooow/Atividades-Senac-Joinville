@@ -138,4 +138,4 @@ class EnderecoController {
     }
 }
 
-this.EnderecoController = EnderecoController;
+globalThis.EnderecoController = EnderecoController;

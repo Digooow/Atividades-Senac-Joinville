@@ -47,7 +47,7 @@ test("EnderecoModel usa a API relativa e propaga falhas na listagem", async () =
 
 test("EnderecoModel preserva AbortError para cancelamento de busca", async () => {
     const fetchOriginal = global.fetch;
-    global.fetch = async (url, opcoes) => {
+    global.fetch = async () => {
         const erro = new Error("Abortado");
         erro.name = "AbortError";
         throw erro;

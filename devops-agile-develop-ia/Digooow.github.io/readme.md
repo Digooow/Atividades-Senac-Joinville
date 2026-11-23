@@ -21,15 +21,17 @@ Mesmo sendo hospedada em um ambiente 100% estático (**Cloudflare Pages**), a ap
 ## Tecnologias Utilizadas
 
 ### Front-End & Runtime no Navegador
-- **HTML5 Semântico & Acessível** — estrutura validada estaticamente e regiões dinâmicas com `aria-live="polite"`.
+
+- **HTML5 Semântico & Acessível** — estrutura validada estaticamente, atributos de segurança (`rel="noopener noreferrer"` e SRI em CDN) e regiões dinâmicas com `aria-live="polite"`.
 - **CSS3 & Tailwind CSS** — *glassmorphism*, tipografia responsiva (`text-wrap: balance` e `text-wrap: pretty`), animações suaves e *scrollbars* padronizadas com fallback progressivo.
-- **JavaScript Moderno (ES Modules)** — arquitetura modular sem dependências pesadas de runtime.
+- **JavaScript Moderno (ES Modules)** — arquitetura modular sem dependências pesadas de runtime e gerador CSPRNG em buffer (`crypto.getRandomValues`) para partículas visuais.
 - **GitHub REST API v3** — integração client-side com cache inteligente em `localStorage` (TTL de 15 minutos) para respeitar limites de *rate-limiting*.
 - **HTML5 Canvas 2D & Performance API** — motor gráfico de partículas com controle de FPS e leitura de métricas reais de carregamento (`PerformanceNavigationTiming`).
 
 ### DevOps, Qualidade & Infraestrutura
-- **GitHub Actions** — orquestração automatizada da esteira de CI/CD na raiz do monorepo ([`.github/workflows/deploy.yml`](../../.github/workflows/deploy.yml)).
-- **Node.js 20 & `html-validate 10.17.0`** — *Quality Gate* de análise estática (SAST) de sintaxe, semântica e regras de acessibilidade HTML.
+
+- **GitHub Actions** — orquestração automatizada da esteira de CI/CD na raiz do monorepo ([`.github/workflows/deploy.yml`](../../.github/workflows/deploy.yml)) com Actions em Node 24.
+- **Node.js 24 & `html-validate 10.17.0`** — *Quality Gate* de análise estática (SAST) de sintaxe HTML e verificação sintática dos ES Modules (`node --check`).
 - **Cloudflare Pages (Edge CDN) & Wrangler** — hospedagem distribuída globalmente com TLS 1.3 e publicação automatizada via `cloudflare/wrangler-action`.
 - **Lighthouse CI** — auditoria automatizada pós-deploy avaliando Performance, Acessibilidade, Boas Práticas e SEO sobre a URL publicada.
 
@@ -50,13 +52,15 @@ Atividades-Senac-Joinville/
         │   ├── img/                                # Cenários panorâmicos de fundo
         │   └── js/
         │       ├── main.js                         # Ponto de entrada e inicialização dos módulos
+        │       ├── random.js                       # Gerador CSPRNG em buffer para partículas 2D
         │       ├── github-telemetry.js             # Cliente da GitHub REST API (Runs, Commits, Repos e Languages)
         │       ├── terminal-cli.js                 # Shell assíncrono interativo e inspeção dos nós de CI/CD
-        │       ├── background-switcher.js          # Transição suave de cenários sincronizada ao scroll
+        │       ├── background-switcher.js          # Transição suave e lazy hydration de cenários no scroll
         │       ├── canvas-engine.js                # Loop de renderização 2D e gerenciamento de partículas
         │       ├── fairy.js                        # Entidades luminosas com física de voo orgânica
         │       └── mote.js                         # Partículas ambientais de profundidade
         ├── index.html                              # Página principal estruturada em 5 capítulos
+        ├── robots.txt                              # Diretiva para rastreadores e SEO
         └── readme.md                               # Documentação técnica do projeto
 ```
 
@@ -87,23 +91,29 @@ Na seção **O Console dos Bastidores**, o visitante pode interagir via teclado 
 O workflow está definido em [`.github/workflows/deploy.yml`](../../.github/workflows/deploy.yml) na raiz do monorepo e é acionado automaticamente a cada `push` na branch `main` que altere `devops-agile-develop-ia/Digooow.github.io/**` ou o próprio workflow (ou manualmente via `workflow_dispatch`).
 
 ### 1. Quality Gate (`quality-gate`)
+
 1. Faz o checkout do código com `actions/checkout`.
-2. Provisiona o **Node.js 20** com `actions/setup-node`.
+2. Provisiona o **Node.js 24** com `actions/setup-node`.
 3. Instala o validador `html-validate@10.17.0` utilizando a flag de segurança `--ignore-scripts` (mitigando execução arbitrária de scripts de pós-instalação).
-4. Executa `html-validate "devops-agile-develop-ia/Digooow.github.io/*.html"`. Qualquer violação sintática, semântica ou de limite de metadados bloqueia imediatamente o deploy.
+4. Executa `html-validate "devops-agile-develop-ia/Digooow.github.io/*.html"` e valida a sintaxe dos módulos JavaScript com `node --check`. Qualquer violação bloqueia imediatamente o deploy.
 5. Todas as Actions de terceiros são fixadas por **hash SHA completo de commit**, garantindo imutabilidade e segurança da cadeia de suprimentos (*Supply Chain Security*).
 
 ### 2. Empacotamento e Deploy (`deploy`)
+
 Executado somente após a aprovação do `quality-gate`:
+
 1. Valida as credenciais da Cloudflare e verifica via Cloudflare REST API se o projeto no Pages já existe (criando-o automaticamente com `production_branch: "main"` na primeira execução, caso ainda não exista).
-2. Copia apenas os arquivos públicos (`index.html` e `assets/`) para um diretório temporário limpo (`$RUNNER_TEMP/pages-dist`).
-3. Publica nos servidores de borda do **Cloudflare Pages** via `cloudflare/wrangler-action` (`pages deploy`) com controle de concorrência (`group: "cloudflare-pages-portfolio"`).
+2. Copia apenas os arquivos públicos (`index.html`, `robots.txt` e `assets/`) para um diretório temporário limpo (`$RUNNER_TEMP/pages-dist`).
+3. Publica nos servidores de borda do **Cloudflare Pages** via `cloudflare/wrangler-action` (`pages deploy --commit-dirty=true`) com controle de concorrência (`group: "cloudflare-pages-portfolio"`).
 
 ### 3. Auditoria Pós-Deploy (`lighthouse-audit`)
-Após confirmar que a URL de produção gerada pelo deploy (`*.pages.dev`) está respondendo, o job `lighthouse-audit` inicializa o **Lighthouse CI** contra essa URL, auditando métricas de performance, acessibilidade e SEO e salvando os relatórios da execução.
+
+Após aguardar a propagação de TLS e edge da URL gerada pelo deploy (`*.pages.dev`, com janela de até 180 segundos), o job `lighthouse-audit` executa o **Lighthouse CI** contra essa URL, auditando métricas de performance, acessibilidade, boas práticas e SEO.
 
 ### Secrets necessários no GitHub
+
 Em **Settings → Secrets and variables → Actions** do repositório `Atividades-Senac-Joinville`:
+
 - `CLOUDFLARE_API_TOKEN` — token de API da Cloudflare com permissão **Account → Cloudflare Pages → Edit**.
 - `CLOUDFLARE_ACCOUNT_ID` — Account ID da sua conta Cloudflare.
 - *(Opcional)* Variable `CF_PAGES_PROJECT_NAME` — nome do projeto no Cloudflare Pages (padrão: `digooow-portfolio`, gerando `https://digooow-portfolio.pages.dev`).

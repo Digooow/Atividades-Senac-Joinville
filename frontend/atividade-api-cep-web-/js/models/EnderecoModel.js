@@ -94,4 +94,4 @@ class EnderecoModel {
 
 }
 
-this.EnderecoModel = EnderecoModel;
+globalThis.EnderecoModel = EnderecoModel;

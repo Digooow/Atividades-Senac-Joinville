@@ -19,7 +19,7 @@ function validarFormulario() {
 
 	campos.forEach((campo) => mostrarErro(campo, ""));
 	if (!/^[A-Za-zÀ-ÿ ]{3,}$/.test(nome)) { mostrarErro("nome", "Digite um nome com pelo menos 3 letras."); formularioValido = false; }
-	if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { mostrarErro("email", "Digite um e-mail válido."); formularioValido = false; }
+	if (!/^[^\s@.]+(?:\.[^\s@.]+)*@[^\s@.]+(?:\.[^\s@.]+)+$/.test(email)) { mostrarErro("email", "Digite um e-mail válido."); formularioValido = false; }
 	if (!/^\d{10,11}$/.test(telefone.replace(/\D/g, ""))) { mostrarErro("telefone", "Digite um telefone com 10 ou 11 números."); formularioValido = false; }
 	if (!Number.isInteger(idade) || idade < 1 || idade > 120) { mostrarErro("idade", "Digite uma idade entre 1 e 120."); formularioValido = false; }
 	if (mensagem.length < 10) { mostrarErro("mensagem", "Escreva uma mensagem com pelo menos 10 caracteres."); formularioValido = false; }

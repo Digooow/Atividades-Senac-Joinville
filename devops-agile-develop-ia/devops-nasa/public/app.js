@@ -72,6 +72,15 @@ function shiftIsoDate(dateStr, deltaDays) {
   return `${nextYear}-${nextMonth}-${nextDay}`;
 }
 
+function randomIndex(maxExclusive) {
+  if (maxExclusive <= 1) {
+    return 0;
+  }
+  const buffer = new Uint32Array(1);
+  globalThis.crypto.getRandomValues(buffer);
+  return buffer[0] % maxExclusive;
+}
+
 function getRandomApodDate(maxDateStr) {
   const [minY, minM, minD] = FIRST_APOD_DATE.split('-').map(Number);
   const [maxY, maxM, maxD] = maxDateStr.split('-').map(Number);
@@ -79,7 +88,7 @@ function getRandomApodDate(maxDateStr) {
   const minMs = Date.UTC(minY, minM - 1, minD);
   const maxMs = Date.UTC(maxY, maxM - 1, maxD);
   const totalDays = Math.max(0, Math.floor((maxMs - minMs) / (24 * 60 * 60 * 1000)));
-  const randomOffset = Math.floor(Math.random() * (totalDays + 1));
+  const randomOffset = randomIndex(totalDays + 1);
 
   return shiftIsoDate(FIRST_APOD_DATE, randomOffset);
 }

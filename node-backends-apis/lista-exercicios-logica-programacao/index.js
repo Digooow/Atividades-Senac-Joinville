@@ -4,6 +4,7 @@ console.log("Hello, World!");
 
 import express from 'express';
 const app = express();
+app.disable('x-powered-by');
 const port = 3000;
 
 app.use(express.json()); 
@@ -100,7 +101,6 @@ app.post('/api/troca', (req, res) => {
     let a = req.body.a;
     let b = req.body.b;
     const originalA = a;
-    const originalB = b;
 
     // Troca os valores
     a = b;

@@ -2,8 +2,6 @@
    CANVAS ENGINE — Gerenciamento e Loop do Canvas
    ========================================================================== */
 
-'use strict';
-
 import { Fairy } from './fairy.js';
 import { Mote } from './mote.js';
 
@@ -15,17 +13,17 @@ export function initFairyCanvas() {
 
   let width = 0;
   let height = 0;
-  let renderScale = 1;
   let fairies = [];
   let motes = [];
-  let animationFrame;
+  let allEntities = [];
+  let animationFrame = 0;
   let lastFrameTime = 0;
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const reducedMotion = globalThis.matchMedia('(prefers-reduced-motion: reduce)');
 
   function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    renderScale = Math.min(1, (window.devicePixelRatio || 1) * 1.0);
+    width = globalThis.innerWidth;
+    height = globalThis.innerHeight;
+    const renderScale = Math.min(1, globalThis.devicePixelRatio || 1);
     canvas.width = Math.floor(width * renderScale);
     canvas.height = Math.floor(height * renderScale);
     ctx.setTransform(renderScale, 0, 0, renderScale, 0, 0);
@@ -35,21 +33,23 @@ export function initFairyCanvas() {
     fairies = [];
     motes = [];
 
-    const isMobile = window.innerWidth < 768;
+    const isMobile = globalThis.innerWidth < 768;
     const fairyCount = isMobile ? 14 : 26;
-    for (let i = 0; i < fairyCount; i++) {
-      fairies.push(new Fairy(i, width, height));
+    for (let i = 0; i < fairyCount; i += 1) {
+      fairies.push(new Fairy(width, height, i));
     }
 
     const moteCount = isMobile ? 55 : 100;
-    for (let i = 0; i < moteCount; i++) {
+    for (let i = 0; i < moteCount; i += 1) {
       motes.push(new Mote(width, height));
     }
+
+    allEntities = [...fairies, ...motes];
   }
 
   resize();
   spawnLights();
-  window.addEventListener('resize', () => {
+  globalThis.addEventListener('resize', () => {
     resize();
     spawnLights();
   }, { passive: true });
@@ -71,9 +71,7 @@ export function initFairyCanvas() {
       mote.update(width, height);
     }
 
-    const allEntities = [...fairies, ...motes];
     allEntities.sort((a, b) => a.z - b.z);
-
     for (const entity of allEntities) {
       entity.draw(ctx);
     }

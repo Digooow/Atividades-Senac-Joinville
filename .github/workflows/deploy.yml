@@ -21,29 +21,33 @@ env:
   CF_PAGES_PROJECT: ${{ vars.CF_PAGES_PROJECT_NAME || 'digooow-portfolio' }}
 
 jobs:
-  # Job 1: Validação de Qualidade de Código (Linting & Security Checks)
+  # Job 1: Validação de Qualidade de Código (Linting & Syntax Checks)
   quality-gate:
     name: Code Quality & Validation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Install HTML validator
         run: npm install --global --ignore-scripts html-validate@10.17.0
 
-      - name: HTML Syntax & Quality Check
-        run: html-validate "${{ env.PORTFOLIO_DIR }}/*.html"
+      - name: HTML & JavaScript Syntax Check
+        run: |
+          html-validate "${{ env.PORTFOLIO_DIR }}/*.html"
+          for file in "${{ env.PORTFOLIO_DIR }}"/assets/js/*.js; do
+            node --check "$file"
+          done
 
   # Job 2: Build, Empacotamento e Implantação no Cloudflare Pages
   deploy:
     name: Build & Deploy to Cloudflare Pages
-    needs: quality-gate # Só roda se o Job de qualidade passar
+    needs: quality-gate
     outputs:
       page_url: ${{ steps.cloudflare_pages.outputs.deployment-url }}
     environment:
@@ -52,12 +56,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Verify Cloudflare Credentials & Ensure Pages Project
         env:
@@ -124,6 +128,9 @@ jobs:
           rm -rf "$BUNDLE_DIR"
           mkdir -p "$BUNDLE_DIR"
           cp "${{ env.PORTFOLIO_DIR }}/index.html" "$BUNDLE_DIR/index.html"
+          if [ -f "${{ env.PORTFOLIO_DIR }}/robots.txt" ]; then
+            cp "${{ env.PORTFOLIO_DIR }}/robots.txt" "$BUNDLE_DIR/robots.txt"
+          fi
           cp -R "${{ env.PORTFOLIO_DIR }}/assets" "$BUNDLE_DIR/assets"
 
       - name: Deploy to Cloudflare Pages
@@ -133,7 +140,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          command: pages deploy "${{ runner.temp }}/pages-dist" --project-name=${{ env.CF_PAGES_PROJECT }} --branch=main
+          command: pages deploy "${{ runner.temp }}/pages-dist" --project-name=${{ env.CF_PAGES_PROJECT }} --branch=main --commit-dirty=true
 
   # Job 3: Auditoria Automatizada Pós-Deploy (Lighthouse CI)
   lighthouse-audit:
@@ -143,25 +150,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Wait for Cloudflare Pages Edge Propagation
         env:
           TARGET_URL: ${{ needs.deploy.outputs.page_url }}
         run: |
-          for i in $(seq 1 6); do
-            if curl -fsS --max-time 10 -o /dev/null "$TARGET_URL"; then
-              echo "Deployment live at $TARGET_URL"
+          max_attempts=36
+          for i in $(seq 1 "$max_attempts"); do
+            if curl -fsS --max-time 10 -o /dev/null "$TARGET_URL" 2>/dev/null; then
+              echo "Deployment live at $TARGET_URL (attempt $i/$max_attempts)"
               exit 0
             fi
-            echo "Waiting for edge propagation (attempt $i/6)..."
+            echo "Waiting for TLS & edge propagation (attempt $i/$max_attempts)..."
             sleep 5
           done
+          echo "Final diagnostic check against $TARGET_URL:"
+          curl -v --max-time 10 -o /dev/null "$TARGET_URL" || true
           echo "Timed out waiting for $TARGET_URL"
           exit 1
 
       - name: Run Lighthouse CI
-        uses: treosh/lighthouse-ci-action@72f881228236981b625ed765b928efb1786a1f55 # v11.0.0
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12.6.2
         with:
           urls: |
             ${{ needs.deploy.outputs.page_url }}

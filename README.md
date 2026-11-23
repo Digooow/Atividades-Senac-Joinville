@@ -19,18 +19,31 @@ A estrutura reflete a sequência natural do aprendizado:
 
 ```text
 Atividades-Senac-Joinville/
-├── Agenda-Windows-Form/              # Aplicação desktop em C# com Windows Forms
-├── Atividade GitHub/                 # Atividade de Git e GitHub
-├── Desenvolvimento-Web/              # Atividades de HTML, CSS, JavaScript e UX/UI
-├── exercicio-api-backend-senac/      # API REST em Node.js com arquitetura MVC
-├── jovem-programador-backend-senac/  # Exercícios e exemplos de backend em Node.js
-├── metodologias-ageis/               # Documentação do Projeto Integrador 2
-├── recuperacaoNode/                  # Projeto de recuperação em Node.js
-├── c++/                              # Exercícios em Portugol e C++
-├── aula-lista-exercicios/            # Material da lista de exercícios do curso
-├── README.md                         # Documentação principal
+├── .github/
+│   └── workflows/
+│       └── deploy.yml                   # CI/CD (Quality Gate, Cloudflare Pages, Lighthouse)
+├── c++/                                 # Exercícios em Portugol e C++
+├── devops-agile-develop-ia/             # GitHub, Portfólio CI/CD, IA, Abacaxi e NASA APOD
+│   ├── Atividade GitHub/
+│   ├── Digooow.github.io/
+│   ├── aula-exemplo-ia/
+│   ├── devops-abacaxi/
+│   └── devops-nasa/
+├── frontend/                            # Aplicações Web, Angular, API CEP e WinForms C#
+│   ├── Agenda-Windows-Form/
+│   ├── Desenvolvimento-Web/
+│   ├── atividade-api-cep-web-/
+│   └── trabalho-framework-angular/
+├── node-backends-apis/                  # APIs REST em Node.js e Express (MVC)
+│   ├── AvaliacaoFinalNodeAPI/
+│   ├── avaliacao-node-api2/
+│   ├── exercicio-api-backend-senac/
+│   ├── lista-exercicios-logica-programacao/
+│   ├── recuperacao-da-recuperacao/
+│   └── recuperacao-node/
 ├── .gitignore
-└── .git/
+├── .markdownlint.json
+└── README.md                            # Documentação principal
 ```
 
 ## Desenvolvimento do curso por matéria
@@ -173,4 +186,3 @@ Cada pasta guarda uma etapa do aprendizado, mostrando a evolução da maneira co
 ---
 
 Repositório desenvolvido como material de estudo e registro de atividades do curso Jovem Programador do SENAC Joinville.
-

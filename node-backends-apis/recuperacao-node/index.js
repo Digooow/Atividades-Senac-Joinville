@@ -3,6 +3,7 @@ import router from './src/router/pessoa.js'
 import database from './src/config/database.js'
 
 const app = express();
+app.disable("x-powered-by");
 app.use(express.json());
 
 app.use("/api", router)
@@ -10,9 +11,9 @@ const port = 3000
 
 database.db
     .sync({ force: false })
-    .then((_) => {
+    .then(() => {
 
-        app.listen(port, (req, res) => {
+        app.listen(port, () => {
 
             console.log(`Servidor rodando em http://localhost:${port}`)
 

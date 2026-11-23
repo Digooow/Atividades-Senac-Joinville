@@ -4,7 +4,9 @@
    ========================================================================== */
 
 /* ─── RESET E SELEÇÃO ─────────────────────────────────────────────────── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -12,16 +14,23 @@ html {
   scroll-behavior: smooth;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 
-p, blockquote, li {
+p,
+blockquote,
+li {
   text-wrap: pretty;
 }
 
 ::selection {
-  background-color: rgba(245, 158, 11, 0.35);
+  background-color: rgb(245 158 11 / 35%);
   color: #fef08a;
 }
 
@@ -65,31 +74,15 @@ p, blockquote, li {
   background-image: url('../img/kamasylvia-fairies.jpg');
 }
 
-.bg-slide.bg-architecture {
-  background-image: url('../img/grana-gazebo.jpg');
-}
-
-.bg-slide.bg-waterfalls {
-  background-image: url('../img/kamasylvia-waterfalls.jpg');
-}
-
-.bg-slide.bg-stream {
-  background-image: url('../img/forest-stream.jpg');
-}
-
-.bg-slide.bg-sunset {
-  background-image: url('../img/kamasylve-sunset.jpg');
-}
-
 /* Vinheta Suave: Preserva a beleza das árvores e águas enquanto garante legibilidade */
 .ambient-vignette {
   position: absolute;
   inset: 0;
   background: radial-gradient(
     ellipse at center,
-    rgba(6, 20, 15, 0.3) 0%,
-    rgba(4, 15, 11, 0.65) 65%,
-    rgba(2, 9, 7, 0.9) 100%
+    rgb(6 20 15 / 30%) 0%,
+    rgb(4 15 11 / 65%) 65%,
+    rgb(2 9 7 / 90%) 100%
   );
   pointer-events: none;
 }
@@ -100,19 +93,20 @@ p, blockquote, li {
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(251, 191, 36, 0.12) 0%,
-    rgba(16, 185, 129, 0.06) 40%,
+    rgb(251 191 36 / 12%) 0%,
+    rgb(16 185 129 / 6%) 40%,
     transparent 70%
   );
   pointer-events: none;
-  animation: lightShift 12s ease-in-out infinite alternate;
+  animation: light-shift 12s ease-in-out infinite alternate;
 }
 
-@keyframes lightShift {
+@keyframes light-shift {
   0% {
     opacity: 0.6;
     transform: translateY(-2%) scale(1);
   }
+
   100% {
     opacity: 1;
     transform: translateY(2%) scale(1.03);
@@ -121,16 +115,16 @@ p, blockquote, li {
 
 /* ─── NAVBAR ÉLFICA ──────────────────────────────────────────────────── */
 .navbar-kamasylve {
-  background: rgba(6, 20, 15, 0.75);
-  backdrop-filter: blur(18px);
+  background: rgb(6 20 15 / 75%);
   -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgb(16 185 129 / 20%);
+  box-shadow: 0 4px 30px rgb(0 0 0 / 40%);
   transition: all 0.3s ease;
 }
 
 .nav-anchor {
-  color: rgba(226, 232, 240, 0.85);
+  color: rgb(226 232 240 / 85%);
   transition: all 0.25s ease;
   position: relative;
   text-decoration: none;
@@ -145,14 +139,14 @@ p, blockquote, li {
   width: 0;
   height: 2px;
   background: linear-gradient(90deg, #fbbf24, #10b981);
-  box-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
+  box-shadow: 0 0 8px rgb(251 191 36 / 60%);
   transition: width 0.3s ease;
   border-radius: 9999px;
 }
 
 .nav-anchor:hover {
   color: #fef08a;
-  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  text-shadow: 0 0 10px rgb(251 191 36 / 50%);
 }
 
 .nav-anchor:hover::after,
@@ -168,7 +162,7 @@ p, blockquote, li {
 }
 
 .mobile-nav-link:hover {
-  background: rgba(16, 185, 129, 0.15);
+  background: rgb(16 185 129 / 15%);
   color: #fbbf24;
 }
 
@@ -179,14 +173,14 @@ p, blockquote, li {
   gap: 10px;
   padding: 13px 26px;
   border-radius: 9999px;
-  font-family: 'Cinzel', serif;
+  font-family: Cinzel, serif;
   font-weight: 700;
   font-size: 0.875rem;
   letter-spacing: 0.05em;
   color: #061812;
   background: linear-gradient(135deg, #fbbf24 0%, #34d399 50%, #10b981 100%);
   background-size: 200% auto;
-  box-shadow: 0 0 25px rgba(245, 158, 11, 0.45), 0 8px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 25px rgb(245 158 11 / 45%), 0 8px 20px rgb(0 0 0 / 40%);
   transition: all 0.35s ease;
   text-decoration: none;
 }
@@ -194,7 +188,7 @@ p, blockquote, li {
 .btn-kama-primary:hover {
   background-position: right center;
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 0 35px rgba(245, 158, 11, 0.7), 0 12px 28px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 35px rgb(245 158 11 / 70%), 0 12px 28px rgb(0 0 0 / 50%);
 }
 
 .btn-kama-secondary {
@@ -203,25 +197,26 @@ p, blockquote, li {
   gap: 10px;
   padding: 13px 26px;
   border-radius: 9999px;
-  font-family: 'Cinzel', serif;
+  font-family: Cinzel, serif;
   font-weight: 700;
   font-size: 0.875rem;
   letter-spacing: 0.05em;
   color: #f1f5f9;
-  background: rgba(6, 26, 19, 0.7);
-  border: 1px solid rgba(251, 191, 36, 0.4);
+  background: rgb(6 26 19 / 70%);
+  border: 1px solid rgb(251 191 36 / 40%);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgb(0 0 0 / 30%);
   transition: all 0.35s ease;
   text-decoration: none;
 }
 
 .btn-kama-secondary:hover {
-  background: rgba(16, 185, 129, 0.2);
+  background: rgb(16 185 129 / 20%);
   border-color: #fbbf24;
   color: #fef08a;
   transform: translateY(-3px);
-  box-shadow: 0 0 25px rgba(251, 191, 36, 0.35);
+  box-shadow: 0 0 25px rgb(251 191 36 / 35%);
 }
 
 .btn-kama-ghost {
@@ -233,35 +228,36 @@ p, blockquote, li {
   font-family: 'Fira Code', monospace;
   font-weight: 500;
   font-size: 0.825rem;
-  color: rgba(226, 232, 240, 0.8);
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgb(226 232 240 / 80%);
+  background: rgb(0 0 0 / 35%);
+  border: 1px solid rgb(255 255 255 / 15%);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   transition: all 0.3s ease;
   text-decoration: none;
 }
 
 .btn-kama-ghost:hover {
-  border-color: rgba(16, 185, 129, 0.6);
+  border-color: rgb(16 185 129 / 60%);
   color: #34d399;
-  background: rgba(16, 185, 129, 0.1);
+  background: rgb(16 185 129 / 10%);
   transform: translateY(-2px);
 }
 
 /* ─── CARDS COM VIDRO ÉLFICO (GLASSMORPHISM) ─────────────────────────── */
 .kama-card {
-  background: rgba(6, 26, 19, 0.68);
-  border: 1px solid rgba(16, 185, 129, 0.22);
-  backdrop-filter: blur(16px);
+  background: rgb(6 26 19 / 68%);
+  border: 1px solid rgb(16 185 129 / 22%);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 45%), inset 0 1px 1px rgb(255 255 255 / 10%);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .kama-card:hover {
-  border-color: rgba(245, 158, 11, 0.45);
-  background: rgba(7, 32, 23, 0.78);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 25px rgba(16, 185, 129, 0.18);
+  border-color: rgb(245 158 11 / 45%);
+  background: rgb(7 32 23 / 78%);
+  box-shadow: 0 16px 40px rgb(0 0 0 / 55%), 0 0 25px rgb(16 185 129 / 18%);
   transform: translateY(-4px);
 }
 
@@ -275,17 +271,18 @@ p, blockquote, li {
   font-size: 0.75rem;
   font-weight: 500;
   color: #fef08a;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(251, 191, 36, 0.3);
+  background: rgb(16 185 129 / 12%);
+  border: 1px solid rgb(251 191 36 / 30%);
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   transition: all 0.25s ease;
 }
 
 .tech-pill:hover {
-  background: rgba(245, 158, 11, 0.2);
+  background: rgb(245 158 11 / 20%);
   border-color: #fbbf24;
   transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 12px rgb(245 158 11 / 35%);
 }
 
 .badge-tag {
@@ -295,9 +292,9 @@ p, blockquote, li {
   font-family: 'Fira Code', monospace;
   font-size: 0.7rem;
   font-weight: 500;
-  background: rgba(16, 185, 129, 0.12);
+  background: rgb(16 185 129 / 12%);
   color: #6ee7b7;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  border: 1px solid rgb(16 185 129 / 25%);
 }
 
 /* Links de Ação dos Cards */
@@ -314,7 +311,7 @@ p, blockquote, li {
 
 .card-action-link:hover {
   color: #fbbf24;
-  text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+  text-shadow: 0 0 8px rgb(251 191 36 / 50%);
   transform: translateX(3px);
 }
 
@@ -354,7 +351,7 @@ p, blockquote, li {
   justify-content: center;
   position: relative;
   transition: all 0.35s ease;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 40%);
 }
 
 .step-num {
@@ -365,7 +362,7 @@ p, blockquote, li {
   height: 22px;
   border-radius: 9999px;
   background: #061812;
-  border: 1px solid rgba(251, 191, 36, 0.5);
+  border: 1px solid rgb(251 191 36 / 50%);
   color: #fbbf24;
   font-family: 'Fira Code', monospace;
   font-size: 0.65rem;
@@ -377,12 +374,13 @@ p, blockquote, li {
 
 /* ─── TERMINAL CLI ───────────────────────────────────────────────────── */
 .terminal-window {
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 25px 60px rgb(0 0 0 / 70%);
 }
 
 #terminal-output {
-  --scrollbar-thumb: rgba(16, 185, 129, 0.35);
+  --scrollbar-thumb: rgb(16 185 129 / 35%);
   --scrollbar-track: transparent;
+
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
@@ -404,17 +402,17 @@ p, blockquote, li {
 }
 
 .cmd-pill {
-  padding: 4px 10px;
+  padding: 6px 12px;
   border-radius: 6px;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgb(16 185 129 / 10%);
+  border: 1px solid rgb(16 185 129 / 25%);
   color: #34d399;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .cmd-pill:hover {
-  background: rgba(245, 158, 11, 0.2);
+  background: rgb(245 158 11 / 20%);
   border-color: #fbbf24;
   color: #fef08a;
   transform: translateY(-1px);
@@ -430,25 +428,26 @@ p, blockquote, li {
   font-family: 'Fira Code', monospace;
   font-size: 0.78rem;
   font-weight: 500;
-  color: rgba(226, 232, 240, 0.85);
-  background: rgba(6, 26, 19, 0.65);
-  border: 1px solid rgba(16, 185, 129, 0.28);
+  color: rgb(226 232 240 / 85%);
+  background: rgb(6 26 19 / 65%);
+  border: 1px solid rgb(16 185 129 / 28%);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   cursor: pointer;
   transition: all 0.25s ease;
 }
 
 .repo-filter-btn:hover {
-  border-color: rgba(251, 191, 36, 0.6);
+  border-color: rgb(251 191 36 / 60%);
   color: #fef08a;
   transform: translateY(-1px);
 }
 
 .repo-filter-btn.active {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.22), rgba(16, 185, 129, 0.28));
+  background: linear-gradient(135deg, rgb(251 191 36 / 22%), rgb(16 185 129 / 28%));
   border-color: #fbbf24;
   color: #fef08a;
-  box-shadow: 0 0 18px rgba(245, 158, 11, 0.25);
+  box-shadow: 0 0 18px rgb(245 158 11 / 25%);
 }
 
 /* ─── BOTÕES SOCIAIS ─────────────────────────────────────────────────── */
@@ -458,9 +457,9 @@ p, blockquote, li {
   gap: 8px;
   padding: 8px 16px;
   border-radius: 10px;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  color: #ffffff;
+  background: rgb(16 185 129 / 10%);
+  border: 1px solid rgb(16 185 129 / 25%);
+  color: #fff;
   font-family: 'Fira Code', monospace;
   font-size: 0.8rem;
   text-decoration: none;
@@ -468,9 +467,9 @@ p, blockquote, li {
 }
 
 .social-btn:hover {
-  background: rgba(245, 158, 11, 0.15);
+  background: rgb(245 158 11 / 15%);
   border-color: #fbbf24;
-  color: #ffffff;
+  color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(245, 158, 11, 0.25);
+  box-shadow: 0 0 15px rgb(245 158 11 / 25%);
 }

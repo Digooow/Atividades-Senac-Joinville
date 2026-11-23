@@ -76,120 +76,131 @@ function extrairIdLivro(pathname) {
   return Number.isInteger(id) && id > 0 ? id : null;
 }
 
+async function handleCriarLivro(req, res) {
+  try {
+    const dados = await lerCorpoJson(req);
+    const titulo = typeof dados.titulo === "string" ? dados.titulo.trim() : "";
+    const autor = typeof dados.autor === "string" ? dados.autor.trim() : "";
+
+    if (!titulo || !autor) {
+      console.log("[POST] /livros -> 400 (dados inválidos)");
+      enviarJson(res, 400, { erro: "Os campos 'titulo' e 'autor' são obrigatórios." });
+      return;
+    }
+
+    const novoLivro = {
+      id: proximoId++,
+      titulo,
+      autor,
+      disponivel: typeof dados.disponivel === "boolean" ? dados.disponivel : true,
+    };
+
+    livros.push(novoLivro);
+    console.log(`[POST] /livros -> 201 (id=${novoLivro.id})`);
+    enviarJson(res, 201, novoLivro);
+  } catch (err) {
+    const status = err.message === "BODY_TOO_LARGE" ? 413 : 400;
+    enviarJson(res, status, { erro: "JSON inválido ou muito grande." });
+  }
+}
+
+async function handleAtualizarLivro(req, res, pathname, indice) {
+  try {
+    const dados = await lerCorpoJson(req);
+    const livro = livros[indice];
+
+    if (typeof dados.titulo === "string" && dados.titulo.trim()) {
+      livro.titulo = dados.titulo.trim();
+    }
+    if (typeof dados.autor === "string" && dados.autor.trim()) {
+      livro.autor = dados.autor.trim();
+    }
+    if (typeof dados.disponivel === "boolean") {
+      livro.disponivel = dados.disponivel;
+    }
+
+    console.log(`[PATCH] ${pathname} -> 200`);
+    enviarJson(res, 200, livro);
+  } catch (err) {
+    const status = err.message === "BODY_TOO_LARGE" ? 413 : 400;
+    enviarJson(res, status, { erro: "JSON inválido." });
+  }
+}
+
+async function handleRotaLivroPorId(req, res, metodo, pathname, id) {
+  const indice = livros.findIndex((item) => item.id === id);
+
+  if (indice === -1) {
+    console.log(`[${metodo}] ${pathname} -> 404 (não encontrado)`);
+    enviarJson(res, 404, { erro: `Livro com id ${id} não encontrado.` });
+    return;
+  }
+
+  if (metodo === "GET") {
+    console.log(`[GET] ${pathname} -> 200`);
+    enviarJson(res, 200, livros[indice]);
+    return;
+  }
+
+  if (metodo === "PATCH") {
+    await handleAtualizarLivro(req, res, pathname, indice);
+    return;
+  }
+
+  if (metodo === "DELETE") {
+    livros.splice(indice, 1);
+    console.log(`[DELETE] ${pathname} -> 204`);
+    enviarJson(res, 204, null);
+    return;
+  }
+
+  console.log(`[${metodo}] ${pathname} -> 404`);
+  enviarJson(res, 404, { erro: "Rota não encontrada." });
+}
+
+function handleServirFrontend(res) {
+  fs.readFile(FRONTEND_PATH, "utf8", (err, html) => {
+    if (err) {
+      enviarJson(res, 404, { erro: "Arquivo frontend.html não encontrado." });
+      return;
+    }
+    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+    res.end(html);
+  });
+}
+
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
   const { pathname } = url;
   const metodo = req.method;
 
-  // Pré-requisição CORS (preflight) enviada automaticamente pelos navegadores
   if (metodo === "OPTIONS") {
     enviarJson(res, 204, null);
     return;
   }
 
-  // Opcional: serve o front-end se você acessar http://localhost:3000 diretamente
   if (metodo === "GET" && pathname === "/") {
-    fs.readFile(FRONTEND_PATH, "utf8", (err, html) => {
-      if (err) {
-        enviarJson(res, 404, { erro: "Arquivo frontend.html não encontrado." });
-        return;
-      }
-      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-      res.end(html);
-    });
+    handleServirFrontend(res);
     return;
   }
 
-  // GET /livros -> Lista todos os livros
   if (metodo === "GET" && pathname === "/livros") {
     console.log(`[GET] /livros -> 200 (${livros.length} itens)`);
     enviarJson(res, 200, livros);
     return;
   }
 
-  // POST /livros -> Cadastra um novo livro
   if (metodo === "POST" && pathname === "/livros") {
-    try {
-      const dados = await lerCorpoJson(req);
-      const titulo = typeof dados.titulo === "string" ? dados.titulo.trim() : "";
-      const autor = typeof dados.autor === "string" ? dados.autor.trim() : "";
-
-      if (!titulo || !autor) {
-        console.log("[POST] /livros -> 400 (dados inválidos)");
-        enviarJson(res, 400, { erro: "Os campos 'titulo' e 'autor' são obrigatórios." });
-        return;
-      }
-
-      const novoLivro = {
-        id: proximoId++,
-        titulo,
-        autor,
-        disponivel: typeof dados.disponivel === "boolean" ? dados.disponivel : true,
-      };
-
-      livros.push(novoLivro);
-      console.log(`[POST] /livros -> 201 (id=${novoLivro.id})`);
-      enviarJson(res, 201, novoLivro);
-    } catch (err) {
-      const status = err.message === "BODY_TOO_LARGE" ? 413 : 400;
-      enviarJson(res, status, { erro: "JSON inválido ou muito grande." });
-    }
+    await handleCriarLivro(req, res);
     return;
   }
 
-  // Rotas com ID: /livros/:id
   const id = extrairIdLivro(pathname);
   if (id !== null) {
-    const indice = livros.findIndex((item) => item.id === id);
-
-    if (indice === -1) {
-      console.log(`[${metodo}] ${pathname} -> 404 (não encontrado)`);
-      enviarJson(res, 404, { erro: `Livro com id ${id} não encontrado.` });
-      return;
-    }
-
-    // GET /livros/:id -> Busca um livro específico
-    if (metodo === "GET") {
-      console.log(`[GET] ${pathname} -> 200`);
-      enviarJson(res, 200, livros[indice]);
-      return;
-    }
-
-    // PATCH /livros/:id -> Atualiza parcialmente um livro
-    if (metodo === "PATCH") {
-      try {
-        const dados = await lerCorpoJson(req);
-        const livro = livros[indice];
-
-        if (typeof dados.titulo === "string" && dados.titulo.trim()) {
-          livro.titulo = dados.titulo.trim();
-        }
-        if (typeof dados.autor === "string" && dados.autor.trim()) {
-          livro.autor = dados.autor.trim();
-        }
-        if (typeof dados.disponivel === "boolean") {
-          livro.disponivel = dados.disponivel;
-        }
-
-        console.log(`[PATCH] ${pathname} -> 200`);
-        enviarJson(res, 200, livro);
-      } catch (err) {
-        const status = err.message === "BODY_TOO_LARGE" ? 413 : 400;
-        enviarJson(res, status, { erro: "JSON inválido." });
-      }
-      return;
-    }
-
-    // DELETE /livros/:id -> Remove um livro
-    if (metodo === "DELETE") {
-      livros.splice(indice, 1);
-      console.log(`[DELETE] ${pathname} -> 204`);
-      enviarJson(res, 204, null);
-      return;
-    }
+    await handleRotaLivroPorId(req, res, metodo, pathname, id);
+    return;
   }
 
-  // Rota não encontrada
   console.log(`[${metodo}] ${pathname} -> 404`);
   enviarJson(res, 404, { erro: "Rota não encontrada." });
 });

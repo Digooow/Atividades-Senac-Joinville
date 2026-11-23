@@ -159,8 +159,9 @@ class EnderecoView {
             const card = document.createElement("div");
             card.className = "card-endereco";
 
+            const numeroFormatado = item.numero ? `, ${item.numero}` : "";
             const logradouroTexto = item.logradouro
-                ? `${item.logradouro}${item.numero ? ", " + item.numero : ""}`
+                ? `${item.logradouro}${numeroFormatado}`
                 : "Logradouro não informado";
 
             const localTexto = [item.bairro, item.cidade, item.estado].filter(Boolean).join(" - ");
@@ -215,4 +216,4 @@ class EnderecoView {
     }
 }
 
-this.EnderecoView = EnderecoView;
+globalThis.EnderecoView = EnderecoView;

@@ -1,12 +1,12 @@
 function calcular(operacao) {
-  const number1 = parseFloat(document.getElementById('number1').value);
-  const number2 = parseFloat(document.getElementById('number2').value);
+  const number1 = Number.parseFloat(document.getElementById('number1').value);
+  const number2 = Number.parseFloat(document.getElementById('number2').value);
   const result = document.getElementById('result');
   const error = document.getElementById('error');
 
   error.textContent = '';
 
-  if (isNaN(number1) || isNaN(number2)) {
+  if (Number.isNaN(number1) || Number.isNaN(number2)) {
     error.textContent = 'Por favor, insira números válidos.';
     return;
   }
@@ -43,3 +43,10 @@ function limpar() {
   document.getElementById('result').textContent = '0';
   document.getElementById('error').textContent = '';
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  for (const button of document.querySelectorAll('[data-op]')) {
+    button.addEventListener('click', () => calcular(button.dataset.op));
+  }
+  document.getElementById('btn-limpar')?.addEventListener('click', limpar);
+});

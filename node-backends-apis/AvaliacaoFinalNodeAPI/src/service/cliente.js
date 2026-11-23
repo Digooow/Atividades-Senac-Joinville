@@ -1,4 +1,3 @@
-import cliente from '../model/cliente.js'
 import Cliente from '../model/cliente.js'
 
 class ServiceCliente {

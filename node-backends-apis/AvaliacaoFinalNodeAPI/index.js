@@ -4,6 +4,7 @@ import routerAtendimento from "./src/router/atendimento.js"
 import database from "./src/config/database.js"
 
 const app = express();
+app.disable("x-powered-by");
 app.use(express.json());
 
 
@@ -14,9 +15,9 @@ const port = 3000
 
 database.db
     .sync({ force: false })
-    .then((_) => {
+    .then(() => {
 
-        app.listen(port, (req, res) => {
+        app.listen(port, () => {
 
             console.log(`Servidor rodando em http://localhost:${port}`)
         })

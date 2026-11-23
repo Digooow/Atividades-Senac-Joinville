@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import enderecoRoutes from "./src/routes/enderecoRoutes.js";
 
 const app = express();
+app.disable("x-powered-by");
 const porta = process.env.PORT || 3000;
 const diretorioAtual = path.dirname(fileURLToPath(import.meta.url));
 
