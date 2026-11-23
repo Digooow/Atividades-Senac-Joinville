@@ -5,7 +5,7 @@
 **Monorepo completo com a evolução prática da formação em Desenvolvimento de Sistemas: da lógica em Portugol e C++ a aplicações Full-Stack com React, Angular, Node.js, C# .NET, bancos SQL e pipelines CI/CD.**
 
 [![CI/CD Pipeline](https://img.shields.io/github/actions/workflow/status/Digooow/Atividades-Senac-Joinville/deploy.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI%2FCD%20Deploy)](./.github/workflows/deploy.yml)
-[![Cloudflare Pages](https://img.shields.io/badge/Cloudflare%20Pages-Edge%20CDN-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](./devops-agile-develop-ia/Digooow.github.io/readme.md)
+[![Cloudflare Pages](https://img.shields.io/badge/Cloudflare%20Pages-Edge%20CDN-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://digooow-portfolio.pages.dev)
 [![C# .NET 10](https://img.shields.io/badge/C%23-.NET%2010%20%2B%20SQLite-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](./frontend/Agenda-Windows-Form/README.md)
 [![Angular 21](https://img.shields.io/badge/Angular-21.2%20%2B%20Signals-DD0031?style=for-the-badge&logo=angular&logoColor=white)](./frontend/trabalho-framework-angular/readme.md)
 [![React 18](https://img.shields.io/badge/React-18.3%20%2B%20Vite-61DAFB?style=for-the-badge&logo=react&logoColor=000000)](./devops-agile-develop-ia/devops-abacaxi/README.md)
@@ -37,6 +37,7 @@ Este repositório centraliza projetos, avaliações, seminários e exercícios d
       <p>Aplicação web narrativa em 5 capítulos com telemetria real da <strong>GitHub REST API v3</strong>, console CLI assíncrono no navegador (<code>ping</code>, <code>inspect</code>, <code>git log</code>, <code>repos</code>), partículas procedurais em Canvas 2D com CSPRNG e esteira DevOps completa em <a href="./.github/workflows/deploy.yml"><code>deploy.yml</code></a>.</p>
       <p><strong>Destaques:</strong> Quality Gate SAST (<code>html-validate</code> + <code>node --check</code>), Actions fixadas por SHA, deploy automático no <strong>Cloudflare Pages</strong> via Wrangler e auditoria pós-deploy com <strong>Lighthouse CI</strong>.</p>
       <p>
+        <a href="https://digooow-portfolio.pages.dev">🌐 Abrir site ao vivo</a> ·
         <a href="./devops-agile-develop-ia/Digooow.github.io/readme.md">📄 Ler README completo</a> ·
         <a href="./.github/workflows/deploy.yml">⚙️ Ver Workflow CI/CD</a>
       </p>
@@ -175,7 +176,7 @@ Abaixo está o resumo de **todas** as atividades organizadas por trilha, com lin
 
 | Atividade / Projeto | Resumo da Entrega | Tecnologias | README |
 | :--- | :--- | :--- | :--- |
-| [**Digooow.github.io**](./devops-agile-develop-ia/Digooow.github.io/) | Portfólio estático em 5 capítulos com sincronização paginada da API do GitHub (repos autorais/forks e proporção de linguagens), terminal CLI assíncrono (`help`, `devops`, `repos`, `git log`, `ping`, `inspect`) e pipeline automática no Cloudflare Pages com Quality Gate e Lighthouse CI. | HTML5, Tailwind CSS, ES Modules, Canvas 2D, GitHub Actions, Wrangler, Lighthouse CI | [readme.md](./devops-agile-develop-ia/Digooow.github.io/readme.md) |
+| [**Digooow.github.io**](./devops-agile-develop-ia/Digooow.github.io/) | Portfólio estático em 5 capítulos com sincronização paginada da API do GitHub (repos autorais/forks e proporção de linguagens), terminal CLI assíncrono (`help`, `devops`, `repos`, `git log`, `ping`, `inspect`) e pipeline automática no Cloudflare Pages com Quality Gate e Lighthouse CI. | HTML5, Tailwind CSS, ES Modules, Canvas 2D, GitHub Actions, Wrangler, Lighthouse CI | [Site ao vivo](https://digooow-portfolio.pages.dev) · [readme.md](./devops-agile-develop-ia/Digooow.github.io/readme.md) |
 | [**devops-abacaxi**](./devops-agile-develop-ia/devops-abacaxi/) | Sistema de controle da *Fazenda de Abacaxis* (login JWT, colheitas, vendas com trava de estoque e painel). Front-end temático da *Fenda do Biquíni* com animações Canvas/SVG e 3 idiomas (PT/EN/ZH); back-end com Sequelize dual (MySQL Docker local / PostgreSQL Render) e Swagger `/docs`. | React 18, Vite 6, i18n, Express 5, Sequelize 6, JWT, Swagger, Docker | [README.md](./devops-agile-develop-ia/devops-abacaxi/README.md) · [Backend](./devops-agile-develop-ia/devops-abacaxi/abacaxi-backend/README.md) · [Frontend](./devops-agile-develop-ia/devops-abacaxi/abacaxi-frontend/README.md) |
 | [**devops-nasa**](./devops-agile-develop-ia/devops-nasa/) | *Diário do Cosmos*: consumo da API NASA APOD com navegação por datas (desde 1995), data aleatória, cache em servidor e proteção da chave de API via proxy Express (`BFF`), construído a partir de regras do Copilot (`INTERACOES_COPILOT.md`). | Node.js 18+, Express 4, HTML5, CSS3 Mobile-First, GitHub Copilot | [README.md](./devops-agile-develop-ia/devops-nasa/README.md) |
 | [**aula-exemplo-ia**](./devops-agile-develop-ia/aula-exemplo-ia/) | Aplicação didática de Biblioteca sem dependências externas (`node_modules`): servidor HTTP nativo (`node:http`) com CRUD em `/livros` e cliente web dark mode com painel de inspeção JSON de requisições/respostas em tempo real. | Node.js (`node:http`), HTML5, CSS3, Fetch API | [readme.md](./devops-agile-develop-ia/aula-exemplo-ia/readme.md) |
@@ -245,7 +246,7 @@ cd Atividades-Senac-Joinville
 
 | Projeto | Comando para Rodar Localmente | Endereço / Saída |
 | :--- | :--- | :--- |
-| **Portfólio &amp; Telemetria GitHub** | Sirva `devops-agile-develop-ia/Digooow.github.io` com `npx serve devops-agile-develop-ia/Digooow.github.io` ou Live Server | Navegador (ES Modules) |
+| **Portfólio &amp; Telemetria GitHub** | Sirva `devops-agile-develop-ia/Digooow.github.io` com `npx serve devops-agile-develop-ia/Digooow.github.io` ou Live Server | [digooow-portfolio.pages.dev](https://digooow-portfolio.pages.dev) *(ao vivo)* ou servidor local |
 | **DevOps Abacaxi (Full-Stack)** | `cd devops-agile-develop-ia/devops-abacaxi && npm run dev` *(com Docker aberto)* | Site `http://localhost:5173` · API `http://localhost:3001` · Swagger `/docs` |
 | **SPA Angular 21** | `cd frontend/trabalho-framework-angular/projeto-seminario && npm install && npm start` | `http://localhost:4200` |
 | **Sistema ViaCEP + Testes** | `cd frontend/atividade-api-cep-web- && npm install && npm test && npm start` | `http://localhost:3000` |

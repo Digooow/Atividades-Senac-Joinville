@@ -11,7 +11,7 @@ Este diretório concentra os projetos práticos das disciplinas de **DevOps**, *
 
 | Projeto / Pasta | Descrição | Destaques Técnicos | Documentação |
 | :--- | :--- | :--- | :--- |
-| [**Digooow.github.io**](./Digooow.github.io/) | Portfólio interativo com telemetria real da API do GitHub e terminal CLI assíncrono | HTML5, Tailwind, ES Modules, Canvas 2D, CI/CD (`deploy.yml`), Cloudflare Pages & Lighthouse CI | [readme.md](./Digooow.github.io/readme.md) |
+| [**Digooow.github.io**](./Digooow.github.io/) | Portfólio interativo com telemetria real da API do GitHub e terminal CLI assíncrono | HTML5, Tailwind, ES Modules, Canvas 2D, CI/CD (`deploy.yml`), Cloudflare Pages & Lighthouse CI | [Site ao vivo](https://digooow-portfolio.pages.dev) · [readme.md](./Digooow.github.io/readme.md) |
 | [**devops-abacaxi**](./devops-abacaxi/) | Sistema full-stack *Fazenda de Abacaxis* (tema Fenda do Biquíni) para deploy em plano gratuito | React 18, Vite 6, Canvas/SVG, i18n (PT/EN/ZH), Express 5, Sequelize (MySQL/Postgres), JWT & Swagger | [README.md](./devops-abacaxi/README.md) |
 | [**devops-nasa**](./devops-nasa/) | *Diário do Cosmos* — galeria responsiva consumindo a API NASA APOD com proxy BFF seguro | Express 4, proteção de API Key em `.env`, cache em memória, mobile-first & Copilot instructions | [README.md](./devops-nasa/README.md) |
 | [**aula-exemplo-ia**](./aula-exemplo-ia/) | API REST nativa de Biblioteca (zero dependências) + cliente web dark mode com log HTTP | `node:http` nativo, CRUD de livros em memória, `fetch()` e inspetor JSON | [readme.md](./aula-exemplo-ia/readme.md) |

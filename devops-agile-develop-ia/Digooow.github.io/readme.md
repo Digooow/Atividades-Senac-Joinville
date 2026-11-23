@@ -1,9 +1,11 @@
 # Rodrigo da Cruz Godinho — Portfólio Interativo & Engenharia DevOps
 
-![CI/CD Pipeline](https://img.shields.io/github/actions/workflow/status/Digooow/Atividades-Senac-Joinville/deploy.yml?branch=main&style=for-the-badge&label=CI%2FCD%20Deploy)
-![Cloudflare Pages](https://img.shields.io/badge/Cloudflare%20Pages-Edge%20CDN-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)
+[![CI/CD Pipeline](https://img.shields.io/github/actions/workflow/status/Digooow/Atividades-Senac-Joinville/deploy.yml?branch=main&style=for-the-badge&label=CI%2FCD%20Deploy)](https://github.com/Digooow/Atividades-Senac-Joinville/actions/workflows/deploy.yml)
+[![Site ao Vivo — Cloudflare Pages](https://img.shields.io/badge/Site%20ao%20Vivo-Cloudflare%20Pages-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://digooow-portfolio.pages.dev)
 ![Lighthouse CI](https://img.shields.io/badge/Audit-Lighthouse%20CI-F44B21?style=for-the-badge&logo=lighthouse&logoColor=white)
 ![ES Modules](https://img.shields.io/badge/JavaScript-ES%20Modules-F7DF1E?style=for-the-badge&logo=javascript&logoColor=000000)
+
+> 🌐 **Acesse o site ao vivo:** [**digooow-portfolio.pages.dev**](https://digooow-portfolio.pages.dev)
 
 Aplicação web estática, interativa e orientada a telemetria em tempo real, desenvolvida na disciplina de **DevOps com IA** para demonstrar na prática um ciclo completo de **Integração Contínua e Entrega Contínua (CI/CD)** no GitHub Actions, aliado a consumo assíncrono da **GitHub REST API v3**, animações procedurais em Canvas 2D e auditoria automatizada pós-deploy com **Lighthouse CI**.
 
@@ -150,6 +152,7 @@ html-validate "devops-agile-develop-ia/Digooow.github.io/*.html"
 **Rodrigo da Cruz Godinho**  
 Qualificação Profissional em Desenvolvimento de Sistemas (Programa Jovem Programador) — Faculdade de Tecnologia SENAC Joinville (SC)
 
+- **Portfólio ao Vivo:** [digooow-portfolio.pages.dev](https://digooow-portfolio.pages.dev)
 - **Repositório:** [Digooow/Atividades-Senac-Joinville](https://github.com/Digooow/Atividades-Senac-Joinville)
 - **GitHub:** [@Digooow](https://github.com/Digooow)
 - **LinkedIn:** [linkedin.com/in/digooow](https://linkedin.com/in/digooow)
