@@ -20,14 +20,14 @@ export function initTerminalAndPipeline() {
         log: '[sast] html-validate "*.html" -> 0 errors, 0 warnings. Gate unlocked.'
       },
       3: {
-        name: '03 - A Forja do Artefato (Immutable Pack)',
-        details: 'Os arquivos validados são empacotados em um artefato tar.gz imutável via actions/upload-pages-artifact@v3.',
-        log: '[artifact] Bundle sealed & uploaded. SHA-256 checksum verified.'
+        name: '03 - A Forja do Pacote (Static Bundle)',
+        details: 'Os arquivos validados (index.html e assets/) são isolados em um diretório limpo antes da publicação via cloudflare/wrangler-action.',
+        log: '[bundle] Static assets staged cleanly in temporary runner directory.'
       },
       4: {
         name: '04 - O Grande Salto (Edge CDN Deploy)',
-        details: 'Publicação autenticada via token OIDC (id-token: write) direto para a CDN global do GitHub Pages com TLS 1.3.',
-        log: '[deploy] Environment: github-pages | Live at https://digooow.github.io/'
+        details: 'Publicação automatizada via Wrangler CLI direto para a CDN global do Cloudflare Pages com TLS 1.3.',
+        log: '[deploy] Environment: cloudflare-pages | Live on Cloudflare Edge (*.pages.dev)'
       },
       5: {
         name: '05 - O Oráculo da Performance (Lighthouse CI)',
@@ -91,7 +91,7 @@ export function initTerminalAndPipeline() {
         { text: '✔ Pipeline CI/CD Status: ALL GATES PASSING', cls: 'text-emerald-300 font-bold' },
         { text: '  • Supply Chain: Actions pinadas por SHA completo + npm --ignore-scripts', cls: 'text-slate-200' },
         { text: '  • Quality Gate: html-validate@10.17.0 em Node.js 20 [OK]', cls: 'text-slate-200' },
-        { text: '  • Deployment: GitHub Pages Edge CDN via OIDC Token [OK]', cls: 'text-slate-200' },
+        { text: '  • Deployment: Cloudflare Pages Edge CDN via Wrangler CLI [OK]', cls: 'text-slate-200' },
         { text: '  • Pós-Deploy: Auditoria automatizada com Lighthouse CI [OK]', cls: 'text-slate-200' },
       ];
       try {
@@ -134,7 +134,7 @@ export function initTerminalAndPipeline() {
       try {
         const commits = await fetchRecentCommits(5);
         const lines = [
-          { text: '✦ GitHub REST API — Últimos 5 commits em Digooow/Digooow.github.io:', cls: 'text-amber-300 font-bold' }
+          { text: '✦ GitHub REST API — Últimos 5 commits em Digooow/Atividades-Senac-Joinville:', cls: 'text-amber-300 font-bold' }
         ];
         commits.forEach(c => {
           lines.push({

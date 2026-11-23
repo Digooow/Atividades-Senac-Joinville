@@ -6,7 +6,8 @@
 'use strict';
 
 const REPO_OWNER = 'Digooow';
-const PAGES_REPO = 'Digooow.github.io';
+const PAGES_REPO = 'Atividades-Senac-Joinville';
+const WORKFLOW_FILE = 'deploy.yml';
 const CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutos para lista de repos/workflows
 const LANG_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 horas quando pushed_at não mudou
 
@@ -211,12 +212,12 @@ export async function fetchRepoLanguages(repoName, fallbackLang, pushedAt = '') 
  * Busca a última execução do GitHub Actions para alimentar a Pipeline e o Terminal
  */
 export async function fetchLatestWorkflowRun() {
-  const cacheKey = 'gh_pages_latest_run_v3';
+  const cacheKey = 'gh_pages_latest_run_v4';
   const cached = getCachedData(cacheKey);
   if (cached) return cached;
 
   try {
-    const url = `https://api.github.com/repos/${REPO_OWNER}/${PAGES_REPO}/actions/runs?per_page=1`;
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${PAGES_REPO}/actions/workflows/${encodeURIComponent(WORKFLOW_FILE)}/runs?per_page=1`;
     const response = await fetch(url, {
       headers: { Accept: 'application/vnd.github+json' }
     });
@@ -243,7 +244,7 @@ export async function fetchLatestWorkflowRun() {
       durationSec,
       updatedAt: run.updated_at,
       formattedDate: formatDateBR(run.updated_at),
-      htmlUrl: run.html_url || `https://github.com/${REPO_OWNER}/${PAGES_REPO}/actions`
+      htmlUrl: run.html_url || `https://github.com/${REPO_OWNER}/${PAGES_REPO}/actions/workflows/${WORKFLOW_FILE}`
     };
 
     setCachedData(cacheKey, summary);
@@ -259,7 +260,7 @@ export async function fetchLatestWorkflowRun() {
  * Busca os últimos commits reais do repositório para o comando `git log`
  */
 export async function fetchRecentCommits(limit = 5) {
-  const cacheKey = `gh_pages_commits_${limit}_v3`;
+  const cacheKey = `gh_pages_commits_${limit}_v4`;
   const cached = getCachedData(cacheKey);
   if (cached) return cached;
 
@@ -296,7 +297,7 @@ export async function fetchRecentCommits(limit = 5) {
  * com suporte a paginação e fallback para cache em caso de rate-limit.
  */
 export async function fetchAllUserRepos() {
-  const cacheKey = 'gh_user_repos_list_v3';
+  const cacheKey = 'gh_user_repos_list_v4';
   const cached = getCachedData(cacheKey);
   if (cached) return cached;
 

@@ -97,7 +97,7 @@
       <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-400/30 backdrop-blur-md shadow-[0_0_12px_rgba(16,185,129,0.2)]">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
         <span class="w-2 h-2 rounded-full bg-emerald-400 -ml-3"></span>
-        <span id="nav-ci-text" class="font-mono text-xs font-semibold text-emerald-300">Pages Live • CI/CD OK</span>
+        <span id="nav-ci-text" class="font-mono text-xs font-semibold text-emerald-300">Cloudflare Pages • CI/CD OK</span>
       </div>
 
       <!-- Botão Mobile -->
@@ -244,22 +244,22 @@
               <span class="step-num">03</span>
             </span>
             <span class="font-cinzel font-bold text-base text-amber-200 mt-4 mb-1">A Forja</span>
-            <span class="font-mono text-xs text-amber-300/80 mb-2">Immutable Artifact</span>
+            <span class="font-mono text-xs text-amber-300/80 mb-2">Static Bundle</span>
             <span class="text-xs text-slate-300/80 leading-relaxed">
-              O código aprovado é lacrado num pacote imutável via <code class="text-amber-300">upload-pages-artifact</code>.
+              Os arquivos validados são isolados em um pacote limpo antes da publicação via <code class="text-amber-300">wrangler-action</code>.
             </span>
           </button>
 
-          <!-- Nó 4: GitHub Pages Deploy -->
+          <!-- Nó 4: Cloudflare Pages Deploy -->
           <button type="button" class="pipeline-step group" onclick="selectPipelineStep(4)">
             <span class="step-icon-box bg-emerald-950/80 border-emerald-400/40 text-emerald-300 group-hover:border-emerald-300 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.5)]">
               <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
               <span class="step-num">04</span>
             </span>
             <span class="font-cinzel font-bold text-base text-emerald-200 mt-4 mb-1">O Grande Salto</span>
-            <span class="font-mono text-xs text-emerald-300/80 mb-2">Global Edge CDN</span>
+            <span class="font-mono text-xs text-emerald-300/80 mb-2">Cloudflare Edge CDN</span>
             <span class="text-xs text-slate-300/80 leading-relaxed">
-              Distribuição global via OIDC token com TLS 1.3 nos servidores de borda.
+              Distribuição global no Cloudflare Pages com TLS 1.3 nos servidores de borda.
             </span>
           </button>
 
@@ -288,14 +288,14 @@
               Branch: main • SHA-Pinned
             </span>
             <span id="pipeline-live-time" class="text-slate-400">
-              Env: <strong class="text-white">github-pages</strong>
+              Env: <strong class="text-white">cloudflare-pages</strong>
             </span>
           </div>
           <div class="flex flex-wrap items-center justify-center gap-4">
             <span id="pipeline-live-status" class="text-emerald-400 flex items-center gap-1.5">
               <i class="fa-solid fa-circle-check"></i> Quality Gate &amp; Deploy: Verified
             </span>
-            <a id="pipeline-live-link" href="https://github.com/Digooow/Digooow.github.io/actions" target="_blank" class="text-amber-300 hover:text-amber-200 underline underline-offset-4 transition-colors">
+            <a id="pipeline-live-link" href="https://github.com/Digooow/Atividades-Senac-Joinville/actions/workflows/deploy.yml" target="_blank" class="text-amber-300 hover:text-amber-200 underline underline-offset-4 transition-colors">
               Inspecionar Run no GitHub &rarr;
             </a>
           </div>
@@ -733,7 +733,7 @@
       <div class="flex flex-wrap justify-center items-center gap-6 text-xs text-slate-400 font-mono">
         <span>© 2026 Rodrigo da Cruz Godinho</span>
         <span>•</span>
-        <span>GitHub Pages &amp; GitHub Actions CI/CD</span>
+        <span>Cloudflare Pages &amp; GitHub Actions CI/CD</span>
         <span>•</span>
         <span class="text-emerald-400">Build: Verified &amp; Automated</span>
       </div>

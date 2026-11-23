@@ -133,6 +133,7 @@ Essa etapa foi importante para demonstrar que a programação não envolve apena
 ### Materiais complementares
 
 - [aula-lista-exercicios](https://github.com/Digooow/Atividades-Senac-Joinville/tree/main/aula-lista-exercicios) — lista de exercícios práticos da formação
+- [devops-agile-develop-ia/Digooow.github.io](https://github.com/Digooow/Atividades-Senac-Joinville/tree/main/devops-agile-develop-ia/Digooow.github.io) — portfólio estático e esteira CI/CD ([`.github/workflows/deploy.yml`](https://github.com/Digooow/Atividades-Senac-Joinville/blob/main/.github/workflows/deploy.yml)) com Quality Gate (`html-validate`), deploy no Cloudflare Pages e auditoria Lighthouse CI
 
 ## Tecnologias praticadas ao longo do curso
 

@@ -8,7 +8,7 @@ Aplicação web estática, interativa e orientada a telemetria em tempo real, de
 
 A página foi estruturada como uma jornada narrativa dividida em **cinco capítulos** (*O Prólogo*, *As Cinco Provações de um Commit*, *Crônicas & Construções*, *O Console dos Bastidores* e *Quem Escreve Esta História*), unindo uma atmosfera visual de fantasia a dados reais de engenharia de software e infraestrutura.
 
-Mesmo sendo hospedada em um ambiente 100% estático (**GitHub Pages**), a aplicação atua como um painel vivo do ecossistema do autor no GitHub:
+Mesmo sendo hospedada em um ambiente 100% estático (**Cloudflare Pages**), a aplicação atua como um painel vivo do ecossistema do autor no GitHub:
 
 - **Sincronização Completa de Repositórios (Autorais & Forks):** Consulta paginada na API pública do GitHub (`/users/Digooow/repos?type=owner`) para listar **todos os repositórios públicos** da conta, incluindo **forks** identificados com badge próprio e filtros interativos (`Todos`, `Autorais` e `Forks`).
 - **Detalhamento Multi-Linguagem por Projeto:** Consulta o endpoint `/repos/Digooow/{repo}/languages` com cache vinculado ao `pushed_at` para exibir **todas as linguagens de programação utilizadas**, calculando suas proporções em porcentagem e renderizando uma barra visual multicolorida em cada card.
@@ -28,34 +28,36 @@ Mesmo sendo hospedada em um ambiente 100% estático (**GitHub Pages**), a aplica
 - **HTML5 Canvas 2D & Performance API** — motor gráfico de partículas com controle de FPS e leitura de métricas reais de carregamento (`PerformanceNavigationTiming`).
 
 ### DevOps, Qualidade & Infraestrutura
-- **GitHub Actions** — orquestração automatizada da esteira de CI/CD.
+- **GitHub Actions** — orquestração automatizada da esteira de CI/CD na raiz do monorepo ([`.github/workflows/deploy.yml`](../../.github/workflows/deploy.yml)).
 - **Node.js 20 & `html-validate 10.17.0`** — *Quality Gate* de análise estática (SAST) de sintaxe, semântica e regras de acessibilidade HTML.
-- **GitHub Pages (Edge CDN)** — hospedagem distribuída globalmente com TLS 1.3 e publicação autenticada via token OIDC (`id-token: write`).
-- **Lighthouse CI** — auditoria automatizada pós-deploy avaliando Performance, Acessibilidade, Boas Práticas e SEO.
+- **Cloudflare Pages (Edge CDN) & Wrangler** — hospedagem distribuída globalmente com TLS 1.3 e publicação automatizada via `cloudflare/wrangler-action`.
+- **Lighthouse CI** — auditoria automatizada pós-deploy avaliando Performance, Acessibilidade, Boas Práticas e SEO sobre a URL publicada.
 
 ---
 
-## Estrutura do Repositório
+## Estrutura do Projeto no Monorepo
 
 ```text
-.
+Atividades-Senac-Joinville/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml              # Pipeline CI/CD (Quality Gate, Deploy e Lighthouse CI)
-├── assets/
-│   ├── css/
-│   │   └── style.css               # Estilos personalizados, animações e glassmorphism
-│   ├── img/                        # Cenários panorâmicos de fundo
-│   └── js/
-│       ├── main.js                 # Ponto de entrada e inicialização dos módulos
-│       ├── github-telemetry.js     # Cliente da GitHub REST API (Runs, Commits, Repos e Languages)
-│       ├── terminal-cli.js         # Shell assíncrono interativo e inspeção dos nós de CI/CD
-│       ├── background-switcher.js  # Transição suave de cenários sincronizada ao scroll
-│       ├── canvas-engine.js        # Loop de renderização 2D e gerenciamento de partículas
-│       ├── fairy.js                # Entidades luminosas com física de voo orgânica
-│       └── mote.js                 # Partículas ambientais de profundidade
-├── index.html                      # Página principal estruturada em 5 capítulos
-└── readme.md                       # Documentação técnica do projeto
+│       └── deploy.yml                              # Pipeline CI/CD (Quality Gate, Cloudflare Pages e Lighthouse CI)
+└── devops-agile-develop-ia/
+    └── Digooow.github.io/
+        ├── assets/
+        │   ├── css/
+        │   │   └── style.css                       # Estilos personalizados, animações e glassmorphism
+        │   ├── img/                                # Cenários panorâmicos de fundo
+        │   └── js/
+        │       ├── main.js                         # Ponto de entrada e inicialização dos módulos
+        │       ├── github-telemetry.js             # Cliente da GitHub REST API (Runs, Commits, Repos e Languages)
+        │       ├── terminal-cli.js                 # Shell assíncrono interativo e inspeção dos nós de CI/CD
+        │       ├── background-switcher.js          # Transição suave de cenários sincronizada ao scroll
+        │       ├── canvas-engine.js                # Loop de renderização 2D e gerenciamento de partículas
+        │       ├── fairy.js                        # Entidades luminosas com física de voo orgânica
+        │       └── mote.js                         # Partículas ambientais de profundidade
+        ├── index.html                              # Página principal estruturada em 5 capítulos
+        └── readme.md                               # Documentação técnica do projeto
 ```
 
 ---
@@ -82,23 +84,29 @@ Na seção **O Console dos Bastidores**, o visitante pode interagir via teclado 
 
 ## Arquitetura da Pipeline CI/CD
 
-O workflow está definido em [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) e é acionado automaticamente a cada `push` na branch `main` (ou manualmente via `workflow_dispatch`).
+O workflow está definido em [`.github/workflows/deploy.yml`](../../.github/workflows/deploy.yml) na raiz do monorepo e é acionado automaticamente a cada `push` na branch `main` que altere `devops-agile-develop-ia/Digooow.github.io/**` ou o próprio workflow (ou manualmente via `workflow_dispatch`).
 
 ### 1. Quality Gate (`quality-gate`)
 1. Faz o checkout do código com `actions/checkout`.
 2. Provisiona o **Node.js 20** com `actions/setup-node`.
 3. Instala o validador `html-validate@10.17.0` utilizando a flag de segurança `--ignore-scripts` (mitigando execução arbitrária de scripts de pós-instalação).
-4. Executa `html-validate '*.html'`. Qualquer violação sintática, semântica ou de limite de metadados (como títulos acima de 70 caracteres) bloqueia imediatamente o deploy.
+4. Executa `html-validate "devops-agile-develop-ia/Digooow.github.io/*.html"`. Qualquer violação sintática, semântica ou de limite de metadados bloqueia imediatamente o deploy.
 5. Todas as Actions de terceiros são fixadas por **hash SHA completo de commit**, garantindo imutabilidade e segurança da cadeia de suprimentos (*Supply Chain Security*).
 
 ### 2. Empacotamento e Deploy (`deploy`)
 Executado somente após a aprovação do `quality-gate`:
-1. Configura o ambiente oficial `github-pages`.
-2. Empacota os arquivos estáticos em um artefato imutável via `actions/upload-pages-artifact`.
-3. Publica nos servidores de borda do GitHub Pages via `actions/deploy-pages` usando permissões mínimas (`contents: read`, `pages: write`, `id-token: write`) e controle de concorrência (`group: "pages"`).
+1. Valida as credenciais da Cloudflare e verifica via Cloudflare REST API se o projeto no Pages já existe (criando-o automaticamente com `production_branch: "main"` na primeira execução, caso ainda não exista).
+2. Copia apenas os arquivos públicos (`index.html` e `assets/`) para um diretório temporário limpo (`$RUNNER_TEMP/pages-dist`).
+3. Publica nos servidores de borda do **Cloudflare Pages** via `cloudflare/wrangler-action` (`pages deploy`) com controle de concorrência (`group: "cloudflare-pages-portfolio"`).
 
 ### 3. Auditoria Pós-Deploy (`lighthouse-audit`)
-Após a publicação entrar no ar em `https://digooow.github.io/`, o job `lighthouse-audit` inicializa o **Lighthouse CI** contra a URL de produção, auditando métricas de performance, acessibilidade e SEO e salvando os relatórios da execução.
+Após confirmar que a URL de produção gerada pelo deploy (`*.pages.dev`) está respondendo, o job `lighthouse-audit` inicializa o **Lighthouse CI** contra essa URL, auditando métricas de performance, acessibilidade e SEO e salvando os relatórios da execução.
+
+### Secrets necessários no GitHub
+Em **Settings → Secrets and variables → Actions** do repositório `Atividades-Senac-Joinville`:
+- `CLOUDFLARE_API_TOKEN` — token de API da Cloudflare com permissão **Account → Cloudflare Pages → Edit**.
+- `CLOUDFLARE_ACCOUNT_ID` — Account ID da sua conta Cloudflare.
+- *(Opcional)* Variable `CF_PAGES_PROJECT_NAME` — nome do projeto no Cloudflare Pages (padrão: `digooow-portfolio`, gerando `https://digooow-portfolio.pages.dev`).
 
 ---
 
@@ -107,17 +115,17 @@ Após a publicação entrar no ar em `https://digooow.github.io/`, o job `lighth
 Clone o repositório:
 
 ```bash
-git clone https://github.com/Digooow/Digooow.github.io.git
-cd Digooow.github.io
+git clone https://github.com/Digooow/Atividades-Senac-Joinville.git
+cd Atividades-Senac-Joinville
 ```
 
-Como o projeto utiliza **ES Modules** (`<script type="module">`), sirva a pasta raiz com um servidor HTTP local (por exemplo, a extensão **Live Server** do VS Code ou `npx serve .`).
+Como o projeto utiliza **ES Modules** (`<script type="module">`), sirva a pasta `devops-agile-develop-ia/Digooow.github.io` com um servidor HTTP local (por exemplo, a extensão **Live Server** do VS Code ou `npx serve devops-agile-develop-ia/Digooow.github.io`).
 
 Para reproduzir localmente a mesma checagem do **Quality Gate** da esteira:
 
 ```bash
 npm install --global --ignore-scripts html-validate@10.17.0
-html-validate "*.html"
+html-validate "devops-agile-develop-ia/Digooow.github.io/*.html"
 ```
 
 ---
@@ -127,7 +135,7 @@ html-validate "*.html"
 **Rodrigo da Cruz Godinho**  
 Qualificação Profissional em Desenvolvimento de Sistemas (Programa Jovem Programador) — Faculdade de Tecnologia SENAC Joinville (SC)
 
-- **Portfólio ao Vivo:** [https://digooow.github.io/](https://digooow.github.io/)
+- **Repositório:** [Digooow/Atividades-Senac-Joinville](https://github.com/Digooow/Atividades-Senac-Joinville)
 - **GitHub:** [@Digooow](https://github.com/Digooow)
 - **LinkedIn:** [linkedin.com/in/digooow](https://linkedin.com/in/digooow)
 - **LeetCode:** [leetcode.com/digooow](https://leetcode.com/digooow)
